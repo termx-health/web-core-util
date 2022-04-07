@@ -1,0 +1,23 @@
+{
+  "core": {
+    "period": {
+      "days": "d",
+      "hours": "h",
+      "minutes": "m",
+      "months": "mon",
+      "seconds": "s",
+      "years": "y"
+    },
+    "pipe": {
+      "distance-in-words": {
+        "days": " days ago",
+        "months": " month(s) ago",
+        "more-than": "more than ",
+        "today": "today",
+        "weeks": " week(s) ago",
+        "year": "more than year ago",
+        "yesterday": "yesterday"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "core": {
+    "period": {
+      "days": "p",
+      "hours": "t",
+      "minutes": "m",
+      "months": "k",
+      "seconds": "s",
+      "years": "a"
+    },
+    "pipe": {
+      "distance-in-words": {
+        "days": "päeva tagasi",
+        "months": "kuud tagasi",
+        "more-than": "rohkem kui",
+        "today": "täna",
+        "weeks": "nädalat tagasi",
+        "year": "rohkem kui aasta tagasi",
+        "yesterday": "eile"
+      }
+    }
+  }
+}

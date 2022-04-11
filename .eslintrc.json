@@ -5,6 +5,7 @@
       "files": [
         "*.ts"
       ],
+      "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": [
           "tsconfig.json"
@@ -16,10 +17,20 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "no-console": "warn",
+        "semi": "error",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/explicit-member-accessibility": "error",
+        "@typescript-eslint/no-explicit-any": [
+          "warn",
+          {
+            "ignoreRestArgs": false
+          }
+        ],
         "@angular-eslint/component-selector": [
           "error",
           {
-            "prefix": "lib",
+            "prefix": "ku",
             "style": "kebab-case",
             "type": "element"
           }
@@ -27,21 +38,12 @@
         "@angular-eslint/directive-selector": [
           "error",
           {
-            "prefix": "lib",
+            "prefix": "ku",
             "style": "camelCase",
             "type": "attribute"
           }
         ]
       }
-    },
-    {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {}
     }
   ]
 }

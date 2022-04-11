@@ -10,13 +10,12 @@
     },
     "pipe": {
       "distance-in-words": {
-        "days": " days ago",
-        "months": " month(s) ago",
-        "more-than": "more than ",
+        "yesterday": "yesterday",
         "today": "today",
-        "weeks": " week(s) ago",
-        "year": "more than year ago",
-        "yesterday": "yesterday"
+        "days": "more than {{days}} day(s) ago",
+        "weeks": "more than {{weeks}} week(s) ago",
+        "months": "more than {{months}} month(s) ago",
+        "year": "more than year ago"
       }
     }
   }

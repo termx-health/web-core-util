@@ -1,5 +1,6 @@
+import {DateRange} from 'core-util/model/range/date-range';
 import moment, {Moment} from 'moment/moment';
-import {DateRange, MomentRange} from '../model';
+import {MomentRange} from '../model';
 
 export function mergeDateTime(date: Date, time: Date): Date {
   if (!date) {

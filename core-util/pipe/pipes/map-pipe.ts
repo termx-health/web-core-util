@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {getPathValue} from '../../util';
 
 @Pipe({
   name: 'map'
@@ -13,20 +14,7 @@ export class MapPipe implements PipeTransform {
       return values;
     }
     return values.map((item) => {
-      return typeof mapper === 'string' ? this.getValue(item, mapper) : mapper(item, fnArg);
+      return typeof mapper === 'string' ? getPathValue(item, mapper) : mapper(item, fnArg);
     });
   }
-
-  private getValue(o: any, path: string): any {
-    if (o === undefined) {
-      return undefined;
-    }
-    if (path.indexOf('.') >= 0) {
-      const key = path.substring(0, path.indexOf('.'));
-      const next = path.substring(path.indexOf('.') + 1);
-      return this.getValue(o[key], next);
-    }
-    return o[path];
-  }
-
 }

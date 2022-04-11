@@ -1,7 +1,6 @@
 import {FormatWidth, getLocaleDateFormat, getLocaleTimeFormat} from '@angular/common';
 
 export class LocalDateUtil {
-
   static getDateFormat(locale: string): string {
     const localeFormat = getLocaleDateFormat(locale, FormatWidth.Short);
     return localeFormat.replace('yy', 'yyyy');

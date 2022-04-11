@@ -1,3 +1,5 @@
+import {getPathValue} from './object.util';
+
 export function sort(array: Array<any>, key: string, ascending: boolean = true): Array<any> {
   if (!key) {
     return array;
@@ -11,25 +13,13 @@ export function sort(array: Array<any>, key: string, ascending: boolean = true):
         tempAscending = false;
         sortParam = sortParam.substring(1);
       }
-      const result = compareValues(getValue(a, sortParam), getValue(b, sortParam), tempAscending);
+      const result = compareValues(getPathValue(a, sortParam) || '', getPathValue(b, sortParam) || '', tempAscending);
       if (result && result !== 0) {
         return result;
       }
     }
     return 0;
   });
-}
-
-export function getValue(obj: any, keyValue: string): any {
-  if (!obj) {
-    return '';
-  }
-  if (keyValue.indexOf('.') >= 0) {
-    const key = keyValue.substring(0, keyValue.indexOf('.'));
-    const next = keyValue.substring(keyValue.indexOf('.') + 1);
-    return getValue(obj[key], next);
-  }
-  return obj[keyValue] === undefined || obj[keyValue] === null ? '' : obj[keyValue];
 }
 
 export function compareValues(val1: any, val2: any, ascending: boolean): number {

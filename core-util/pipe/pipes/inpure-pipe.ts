@@ -8,7 +8,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class InpurePipe implements PipeTransform {
 
   public transform(input: any): any {
-    return Array.isArray(input) ? [...input] : typeof(input) === 'object' ? {...input} : input;
+    return Array.isArray(input) ? [...input] : typeof (input) === 'object' ? {...input} : input;
   }
 
 }

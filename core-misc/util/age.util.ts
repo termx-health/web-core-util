@@ -1,9 +1,13 @@
 import moment from 'moment/moment';
-import {Interval} from '../model';
 
-export type PersonAge = Pick<Interval, "years" | "months" | "days">
+export interface PersonAge {
+  years?: number;
+  months?: number;
+  days?: number;
+}
 
-export function calculateAge(start: Date, end = new Date()): PersonAge | undefined {
+
+export function calculateAge(start: Date, end = new Date()): PersonAge {
   if (!start) {
     return undefined;
   }

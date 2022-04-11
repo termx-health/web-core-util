@@ -10,13 +10,12 @@
     },
     "pipe": {
       "distance-in-words": {
-        "days": "päeva tagasi",
-        "months": "kuud tagasi",
-        "more-than": "rohkem kui",
+        "yesterday": "eile",
         "today": "täna",
-        "weeks": "nädalat tagasi",
-        "year": "rohkem kui aasta tagasi",
-        "yesterday": "eile"
+        "days": "rohkem kui {{days}} päev(a) tagasi",
+        "weeks": "rohkem kui {{weeks}} nädal(at) tagasi",
+        "months": "rohkem kui {{months}} kuu(d) tagasi",
+        "year": "rohkem kui aasta tagasi"
       }
     }
   }

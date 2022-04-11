@@ -1,4 +1,4 @@
-export function prettyJson(value: any): any {
+export function prettyJson(value: string): string {
   if (!value) {
     return value;
   }

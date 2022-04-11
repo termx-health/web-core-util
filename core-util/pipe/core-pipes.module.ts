@@ -12,14 +12,13 @@ import {TextSearchPipe} from './pipes/text-search-pipe';
 import {LocalTimePipe} from './pipes/local-time.pipe';
 import {SubstringPipe} from './pipes/substring-pipe';
 import {AbbreviatePipe} from './pipes/abbreviate-pipe';
-import {FormatPipe} from './pipes/format-pipe';
+import {ApplyPipe} from './pipes/apply-pipe';
 import {SortPipe} from './pipes/sort-pipe';
 import {ValuesPipe} from './pipes/values-pipe';
 import {FormattedPeriodPipe} from './pipes/formatted-period-pipe';
 import {DistanceInWordsPipe} from './pipes/distance-in-words-pipe';
 import {ReversePipe} from './pipes/reverse-pipe';
 import {IncludesPipe} from './pipes/includes-pipe';
-import {FormattedAgePipe} from './pipes/formatted-age-pipe';
 import {FormattedIntervalPipe} from './pipes/formatted-interval-pipe';
 import {MaxPipe} from './pipes/max-pipe';
 import {MapPipe} from './pipes/map-pipe';
@@ -41,12 +40,11 @@ const pipes = [
   TextSearchPipe,
   SubstringPipe,
   AbbreviatePipe,
-  FormatPipe,
+  ApplyPipe,
   SortPipe,
   SplitPipe,
   ReversePipe,
   FormattedPeriodPipe,
-  FormattedAgePipe,
   FormattedIntervalPipe,
   DistanceInWordsPipe,
   IncludesPipe,

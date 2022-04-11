@@ -2,7 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import moment from 'moment/moment';
 
-import {DateRange} from '../../model/date-range';
+import {DateRange} from '../../model/range/date-range';
 
 @Pipe({
   name: 'formattedPeriod'

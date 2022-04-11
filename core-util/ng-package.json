@@ -3,5 +3,8 @@
   "dest": "../dist/core-util",
   "lib": {
     "entryFile": "./public-api.ts"
-  }
+  },
+  "assets": [
+    "./assets"
+  ]
 }

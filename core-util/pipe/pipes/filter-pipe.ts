@@ -4,8 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-
-  public transform(values: Array<any>, filter: (f: any, arg: any) => boolean, fnArg?: any): Array<any> {
+  public transform<T, A>(values: Array<T>, filter: (f: T, arg: A) => boolean, fnArg?: A): Array<T> {
     if (!filter) {
       return values;
     }

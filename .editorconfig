@@ -1,9 +1,0 @@
-
-[{.babelrc,.stylelintrc,.eslintrc,jest.config,*.json,*.jsb3,*.jsb2,*.bowerrc}]
-indent_style=space
-indent_size=2
-
-
-[tslint.json]
-indent_style=space
-indent_size=2

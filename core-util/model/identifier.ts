@@ -1,5 +1,5 @@
-export class Identifier {
-  public system?: string;
-  public value?: string;
+export interface Identifier {
+  system?: string;
+  value?: string;
 }
 

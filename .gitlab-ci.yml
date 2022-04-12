@@ -5,6 +5,7 @@ stages:
   - publish
 
 before_script:
+  - npm install -g @angular/cli less
   - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" > ~/.npmrc
   - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
 

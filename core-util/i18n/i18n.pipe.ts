@@ -28,7 +28,6 @@ export class I18nPipe implements PipeTransform, OnDestroy {
       this.lastParams = params;
       this._ref.markForCheck();
     };
-    console.log(this.translate.get(key, params))
     this.translate.get(key, params).subscribe(onTranslation);
   }
 

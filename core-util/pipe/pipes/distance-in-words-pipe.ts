@@ -4,34 +4,35 @@ import {I18nService, I18nTranslateParams} from '../../i18n';
 import {KW_CU_NAMESPACE} from '../../core-util.token';
 import {isDefined, isEqual} from '../../util';
 import {combineLatest, Subscription} from 'rxjs';
+import {I18nBasePipe} from '../../i18n/i18n-base.pipe';
 
 @Pipe({
   name: 'distanceInWords',
   pure: false
 })
-export class DistanceInWordsPipe implements PipeTransform, OnDestroy {
+export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
   private readonly namespace: string;
 
   private translatedValue: string;
   private lastDate: Date;
-  private translateChanges: Subscription;
+
 
   public constructor(
     @Optional() @Inject(KW_CU_NAMESPACE) namespace: string,
-    private translate: I18nService,
-    private _ref: ChangeDetectorRef,
+    protected translateService: I18nService,
+    protected ref: ChangeDetectorRef,
   ) {
+    super(translateService, ref);
     this.namespace = namespace;
   }
 
 
   public updateValue(date: Date, key: string, params: I18nTranslateParams): void {
-    const onTranslation = (res: string): void => {
+    this._translate(key, params, (res: string): void => {
       this.translatedValue = isDefined(res) ? res : key;
       this.lastDate = date;
-      this._ref.markForCheck();
-    };
-    this.translate.get(key, params).subscribe(onTranslation);
+      this.ref.markForCheck();
+    });
   }
 
 
@@ -44,18 +45,14 @@ export class DistanceInWordsPipe implements PipeTransform, OnDestroy {
     const {key, params} = this.getTranslationKey(date);
     this.lastDate = date;
     this.updateValue(date, `${prefix}${key}`, params);
-    this._clearSubscriptions();
 
-    if (!this.translateChanges) {
-      this.translateChanges = combineLatest([this.translate.localeChange, this.translate.translationChange]).subscribe({
-        next: () => {
-          if (this.lastDate) {
-            this.lastDate = null;
-            this.updateValue(date, key, params);
-          }
-        }
-      });
-    }
+    this._dispose();
+    this._subscribeOnChanges(() => {
+      if (this.lastDate) {
+        this.lastDate = null;
+        this.updateValue(date, key, params);
+      }
+    });
 
     return this.translatedValue;
   }
@@ -81,14 +78,8 @@ export class DistanceInWordsPipe implements PipeTransform, OnDestroy {
     return {key: `core.pipe.distance-in-words.year`};
   }
 
-  private _clearSubscriptions(): void {
-    if (this.translateChanges) {
-      this.translateChanges.unsubscribe();
-      this.translateChanges = undefined;
-    }
-  }
 
   public ngOnDestroy(): void {
-    this._clearSubscriptions();
+    this._dispose();
   }
 }

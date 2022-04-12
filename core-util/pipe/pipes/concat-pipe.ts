@@ -4,13 +4,17 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'concat'
 })
 export class ConcatPipe implements PipeTransform {
-  public transform<T>(input: string | T[], ...others: (string | T[])[]): string | T[] {
+  public transform<T>(input: string | T | T[], ...others: (string | T | T[])[]): string | T[] {
     if (!others) {
-      return input;
+      if (typeof input === 'string') {
+        return input;
+      }
+      return Array.isArray(input) ? input : [input];
     }
+
     if (Array.isArray(input)) {
-      return [...input, ...others.flat(1)] as T[];
+      return [...input, ...others.flat(Infinity)] as T[];
     }
-    return [input, ...others].join('');
+    return [input, ...others.flat(Infinity)].join('');
   }
 }

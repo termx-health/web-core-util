@@ -2,8 +2,10 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {CorePipesModule} from './pipe';
-import {I18nModuleConfig, KW_CU_LOCALE_ID} from './i18n';
+import {I18nModuleConfig, I18nService, KW_CU_LOCALE_ID} from './i18n';
 import {KW_CU_NAMESPACE} from './core-util.token';
+import {LIB_CONTEXT} from './core-util.context';
+
 
 export interface CoreUtilModuleConfig extends I18nModuleConfig {
   namespace?: string
@@ -19,7 +21,11 @@ export interface CoreUtilModuleConfig extends I18nModuleConfig {
   ]
 })
 export class CoreUtilModule {
-  static forRoot(config: CoreUtilModuleConfig): ModuleWithProviders<CoreUtilModule> {
+  public constructor(private i18nService: I18nService) {
+    i18nService.localeChange.subscribe(locale => LIB_CONTEXT.locale = locale);
+  }
+
+  public static forRoot(config: CoreUtilModuleConfig): ModuleWithProviders<CoreUtilModule> {
     return {
       ngModule: CoreUtilModule,
       providers: [
@@ -28,5 +34,4 @@ export class CoreUtilModule {
       ]
     };
   }
-
 }

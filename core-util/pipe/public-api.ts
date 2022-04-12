@@ -17,14 +17,14 @@ export * from './pipes/split-pipe';
 export * from './pipes/substring-pipe';
 export * from './pipes/text-search-pipe';
 export * from './pipes/values-pipe';
-export * from './pipes/apply-pipe';
 export * from './pipes/formatted-period-pipe';
 export * from './pipes/local-name.pipe';
 
 export * from './core-pipes.module';
 
 // ok
-export * from './pipes/abbreviate-pipe';
+export * from './pipes/apply-pipe';
 export * from './pipes/concat-pipe';
+export * from './pipes/abbreviate-pipe';
 export * from './pipes/distance-in-words-pipe';
 

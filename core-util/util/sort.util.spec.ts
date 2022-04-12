@@ -1,5 +1,6 @@
 import {async} from '@angular/core/testing';
 import {sort} from './sort.util';
+import {LIB_CONTEXT} from '../core-util.context';
 
 describe('Sort', () => {
 
@@ -58,7 +59,7 @@ describe('Sort', () => {
   const l2 = {a: 'y'};
   const l3 = {a: 'ž'};
 
-  localStorage.setItem('locale', 'et');
+  LIB_CONTEXT.locale = 'et';
   it('should sort locale', async(() => {
     expect(sort([l1, l2, l3], 'a', true)).toEqual([l1, l3, l2]);
   }));

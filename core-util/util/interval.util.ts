@@ -8,7 +8,7 @@ export function addInterval(date: Date, interval: Interval): Date {
   if (!interval) {
     return date;
   }
-  return moment(date).add(interval).toDate(); //XXX expand interval object to moment fields
+  return moment(date).add(toMomentInput(interval)).toDate();
 }
 
 export function subtractInterval(date: Date, interval: Interval): Date {
@@ -18,6 +18,17 @@ export function subtractInterval(date: Date, interval: Interval): Date {
   if (!interval) {
     return date;
   }
-  return moment(date).subtract(interval).toDate(); //XXX expand interval object to moment fields
+  return moment(date).subtract(toMomentInput(interval)).toDate();
 }
 
+
+function toMomentInput(interval: Interval): moment.MomentInputObject {
+  return {
+    years: interval.years,
+    months: interval.months,
+    days: interval.days,
+    hours: interval.hours,
+    minutes: interval.minutes,
+    seconds: interval.seconds
+  };
+}

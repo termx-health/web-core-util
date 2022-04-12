@@ -11,4 +11,5 @@ export * from './i18n';
 
 export * from './core-util.token';
 export * from './core-util.module';
+export * from './core-util.context';
 

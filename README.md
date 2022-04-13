@@ -6,16 +6,21 @@
 npm run build
 ```
 
+*It builds packages and puts them directly into `node_modules` allowing seamless navigation in IDE*
+
 ### Local Paths (dev)
 
-* Run`npm run watch`
-* In projects that calls local libraries:
+* Run `npm link ./dist/core-translate` 
+  * `ng build core-translate` should be run previously
+* Run`npm run watch:$(util | misc | translate)` to trigger `dist` build on changes
+* In projects that calls libraries:
     * Configure `package.json`
       ```json
        {
           "dependencies": {
-             "@kodality-web/core-util": "file:path_to_this_project/dist/core-util",
-             "@kodality-web/core-misc": "file:path_to_this_project/dist/core-misc"
+             "@kodality-web/core-translate": "file:path_to_this_project/dist/core-translate",
+             "@kodality-web/core-misc": "file:path_to_this_project/dist/core-misc",
+             "@kodality-web/core-util": "file:path_to_this_project/dist/core-util"
           }
        }
        ```
@@ -118,7 +123,7 @@ Install as dependency.
    }
     ```
 
-    Inspired by **ngx-translate**.  
-    Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
+   Inspired by **ngx-translate**.  
+   Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
 
 

@@ -1,6 +1,6 @@
 import {DatePipe} from '@angular/common';
 import {Inject, LOCALE_ID, Pipe, PipeTransform} from '@angular/core';
-import {LocalDateUtil} from '../../util/local-date.util';
+import {LocalDateUtil} from '../../util';
 
 @Pipe({name: 'localDateTime'})
 export class LocalDateTimePipe extends DatePipe implements PipeTransform {

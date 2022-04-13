@@ -16,7 +16,7 @@ export class FormattedIntervalPipe implements PipeTransform {
 
   private translationKeys: { [key: string]: string };
 
-  constructor(private translateService: I18nService) {
+  public constructor(private translateService: I18nService) {
     this.translationKeys = {};
     this.translationKeys[this.YEAR] = 'core.period.years';
     this.translationKeys[this.MONTH] = 'core.period.months';

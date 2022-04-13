@@ -1,6 +1,6 @@
 import {DatePipe} from '@angular/common';
 import {Inject, Injectable, LOCALE_ID, Pipe, PipeTransform} from '@angular/core';
-import {LocalDateUtil} from '../../util/local-date.util';
+import {LocalDateUtil} from '../../util';
 
 @Injectable({providedIn: 'root'})
 @Pipe({name: 'localDate'})

@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {sort} from '../../util/sort.util';
+import {sort} from '../../util';
 
 @Pipe({
   name: 'sort'

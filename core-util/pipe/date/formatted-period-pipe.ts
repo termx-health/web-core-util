@@ -8,7 +8,7 @@ import {isEqual} from '../../util';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
 
-export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second'
+export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
 
 export class FormattedPeriodParams {
   public precision?: FormattedPeriodPrecision = 'day';
@@ -107,7 +107,6 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
     const tokens = [];
 
     let force = false;
-    console.log(params)
     for (const precision of [YEAR, MONTH, DAY, HOUR, MINUTE, SECOND]) {
       const val = precisionMap[precision];
       force = force || val > 0 || params.minPrecision === precision || params.precision === precision;

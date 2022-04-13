@@ -1,8 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TranslateModule} from '@ngx-translate/core';
 import {CorePipesModule} from './pipe';
-import {I18nModule, I18nModuleConfig, I18nService, KW_CU_LOCALE_ID} from '@kodality-web/core-translate';
+import {I18nModule, I18nModuleConfig, I18nService, KW_CU_LOCALE_ID} from './i18n';
 import {KW_CU_NAMESPACE} from './core-util.token';
 import {LIB_CONTEXT} from './core-util.context';
 
@@ -14,7 +13,6 @@ export interface CoreUtilModuleConfig extends I18nModuleConfig {
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule,
     I18nModule
   ],
   exports: [

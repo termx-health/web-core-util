@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
-import {I18nBasePipe, I18nService, I18nTranslateParams} from "@kodality-web/core-translate";
 import {KW_CU_NAMESPACE} from '../../core-util.token';
 import {isDefined, isEqual} from '../../util';
+import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
 
 @Pipe({
   name: 'distanceInWords',
@@ -18,7 +18,7 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
   public constructor(
     @Optional() @Inject(KW_CU_NAMESPACE) namespace: string,
     protected translateService: I18nService,
-    protected ref: ChangeDetectorRef,
+    protected ref: ChangeDetectorRef
   ) {
     super(translateService, ref);
     this.namespace = namespace;
@@ -26,10 +26,10 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
 
 
   public updateValue(date: Date, key: string, params: I18nTranslateParams): void {
-    this._translate(key, params, (res: string): void => {
-      this.translatedValue = isDefined(res) ? res : key;
+    const prefix = this.namespace ? `${this.namespace}.` : '';
+    this._translate(`${prefix}${key}`, params, (res: string): void => {
+      this.translatedValue = isDefined(res) ? res : `${prefix}${key}`;
       this.lastDate = date;
-      this.ref.markForCheck();
     });
   }
 
@@ -39,10 +39,9 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
       return this.translatedValue;
     }
 
-    const prefix = this.namespace ? `${this.namespace}.` : '';
     const {key, params} = this.getTranslationKey(date);
     this.lastDate = date;
-    this.updateValue(date, `${prefix}${key}`, params);
+    this.updateValue(date, key, params);
 
     this._dispose();
     this._subscribeOnChanges(() => {

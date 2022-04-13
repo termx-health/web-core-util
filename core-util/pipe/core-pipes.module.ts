@@ -1,9 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LocalNamePipe} from './pipes/local-name.pipe';
 import {LocalDatePipe} from './pipes/local-date.pipe';
 import {LocalDateTimePipe} from './pipes/local-date-time.pipe';
-import {TranslateModule} from '@ngx-translate/core';
 import {FilterPipe} from './pipes/filter-pipe';
 import {KeysPipe} from './pipes/keys-pipe';
 import {SearchPipe} from './pipes/search-pipe';
@@ -30,11 +28,12 @@ import {MergePipe} from './pipes/merge-pipe';
 const pipes = [
   LocalDatePipe,
   LocalDateTimePipe,
-  LocalNamePipe,
   LocalTimePipe,
+
   FilterPipe,
   KeysPipe,
   ValuesPipe,
+
   SearchPipe,
   SlicePipe,
   TextSearchPipe,
@@ -51,7 +50,6 @@ const pipes = [
   MaxPipe,
   LocalDatePipe,
   LocalDateTimePipe,
-  LocalNamePipe,
   MapPipe,
   ConcatPipe,
   InpurePipe,
@@ -61,7 +59,6 @@ const pipes = [
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule
   ],
   declarations: pipes,
   exports: pipes

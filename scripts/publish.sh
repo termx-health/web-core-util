@@ -4,7 +4,7 @@ VERSION=$1
 
 declare -A package_versions
 
-for p in core-translate core-misc core-util; do
+for p in core-util core-misc; do
   cd $p
 
   if [ -z $VERSION ]; then

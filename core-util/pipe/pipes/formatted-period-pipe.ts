@@ -1,74 +1,123 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import {ChangeDetectorRef, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 
 import {DateRange} from '../../model/range/date-range';
+import {I18nBasePipe, I18nService} from '../../i18n';
+import {KW_CU_NAMESPACE} from '../../core-util.token';
+import {isEqual} from '../../util';
+import {map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
+
+export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second'
+
+export class FormattedPeriodParams {
+  public precision?: FormattedPeriodPrecision = 'day';
+  public minPrecision?: FormattedPeriodPrecision = 'day';
+}
+
+const YEAR = 'year';
+const MONTH = 'month';
+const DAY = 'day';
+const HOUR = 'hour';
+const MINUTE = 'minute';
+const SECOND = 'second';
+
+const TRANSLATION_MAP: { [key in FormattedPeriodPrecision]?: string } = {
+  [YEAR]: 'core.period.years',
+  [MONTH]: 'core.period.months',
+  [DAY]: 'core.period.days',
+  [HOUR]: 'core.period.hours',
+  [MINUTE]: 'core.period.minutes',
+  [SECOND]: 'core.period.seconds'
+};
 
 @Pipe({
-  name: 'formattedPeriod'
+  name: 'formattedPeriod',
+  pure: false
 })
-export class FormattedPeriodPipe implements PipeTransform {
-  public YEAR = 'year';
-  public MONTH = 'month';
-  public DAY = 'day';
-  public HOUR = 'hour';
-  public MINUTE = 'minute';
-  public SECOND = 'second';
+export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
+  private readonly namespace: string;
 
-  private translationKeys: {[key: string]: string};
+  private translatedValue: string;
+  private lastPeriod: DateRange | Date;
+  private lastParams: FormattedPeriodParams;
 
-  constructor(private translateService: TranslateService) {
-    this.translationKeys = {};
-    this.translationKeys[this.YEAR] = 'core.period.years';
-    this.translationKeys[this.MONTH] = 'core.period.months';
-    this.translationKeys[this.DAY] = 'core.period.days';
-    this.translationKeys[this.HOUR] = 'core.period.hours';
-    this.translationKeys[this.MINUTE] = 'core.period.minutes';
-    this.translationKeys[this.SECOND] = 'core.period.seconds';
+  public constructor(
+    @Optional() @Inject(KW_CU_NAMESPACE) namespace: string,
+    protected translateService: I18nService,
+    protected ref: ChangeDetectorRef
+  ) {
+    super(translateService, ref);
+    this.namespace = namespace;
   }
 
-    //TODO: observable translations
-  public transform(period: DateRange | Date, opts: FormattedPeriodOptions = {}): string {
+  public updateValue(tokens: {precision: string, val: number}[]): void {
+    const prefix = this.namespace ? `${this.namespace}.` : '';
+    const reqs = tokens.map(t => this.translateService.get(`${prefix}${TRANSLATION_MAP[t.precision]}`).pipe(map(trs => `${t.val}${trs}`)));
+
+    forkJoin(reqs).subscribe((strings: string[]) => {
+      this.translatedValue = strings.join(' ');
+      this.ref.markForCheck();
+    });
+  }
+
+  public transform(period: DateRange | Date, params: FormattedPeriodParams = {}): string {
     if (!period) {
       return '';
     }
-    opts.precision = opts.precision || 'day';
-    opts.minPrecision = opts.minPrecision || opts.precision;
+    if (isEqual(period, this.lastPeriod) && isEqual(params, this.lastParams)) {
+      return this.translatedValue;
+    }
 
+    this.lastPeriod = period;
+    this.lastParams = params;
+
+    const tokens = this.getTranslationKey(period, {
+      precision: params.precision || 'day',
+      minPrecision: params.minPrecision || params.precision
+    });
+    this.updateValue(tokens);
+
+    this._dispose();
+    this._subscribeOnChanges(() => {
+      if (this.lastPeriod) {
+        this.lastPeriod = null;
+        this.updateValue(tokens);
+      }
+    });
+
+    return this.translatedValue;
+  }
+
+
+  private getTranslationKey(period: DateRange | Date, params: FormattedPeriodParams): {precision: string, val: number}[] {
     const startDate = period.hasOwnProperty('lower') ? moment((<DateRange>period).lower) : moment(<Date>period);
     const endDate = period.hasOwnProperty('lower') ? moment((<DateRange>period).upper || new Date()) : moment();
     const duration = moment.duration(endDate.diff(startDate));
 
-    let result = ``;
+    const precisionMap = {
+      [YEAR]: duration.years(),
+      [MONTH]: duration.months(),
+      [DAY]: duration.days(),
+      [HOUR]: duration.hours(),
+      [MINUTE]: duration.minutes(),
+      [SECOND]: duration.seconds()
+    };
+
+    const tokens = [];
+
     let force = false;
-
-
-    for (const precision of [this.YEAR, this.MONTH, this.DAY, this.HOUR, this.MINUTE, this.SECOND]) {
-      const val = precision === this.YEAR ? duration.years() :
-        precision === this.MONTH ? duration.months() :
-        precision === this.DAY ? duration.days() :
-        precision === this.HOUR ? duration.hours() :
-        precision === this.MINUTE ? duration.minutes() :
-        precision === this.SECOND ? duration.seconds() :
-        null;
-      force = force || val > 0 || opts.minPrecision === precision || opts.precision === precision;
+    console.log(params)
+    for (const precision of [YEAR, MONTH, DAY, HOUR, MINUTE, SECOND]) {
+      const val = precisionMap[precision];
+      force = force || val > 0 || params.minPrecision === precision || params.precision === precision;
       if (force) {
-        result = `${result} ${val}${this.tr(precision)}`;
+        tokens.push({precision: precision, val: val});
       }
-      if (opts.precision === precision) {
-        return result.trim();
+
+      if (params.precision === precision) {
+        return tokens;
       }
     }
-    return undefined;
   }
-
-  private tr(precision: string): string {
-    return this.translateService.instant(this.translationKeys[precision]);
-  }
-
-}
-
-export class FormattedPeriodOptions {
-  public precision?: string = 'day';
-  public minPrecision?: string = 'day';
 }

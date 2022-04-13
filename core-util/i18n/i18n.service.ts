@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {I18nStore, I18nTranslation} from './i18n.store';
 import {Observable, shareReplay, Subscription, tap} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {getPathValue} from './i18n.util';
+import {getPathValue} from '../util';
 import {I18nHttpTranslateLoader, I18nTranslateLoader} from './i18n.loader';
 
 

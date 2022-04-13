@@ -7,7 +7,6 @@
     "build": "scripts/build.sh",
     "watch:util": "ng build core-util --watch --configuration development",
     "watch:misc": "ng build core-misc --watch --configuration development",
-    "watch:translate": "ng build core-translate --watch --configuration development",
     "test": "ng test",
     "test-ci": "ng test --watch=false --progress=false --browsers=ChromeHeadless --code-coverage=false",
     "lint": "ng lint",

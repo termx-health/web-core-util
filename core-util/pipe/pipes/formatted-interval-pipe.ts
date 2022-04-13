@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {Interval} from '../../model/interval';
+import {Interval} from '../../model';
+import {I18nService} from '../../i18n';
 
 @Pipe({
   name: 'formattedInterval'
@@ -16,7 +16,7 @@ export class FormattedIntervalPipe implements PipeTransform {
 
   private translationKeys: { [key: string]: string };
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: I18nService) {
     this.translationKeys = {};
     this.translationKeys[this.YEAR] = 'core.period.years';
     this.translationKeys[this.MONTH] = 'core.period.months';

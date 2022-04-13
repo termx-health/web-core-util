@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {I18nTranslation} from './i18n.store';
-import {mergeDeep} from './i18n.util';
+import {mergeDeep} from '../util';
 
 /* Loader abstract class */
 export abstract class I18nTranslateLoader {

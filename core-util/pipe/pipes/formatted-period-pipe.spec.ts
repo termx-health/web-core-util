@@ -1,20 +1,29 @@
 import {FormattedPeriodPipe} from './formatted-period-pipe';
 import {async} from '@angular/core/testing';
 import moment from 'moment/moment';
+import {EventEmitter} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
 describe('FormattedPeriodPipe', () => {
 
   const translateService: any = {
-    instant(key: string | Array<string>, interpolateParams?: Object): string | any {
+    get(key: string | Array<string>, params?: Object): Observable<string> {
       const t: any = {};
       t['core.period.years'] = 'y';
       t['core.period.months'] = 'm';
       t['core.period.days'] = 'd';
       t['core.period.hours'] = 'h';
-      return t[<string>key];
-    }
+      return of(t[<string>key]);
+    },
+    localeChange: new EventEmitter(),
+    translationChange: new EventEmitter()
   };
-  const pipe = new FormattedPeriodPipe(translateService);
+
+  const changeRef: any = {
+    markForCheck: () => null
+  };
+
+  const pipe = new FormattedPeriodPipe(null, translateService, changeRef);
   it('should format period', async(() => {
     expect(pipe.transform(null)).toEqual('');
     expect(pipe.transform(moment().subtract(1, 'day').toDate())).toEqual('1d');

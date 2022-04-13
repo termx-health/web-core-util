@@ -18,7 +18,6 @@ export * from './pipes/substring-pipe';
 export * from './pipes/text-search-pipe';
 export * from './pipes/values-pipe';
 export * from './pipes/formatted-period-pipe';
-export * from './pipes/local-name.pipe';
 
 export * from './core-pipes.module';
 

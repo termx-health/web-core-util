@@ -1,6 +1,6 @@
 export * from './model';
 export * from './util';
-
+export * from './i18n';
 export * from './pipe';
 export * from './services';
 

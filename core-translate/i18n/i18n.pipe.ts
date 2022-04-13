@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {I18nService, I18nTranslateParams} from './i18n.service';
-import {isDefined, isEqual} from '../util';
+import {isDefined, isEqual} from './i18n.util';
 import {I18nBasePipe} from './i18n-base.pipe';
 
 

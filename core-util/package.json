@@ -2,9 +2,9 @@
   "name": "@kodality-web/core-util",
   "version": "0.0.0",
   "peerDependencies": {
+    "@kodality-web/core-translate": "^0.0.0",
     "@angular/common": "^13.2.0",
     "@angular/core": "^13.2.0",
-    "@ngx-translate/core": "^13.0.0",
     "moment": "^2.29.2"
   }
 }

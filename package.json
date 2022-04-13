@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "scripts/build.sh",
-    "watch": "ng build --watch --configuration development",
+    "watch:util": "ng build core-util --watch --configuration development",
+    "watch:misc": "ng build core-misc --watch --configuration development",
+    "watch:translate": "ng build core-translate --watch --configuration development",
     "test": "ng test",
     "test-ci": "ng test --watch=false --progress=false --browsers=ChromeHeadless --code-coverage=false",
     "lint": "ng lint",
@@ -47,6 +49,6 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^13.0.0",
-    "typescript": "^4.5.5"
+    "typescript": "4.5.5"
   }
 }

@@ -1,10 +1,8 @@
 import {ChangeDetectorRef, Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
-import {I18nService, I18nTranslateParams} from '../../i18n';
+import {I18nBasePipe, I18nService, I18nTranslateParams} from "@kodality-web/core-translate";
 import {KW_CU_NAMESPACE} from '../../core-util.token';
 import {isDefined, isEqual} from '../../util';
-import {combineLatest, Subscription} from 'rxjs';
-import {I18nBasePipe} from '../../i18n/i18n-base.pipe';
 
 @Pipe({
   name: 'distanceInWords',

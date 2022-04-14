@@ -4,7 +4,7 @@ import moment from 'moment/moment';
 import {DateRange} from '../../model/range/date-range';
 import {I18nBasePipe, I18nService} from '../../i18n';
 import {KW_CU_NAMESPACE} from '../../core-util.token';
-import {isEqual} from '../../util';
+import {equalsDeep} from '../../util';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
 
@@ -36,19 +36,15 @@ const TRANSLATION_MAP: { [key in FormattedPeriodPrecision]?: string } = {
   pure: false
 })
 export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
-  private readonly namespace: string;
-
   private translatedValue: string;
   private lastPeriod: DateRange | Date;
   private lastParams: FormattedPeriodParams;
 
   public constructor(
-    @Optional() @Inject(KW_CU_NAMESPACE) namespace: string,
-    protected translateService: I18nService,
-    protected ref: ChangeDetectorRef
+    @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
+    protected translateService: I18nService
   ) {
-    super(translateService, ref);
-    this.namespace = namespace;
+    super(translateService);
   }
 
   public updateValue(tokens: {precision: string, val: number}[]): void {
@@ -57,7 +53,6 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
 
     forkJoin(reqs).subscribe((strings: string[]) => {
       this.translatedValue = strings.join(' ');
-      this.ref.markForCheck();
     });
   }
 
@@ -65,7 +60,7 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
     if (!period) {
       return '';
     }
-    if (isEqual(period, this.lastPeriod) && isEqual(params, this.lastParams)) {
+    if (equalsDeep(period, this.lastPeriod) && equalsDeep(params, this.lastParams)) {
       return this.translatedValue;
     }
 

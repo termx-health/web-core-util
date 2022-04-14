@@ -1,5 +1,5 @@
-import {getPathValue} from './object.util';
-import {LIB_CONTEXT} from '../core-util.context';
+import {getPathValue} from '../object/object.util';
+import {LIB_CONTEXT} from '../../core-util.context';
 
 export function sort<T>(array: Array<T>, key: string, ascending: boolean = true): Array<T> {
   if (!key) {

@@ -1,4 +1,4 @@
-import {SearchPipe, TextSearchPipe} from '../pipe';
+import {SearchPipe, TextSearchPipe} from '../../pipe';
 
 const instance = new SearchPipe();
 const textInstance = new TextSearchPipe();

@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, OnDestroy, Pipe, PipeTransform} from '@angular/core';
+import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {I18nService, I18nTranslateParams} from './i18n.service';
-import {isDefined, isEqual} from '../util';
+import {equalsDeep, isDefined} from '../util';
 import {I18nBasePipe} from './i18n-base.pipe';
 
 
@@ -11,14 +11,11 @@ import {I18nBasePipe} from './i18n-base.pipe';
 export class I18nPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
 
-  private lastKey: string = null;
+  private lastKey: string;
   private lastParams: I18nTranslateParams;
 
-  public constructor(
-    protected translateService: I18nService,
-    protected ref: ChangeDetectorRef
-  ) {
-    super(translateService, ref);
+  public constructor(protected translateService: I18nService) {
+    super(translateService);
   }
 
 
@@ -36,7 +33,7 @@ export class I18nPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
       return key;
     }
 
-    if (isEqual(key, this.lastKey) && isEqual(params, this.lastParams)) {
+    if (equalsDeep(key, this.lastKey) && equalsDeep(params, this.lastParams)) {
       return this.translatedValue;
     }
 

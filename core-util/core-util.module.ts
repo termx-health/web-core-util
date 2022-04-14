@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {CorePipesModule} from './pipe';
 import {I18nModule, I18nModuleConfig, I18nService, KW_CU_LOCALE_ID} from './i18n';
 import {KW_CU_NAMESPACE} from './core-util.token';
+import moment from 'moment/moment';
 import {LIB_CONTEXT} from './core-util.context';
 
 
@@ -21,15 +22,19 @@ export interface CoreUtilModuleConfig extends I18nModuleConfig {
 })
 export class CoreUtilModule {
   public constructor(private i18nService: I18nService) {
-    i18nService.localeChange.subscribe(locale => LIB_CONTEXT.locale = locale);
+    i18nService.localeChange.subscribe(locale => {
+      LIB_CONTEXT.locale = locale;
+      moment.locale(locale); // maybe is not needed? should be handled outside?
+    });
   }
 
   public static forRoot(config: CoreUtilModuleConfig): ModuleWithProviders<CoreUtilModule> {
     return {
       ngModule: CoreUtilModule,
       providers: [
-        {provide: KW_CU_LOCALE_ID, useValue: config.locale},
         {provide: KW_CU_NAMESPACE, useValue: config.namespace},
+        {provide: KW_CU_LOCALE_ID, useValue: config.locale},
+        config.loader
       ]
     };
   }

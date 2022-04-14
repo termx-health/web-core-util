@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ConcatPipe} from './array/concat-pipe';
+import {FilterPipe} from './array/filter-pipe';
 import {IncludesPipe} from './array/includes-pipe';
 import {MapPipe} from './array/map-pipe';
 import {MaxPipe} from './array/max-pipe';
@@ -13,11 +14,10 @@ import {FormattedPeriodPipe} from './date/formatted-period-pipe';
 import {LocalDatePipe} from './date/local-date.pipe';
 import {LocalDateTimePipe} from './date/local-date-time.pipe';
 import {LocalTimePipe} from './date/local-time.pipe';
-import {ApplyPipe} from './generic/apply-pipe';
-import {FilterPipe} from './generic/filter-pipe';
-import {InpurePipe} from './generic/inpure-pipe';
-import {KeysPipe} from './generic/keys-pipe';
-import {ValuesPipe} from './generic/values-pipe';
+import {ApplyPipe} from './general/apply-pipe';
+import {InpurePipe} from './general/inpure-pipe';
+import {KeysPipe} from './general/keys-pipe';
+import {ValuesPipe} from './general/values-pipe';
 import {SearchPipe} from './search/search-pipe';
 import {TextSearchPipe} from './search/text-search-pipe';
 import {AbbreviatePipe} from './string/abbreviate-pipe';
@@ -27,6 +27,7 @@ import {SubstringPipe} from './string/substring-pipe';
 
 const pipes = [
   ConcatPipe,
+  FilterPipe,
   IncludesPipe,
   MapPipe,
   MaxPipe,
@@ -42,7 +43,6 @@ const pipes = [
   LocalTimePipe,
 
   ApplyPipe,
-  FilterPipe,
   InpurePipe,
   KeysPipe,
   ValuesPipe,

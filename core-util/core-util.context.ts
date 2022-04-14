@@ -1,4 +1,4 @@
 export const LIB_CONTEXT = {
-  // fixme: hacky way to share data
+  // fixme: hacky way to hold data
   locale: 'en'
 };

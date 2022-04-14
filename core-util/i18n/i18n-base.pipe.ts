@@ -7,16 +7,13 @@ export abstract class I18nBasePipe {
   private localeChange: Subscription;
   private translateChange: Subscription;
 
-  protected constructor(
-    protected translateService: I18nService,
-    protected ref: ChangeDetectorRef
-  ) { }
+  protected constructor(protected translateService: I18nService) { }
 
 
   public _translate(key: string, params: I18nTranslateParams, onTranslate?: (res: string) => void): void {
     const _onTranslate = (res: string): void => {
       onTranslate(res);
-      this.ref.markForCheck();
+      // this.ref.markForCheck();
     };
     this.translateService.get(key, params).subscribe(_onTranslate);
   }

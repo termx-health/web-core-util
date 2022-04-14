@@ -19,11 +19,8 @@ describe('FormattedPeriodPipe', () => {
     translationChange: new EventEmitter()
   };
 
-  const changeRef: any = {
-    markForCheck: () => null
-  };
 
-  const pipe = new FormattedPeriodPipe(null, translateService, changeRef);
+  const pipe = new FormattedPeriodPipe(null, translateService);
   it('should format period', async(() => {
     expect(pipe.transform(null)).toEqual('');
     expect(pipe.transform(moment().subtract(1, 'day').toDate())).toEqual('1d');

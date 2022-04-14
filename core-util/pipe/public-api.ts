@@ -1,4 +1,5 @@
 export * from './array/concat-pipe'; // xxx
+export * from './array/filter-pipe';
 export * from './array/includes-pipe';
 export * from './array/map-pipe';
 export * from './array/max-pipe';
@@ -13,11 +14,10 @@ export * from './date/local-date.pipe';
 export * from './date/local-date-time.pipe';
 export * from './date/local-time.pipe';
 
-export * from './generic/apply-pipe'; // xxx
-export * from './generic/filter-pipe';
-export * from './generic/inpure-pipe';
-export * from './generic/keys-pipe';
-export * from './generic/values-pipe';
+export * from './general/apply-pipe'; // xxx
+export * from './general/inpure-pipe';
+export * from './general/keys-pipe';
+export * from './general/values-pipe';
 
 export * from './search/search-pipe';
 export * from './search/text-search-pipe';

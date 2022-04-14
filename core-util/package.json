@@ -5,5 +5,8 @@
     "@angular/common": "^13.2.0",
     "@angular/core": "^13.2.0",
     "moment": "^2.29.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }

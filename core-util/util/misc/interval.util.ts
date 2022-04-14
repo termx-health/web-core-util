@@ -1,5 +1,5 @@
 import moment from 'moment/moment';
-import {Interval} from '../model';
+import {Interval} from '../../model';
 
 export function addInterval(date: Date, interval: Interval): Date {
   if (!date) {

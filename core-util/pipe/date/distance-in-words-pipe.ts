@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 import {KW_CU_NAMESPACE} from '../../core-util.token';
-import {isDefined, isEqual} from '../../util';
+import {isDefined, equalsDeep} from '../../util';
 import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
 
 @Pipe({
@@ -9,19 +9,15 @@ import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
   pure: false
 })
 export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
-  private readonly namespace: string;
-
   private translatedValue: string;
   private lastDate: Date;
 
 
   public constructor(
-    @Optional() @Inject(KW_CU_NAMESPACE) namespace: string,
-    protected translateService: I18nService,
-    protected ref: ChangeDetectorRef
+    @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
+    protected translateService: I18nService
   ) {
-    super(translateService, ref);
-    this.namespace = namespace;
+    super(translateService);
   }
 
 
@@ -35,7 +31,7 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
 
 
   public transform(date: Date): string {
-    if (isEqual(date, this.lastDate)) {
+    if (equalsDeep(date, this.lastDate)) {
       return this.translatedValue;
     }
 

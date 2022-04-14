@@ -33,11 +33,7 @@ describe('DistanceInWordsPipe', () => {
     translationChange: new EventEmitter()
   };
 
-  const changeRef: any = {
-    markForCheck: () => null
-  };
-
-  const pipe = new DistanceInWordsPipe(null, translateService, changeRef);
+  const pipe = new DistanceInWordsPipe(null, translateService);
   it('should return distance date as words', async () => {
     let today = new Date();
     expect(pipe.transform(today)).toEqual('today');

@@ -1,6 +1,6 @@
 import {async} from '@angular/core/testing';
 import {sort} from './sort.util';
-import {LIB_CONTEXT} from '../core-util.context';
+import {LIB_CONTEXT} from '../../core-util.context';
 
 describe('Sort', () => {
 

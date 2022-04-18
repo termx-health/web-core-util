@@ -1,6 +1,6 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {I18nService, I18nTranslateParams} from './i18n.service';
-import {equalsDeep, isDefined} from '../util';
+import {equalsDeep, isDefined} from '../utils';
 import {I18nBasePipe} from './i18n-base.pipe';
 
 

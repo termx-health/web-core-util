@@ -46,46 +46,6 @@
           }
         }
       }
-    },
-    "core-misc": {
-      "root": "core-misc",
-      "sourceRoot": "core-misc",
-      "projectType": "library",
-      "prefix": "ku",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "core-misc/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "core-misc/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "core-misc/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "core-misc/test.ts",
-            "tsConfig": "core-misc/tsconfig.spec.json",
-            "karmaConfig": "core-misc/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "core-misc/**/*.ts",
-              "core-misc/**/*.html"
-            ]
-          }
-        }
-      }
     }
   },
   "defaultProject": "core-util"

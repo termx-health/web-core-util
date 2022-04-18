@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CorePipesModule} from './pipe';
+import {CorePipesModule} from './pipes';
 import {I18nModule, I18nModuleConfig, I18nService, KW_CU_LOCALE_ID} from './i18n';
 import {KW_CU_NAMESPACE} from './core-util.token';
 import moment from 'moment/moment';

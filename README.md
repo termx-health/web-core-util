@@ -10,13 +10,12 @@ npm run build
 
 ### Local Paths (dev)
 
-* Run`npm run watch:$(util|misc)`
+* Run`npm run watch`
 * In projects that calls libraries:
     * Configure `package.json`
       ```json
        {
           "dependencies": {
-             "@kodality-web/core-misc": "file:path_to_this_project/dist/core-misc",
              "@kodality-web/core-util": "file:path_to_this_project/dist/core-util"
           }
        }

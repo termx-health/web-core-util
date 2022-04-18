@@ -1,7 +1,7 @@
-export * from './model';
-export * from './util';
+export * from './models';
+export * from './utils';
 export * from './i18n';
-export * from './pipe';
+export * from './pipes';
 export * from './services';
 
 export * from './core-util.token';

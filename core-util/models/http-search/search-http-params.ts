@@ -1,10 +1,11 @@
 import {HttpParameterCodec, HttpParams} from '@angular/common/http';
 import * as moment from 'moment';
+import {isDefined, isNil} from '../../utils';
 
 export class SearchHttpParams {
   public static build(query: any): HttpParams {
     let params = new HttpParams({encoder: new CustomEncoder()});
-    if (!query) {
+    if (isNil(query)) {
       return params;
     }
     Object.keys(query).forEach(k => {
@@ -19,35 +20,31 @@ export class SearchHttpParams {
             params = params.append(k, p);
           }
         });
-      } else if (param !== undefined && param !== null && param !== '') {
+      } else if (isDefined(param)) {
         params = params.append(k, param);
       }
     });
 
     return params;
   }
-
-  private static toIsoDate(date: Date): string {
-    return moment(date).format('YYYY-MM-DD');
-  }
 }
 
 class CustomEncoder implements HttpParameterCodec {
   //https://github.com/angular/angular/issues/18261#issuecomment-338354119
 
-  encodeKey(key: string): string {
+  public encodeKey(key: string): string {
     return encodeURIComponent(key);
   }
 
-  encodeValue(value: string): string {
+  public encodeValue(value: string): string {
     return encodeURIComponent(value);
   }
 
-  decodeKey(key: string): string {
+  public decodeKey(key: string): string {
     return decodeURIComponent(key);
   }
 
-  decodeValue(value: string): string {
+  public decodeValue(value: string): string {
     return decodeURIComponent(value);
   }
 }

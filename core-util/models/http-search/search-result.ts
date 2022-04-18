@@ -1,5 +1,5 @@
 export class SearchResult<T> {
-  public data: Array<T>;
+  public data: Array<T> = [];
   public meta?: SearchMeta = {};
 
   public static empty<T>(): SearchResult<T> {
@@ -18,6 +18,5 @@ export class SearchMeta {
   public total?: number;
   public pages?: number;
   public offset?: number;
-  public itemsPerPage?: number;
 }
 

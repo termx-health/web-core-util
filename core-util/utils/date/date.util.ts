@@ -23,12 +23,20 @@ export function format(date: Date | string | number, format: string, locale = LI
   return formatDate(date, format, locale, timezone);
 }
 
-export function isBefore(d1: Date, d2: Date, orEqual = false): boolean {
-  return orEqual ? moment(d1).isSameOrBefore(moment(d2)) : moment(d1).isBefore(moment(d2));
+export function isBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
+  return moment(d1).isBefore(moment(d2), granularity);
 }
 
-export function isAfter(d1: Date, d2: Date, orEqual = false): boolean {
-  return orEqual ? moment(d1).isSameOrAfter(moment(d2)) : moment(d1).isAfter(moment(d2));
+export function isAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
+  return moment(d1).isAfter(moment(d2), granularity);
+}
+
+export function isSameOrBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
+  return moment(d1).isSameOrBefore(moment(d2), granularity);
+}
+
+export function isSameOrAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
+  return moment(d1).isSameOrAfter(moment(d2), granularity);
 }
 
 export function add(date: Date, amount: number, unit: DateUtilUnit): Date {

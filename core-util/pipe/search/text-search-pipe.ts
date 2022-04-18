@@ -1,11 +1,12 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {SearchPipe} from './search-pipe';
+import {SearchNeedle, textFilterFn} from '../../util';
 
 @Pipe({
   name: 'textSearch'
 })
 export class TextSearchPipe extends SearchPipe implements PipeTransform {
-  protected matchesValue(hay: string, needle: string): boolean {
-    return hay && new RegExp(needle, 'i').test(hay);
+  public filterFn<T>(item: T, filter: {[p: string]: SearchNeedle}): boolean {
+    return textFilterFn(item, filter);
   }
 }

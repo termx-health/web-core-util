@@ -3,7 +3,7 @@ import {unitOfTime} from 'moment';
 import {DateRange} from '../../model';
 import {formatDate} from '@angular/common';
 import {LIB_CONTEXT} from '../../core-util.context';
-import {isDefined} from '../object/object.util';
+import {isDefined, isNil} from '../object/object.util';
 
 export type DateUtilUnit = unitOfTime.DurationConstructor;
 
@@ -48,7 +48,7 @@ export function endOf(date: Date, unit: DateUtilUnit): Date {
 }
 
 export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'day'): boolean {
-  if (!isDefined(range)) {
+  if (isNil(range)) {
     return true;
   }
   const _range = new DateRange(range);
@@ -86,7 +86,7 @@ export function next(unit: DateUtilUnit, amount = 1): DateRange {
 
 
 export function mergeDateTime(date: Date, time: Date): Date {
-  if (!isDefined(date)) {
+  if (isNil(date)) {
     return null;
   }
   const d = moment(date);

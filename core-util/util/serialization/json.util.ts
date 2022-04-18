@@ -1,13 +1,10 @@
+import {isNil} from '../object/object.util';
+
 export function prettyJson(value: string): string {
-  if (!value) {
+  if (isNil(value)) {
     return value;
   }
-  let obj;
-  if (typeof value === 'string') {
-    obj = JSON.parse(value);
-  } else {
-    obj = value;
-  }
+  const obj = typeof value === 'string' ? JSON.parse(value) : value;
   try {
     return JSON.stringify(obj, null, 2);
   } catch (e) {

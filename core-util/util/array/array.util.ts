@@ -1,11 +1,11 @@
-import {isDefined} from '../object/object.util';
+import {isNil} from '../object/object.util';
 
 export function unique<T>(value: T, index, self: T[]): boolean {
   return self.indexOf(value) === index;
 }
 
 export function uniqueBy<T>(data: T[], fn: (x: T) => any): T[] {
-  if (!isDefined(data)) {
+  if (isNil(data)) {
     return undefined;
   }
   return Object.values(data.reduce((uniq, val) => {
@@ -22,7 +22,7 @@ export function flat<T>(array: T[][]): T[] {
 }
 
 export function remove<T>(array: T[], item: T): void {
-  if (!isDefined(array) || !isDefined(array)) {
+  if (isNil(array) || isNil(item)) {
     return undefined;
   }
   const i = array.indexOf(item);

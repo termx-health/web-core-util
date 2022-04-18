@@ -1,8 +1,8 @@
-import {getPathValue} from '../object/object.util';
+import {getPathValue, isNil} from '../object/object.util';
 import {LIB_CONTEXT} from '../../core-util.context';
 
-export function sort<T>(array: Array<T>, key: string, ascending: boolean = true): Array<T> {
-  if (!key) {
+export function sort<T>(array: T[], key: string, ascending: boolean = true): T[] {
+  if (isNil(key)) {
     return array;
   }
 
@@ -23,6 +23,7 @@ export function sort<T>(array: Array<T>, key: string, ascending: boolean = true)
   });
 }
 
+
 export function compareValues(val1: any, val2: any, ascending: boolean = true): number {
   if (typeof val1 === 'string' && typeof val2 === 'string') {
     return compareStrings(val1, val2, ascending);
@@ -34,6 +35,7 @@ export function compareValues(val1: any, val2: any, ascending: boolean = true): 
     return compareDates(val1, val2, ascending);
   }
 }
+
 
 export function compareStrings(val1: string, val2: string, ascending: boolean = true): number {
   return (ascending ? 1 : -1) * val1.toLowerCase().localeCompare(val2.toLowerCase(), LIB_CONTEXT.locale);
@@ -57,18 +59,5 @@ export function compareNumbers(val1: number, val2: number, ascending: boolean = 
 }
 
 export function compareDates(val1: Date, val2: Date, ascending: boolean = true): number {
-  if (ascending) {
-    if (val1 > val2) {
-      return 1;
-    } else if (val1 < val2) {
-      return -1;
-    }
-  } else {
-    if (val1 < val2) {
-      return 1;
-    } else if (val1 > val2) {
-      return -1;
-    }
-  }
-  return 0;
+  return compareNumbers(val1.getTime(), val2.getTime(), ascending);
 }

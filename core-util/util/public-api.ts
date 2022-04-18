@@ -1,12 +1,14 @@
-export * from './array/array.util'; // xx
+export * from './array/array.util';
 export * from './array/sort.util';
-export * from './string/string.util'; // xx
-export * from './number/number.util'; // xx
+export * from './string/string.util';
+export * from './number/number.util';
 export * from './object/object.util';
 export * from './map/map.util';
 
 export * from './date/date.util';
 export * from './date/local-date.util';
+
+export * from './search/search.util';
 
 export * from './serialization/serialization.util';
 export * from './serialization/json.util';
@@ -21,5 +23,4 @@ export * from './form/validation.util';
 export * from './form/input.util';
 
 
-// export * from './filter.util'
 // export * from './pipe.util'

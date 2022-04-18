@@ -1,4 +1,4 @@
-import {async} from '@angular/core/testing';
+import {waitForAsync} from '@angular/core/testing';
 import {TextSearchPipe} from './text-search-pipe';
 
 describe('TextSearchPipe', () => {
@@ -7,9 +7,9 @@ describe('TextSearchPipe', () => {
   const o2 = {text: 'cccdddeee', deep: {foo: 'barometr'}};
   const list = [o1, o2];
 
-  it('should filter', async(() => {
+  it('should filter', waitForAsync(() => {
     expect(pipe.transform(null, null)).toEqual([]);
-    expect(pipe.transform([],   null)).toEqual([]);
+    expect(pipe.transform([], null)).toEqual([]);
     expect(pipe.transform(list, null)).toEqual([o1, o2]);
     expect(pipe.transform(list, {})).toEqual([o1, o2]);
 

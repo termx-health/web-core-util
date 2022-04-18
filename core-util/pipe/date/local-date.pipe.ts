@@ -1,5 +1,5 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import {equalsDeep, format as formatDate, getDateFormat, isDefined} from '../../util';
+import {equalsDeep, format as formatDate, getDateFormat, isNil} from '../../util';
 import {LIB_CONTEXT} from '../../core-util.context';
 import {I18nBasePipe, I18nService} from '../../i18n';
 
@@ -28,7 +28,7 @@ export class LocalDatePipe extends I18nBasePipe implements PipeTransform, OnDest
   }
 
   public transform(date: Date | string | number, format?: string, timezone?: string, locale?: string): string {
-    if (!isDefined(date)) {
+    if (isNil(date)) {
       return '';
     }
 

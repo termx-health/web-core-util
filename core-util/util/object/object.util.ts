@@ -6,7 +6,11 @@ export function isObject<T>(value: T): boolean {
 }
 
 export function isDefined<T>(value: T): boolean {
-  return typeof value !== 'undefined' && value !== null;
+  return !isNil(value);
+}
+
+export function isNil<T>(value: T): boolean {
+  return typeof value === 'undefined' || value === null;
 }
 
 
@@ -22,7 +26,7 @@ export function mergeDeep<T>(target: T, source: T): T {
   return _.merge(target, source);
 }
 
-export function omit<T>(obj: T, omitBy = (value): boolean => !isDefined(value)): T {
+export function omit<T>(obj: T, omitBy = (value): boolean => isNil(value)): T {
   const copy = cloneDeep(obj);
   Object.keys(obj).filter((key) => omitBy(copy[key])).forEach(key => delete copy[key]);
   return copy;

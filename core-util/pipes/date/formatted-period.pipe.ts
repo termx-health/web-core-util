@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Inject, Optional, Pipe, PipeTransform} from '@angular/core';
+import {Inject, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 
 import {DateRange} from '../../models';

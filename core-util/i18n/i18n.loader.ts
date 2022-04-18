@@ -4,13 +4,11 @@ import {map} from 'rxjs/operators';
 import {I18nTranslation} from './i18n.store';
 import {mergeDeep} from '../utils';
 
-/* Loader abstract class */
 export abstract class I18nTranslateLoader {
   public abstract loadTranslate(lang: string): Observable<I18nTranslation>;
 }
 
 
-/* HTTP loader implementation */
 export interface I18nHttpTranslateLoaderConfig {
   resources: I18nHttpTranslateLoaderConfigResource[]
 }

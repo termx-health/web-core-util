@@ -1,14 +1,14 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {isNil} from '../../utils';
 
 @Pipe({
   name: 'max'
 })
 export class MaxPipe implements PipeTransform {
-
-  public transform(items: any[]): any {
-    if (!items) {
+  public transform(items: number[]): number {
+    if (isNil(items)) {
       return null;
     }
-    return Math.max.apply(null, items);
+    return Math.max(...items);
   }
 }

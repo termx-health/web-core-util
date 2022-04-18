@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {SearchPipe} from './search-pipe';
+import {SearchPipe} from './search.pipe';
 import {SearchNeedle, textFilterFn} from '../../utils';
 
 @Pipe({

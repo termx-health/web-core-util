@@ -1,4 +1,4 @@
-import {DistanceInWordsPipe} from './distance-in-words-pipe';
+import {DistanceInWordsPipe} from './distance-in-words.pipe';
 import {Observable, of} from 'rxjs';
 import {EventEmitter} from '@angular/core';
 

@@ -1,17 +1,15 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {sort} from '../../utils';
+import {isNil, sort} from '../../utils';
 
 @Pipe({
   name: 'sort'
 })
 export class SortPipe implements PipeTransform {
-
-  public transform<T>(array: Array<T>, key: string, direction?: 'ascend' | string): Array<T> {
+  public transform<T>(array: T[], key: string, direction?: 'ascend' | string): T[] {
     direction = direction || 'ascend';
-    if (!key || !array) {
+    if (isNil(key) || isNil(array)) {
       return array;
     }
     return [...sort(array, key, direction === 'ascend')];
   }
-
 }

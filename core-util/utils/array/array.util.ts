@@ -16,9 +16,9 @@ export function uniqueBy<T>(data: T[], fn: (x: T) => any): T[] {
   );
 }
 
-export function flat<T>(array: T[][]): T[] {
-  // fixme: max 1 level depth, use Array.flat(Infinity) instead
-  return array.reduce((a, b) => a.concat(b), []);
+export function flat<T>(array: T[]): T[] {
+  // return array.reduce((a, b) => a.concat(b), []);
+  return [...array.flat(Infinity)] as T[];
 }
 
 export function remove<T>(array: T[], item: T): void {

@@ -1,5 +1,5 @@
-import {SortPipe} from './sort-pipe';
-import {async} from '@angular/core/testing';
+import {SortPipe} from './sort.pipe';
+import {waitForAsync} from '@angular/core/testing';
 
 describe('SortPipe', () => {
 
@@ -10,7 +10,7 @@ describe('SortPipe', () => {
   const o4 = {'id': 4};
   const list = [o2, o3, o4, o1];
 
-  it('should sort list', async(() => {
+  it('should sort list', waitForAsync(() => {
     expect(pipe.transform(list, null, 'ascend')).toEqual([o2, o3, o4, o1]);
     expect(pipe.transform(list, null, null)).toEqual([o2, o3, o4, o1]);
     expect(pipe.transform(list, 'id', null)).toEqual([o1, o2, o3, o4]);

@@ -1,18 +1,12 @@
-import {DatePipe} from '@angular/common';
-import {Inject, LOCALE_ID, Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {getDateTimeFormat} from '../../utils';
+import {LIB_CONTEXT} from '../../core-util.context';
+import {LocalDatePipe} from './local-date.pipe';
 
 @Pipe({name: 'localDateTime'})
-export class LocalDateTimePipe extends DatePipe implements PipeTransform {
-
-  public constructor(@Inject(LOCALE_ID) private _locale: string) {
-    super(_locale);
-  }
-
-  // @ts-ignore
-  public transform(value: any, timezone?: string, locale?: string): string | null {
-    const format = getDateTimeFormat(this._locale);
+export class LocalDateTimePipe extends LocalDatePipe implements PipeTransform {
+  public transform(value: Date | string | number, timezone?: string, locale?: string): string | null {
+    const format = getDateTimeFormat(LIB_CONTEXT.locale);
     return super.transform(value, format, timezone, locale);
   }
-
 }

@@ -1,4 +1,3 @@
-import {ChangeDetectorRef} from '@angular/core';
 import {I18nService, I18nTranslateParams} from './i18n.service';
 import {Subscription} from 'rxjs';
 

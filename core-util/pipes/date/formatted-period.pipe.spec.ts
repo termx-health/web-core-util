@@ -1,4 +1,4 @@
-import {FormattedPeriodPipe} from './formatted-period-pipe';
+import {FormattedPeriodPipe} from './formatted-period.pipe';
 import {async} from '@angular/core/testing';
 import moment from 'moment/moment';
 import {EventEmitter} from '@angular/core';

@@ -1,5 +1,5 @@
-import {async, waitForAsync} from '@angular/core/testing';
-import {SearchPipe} from './search-pipe';
+import {waitForAsync} from '@angular/core/testing';
+import {SearchPipe} from './search.pipe';
 
 describe('SearchPipe', () => {
   const pipe = new SearchPipe();

@@ -3,7 +3,7 @@ import {unitOfTime} from 'moment';
 import {DateRange} from '../../models';
 import {formatDate} from '@angular/common';
 import {LIB_CONTEXT} from '../../core-util.context';
-import {isDefined, isNil} from '../object/object.util';
+import {isNil} from '../object/object.util';
 
 export type DateUtilUnit = unitOfTime.DurationConstructor;
 

@@ -8,8 +8,8 @@ import {LIB_CONTEXT} from '../../core-util.context';
   pure: false
 })
 export class LocalTimePipe extends LocalDatePipe implements PipeTransform {
-  public transform(value: Date | string | number, timezone?: string, locale?: string): string | null {
-    const format = getTimeFormat(LIB_CONTEXT.locale);
-    return super.transform(value, format, timezone, locale);
+  public override transform(date?: Date | string | number, format?: string, timezone?: string, locale?: string): string | undefined {
+    const _format = format || getTimeFormat(LIB_CONTEXT.locale);
+    return super.transform(date, _format, timezone, locale);
   }
 }

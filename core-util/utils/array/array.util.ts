@@ -1,10 +1,10 @@
 import {isNil} from '../object/object.util';
 
-export function unique<T>(value: T, index, self: T[]): boolean {
+export function unique<T>(value: T, index: number, self: T[]): boolean {
   return self.indexOf(value) === index;
 }
 
-export function uniqueBy<T>(data: T[], fn: (x: T) => any): T[] {
+export function uniqueBy<T>(data: T[], fn: (x: T) => any): T[] | undefined {
   if (isNil(data)) {
     return undefined;
   }
@@ -12,7 +12,7 @@ export function uniqueBy<T>(data: T[], fn: (x: T) => any): T[] {
       const k = fn(val);
       uniq[k] = uniq[k] || val;
       return uniq;
-    }, {})
+    }, {} as any)
   );
 }
 

@@ -1,7 +1,7 @@
 import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 import {KW_CU_NAMESPACE} from '../../core-util.token';
-import {equalsDeep, isDefined} from '../../utils';
+import {equalsDeep, isDefined, isNil} from '../../utils';
 import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
 
 @Pipe({
@@ -9,40 +9,42 @@ import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
   pure: false
 })
 export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
-  private translatedValue: string;
-  private lastDate: Date;
-
+  private translatedValue: string = '';
+  private latestDate: Date | undefined;
 
   public constructor(
     @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
-    protected translateService: I18nService
+    protected override translateService: I18nService
   ) {
     super(translateService);
   }
 
 
-  public updateValue(date: Date, key: string, params: I18nTranslateParams): void {
+  public updateValue(date: Date, key: string, params?: I18nTranslateParams): void {
     const prefix = this.namespace ? `${this.namespace}.` : '';
     this._translate(`${prefix}${key}`, params, (res: string): void => {
       this.translatedValue = isDefined(res) ? res : `${prefix}${key}`;
-      this.lastDate = date;
+      this.latestDate = date;
     });
   }
 
 
   public transform(date: Date): string {
-    if (equalsDeep(date, this.lastDate)) {
+    if (isNil(date)) {
+      return '';
+    }
+    if (equalsDeep(date, this.latestDate)) {
       return this.translatedValue;
     }
 
     const {key, params} = this.getTranslationKey(date);
-    this.lastDate = date;
+    this.latestDate = date;
     this.updateValue(date, key, params);
 
     this._dispose();
     this._subscribeOnChanges(() => {
-      if (this.lastDate) {
-        this.lastDate = null;
+      if (this.latestDate) {
+        this.latestDate = undefined;
         this.updateValue(date, key, params);
       }
     });

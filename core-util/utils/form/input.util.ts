@@ -3,8 +3,8 @@ import {isDefined, isNil} from '../object/object.util';
 
 export function insertAtCursor(element: HTMLInputElement, text: string): string {
   element.focus();
-  const startPos = element.selectionStart;
-  const endPos = element.selectionEnd;
+  const startPos = element.selectionStart!;
+  const endPos = element.selectionEnd!;
 
   if (startPos || startPos === 0) {
     element.value = element.value.substring(0, startPos) + text + element.value.substring(endPos, element.value.length);

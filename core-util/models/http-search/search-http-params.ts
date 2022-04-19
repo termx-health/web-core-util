@@ -1,11 +1,10 @@
 import {HttpParameterCodec, HttpParams} from '@angular/common/http';
-import * as moment from 'moment';
-import {isDefined, isNil} from '../../utils';
+import moment from 'moment/moment';
 
 export class SearchHttpParams {
   public static build(query: any): HttpParams {
     let params = new HttpParams({encoder: new CustomEncoder()});
-    if (isNil(query)) {
+    if (!query) {
       return params;
     }
     Object.keys(query).forEach(k => {
@@ -20,7 +19,7 @@ export class SearchHttpParams {
             params = params.append(k, p);
           }
         });
-      } else if (isDefined(param)) {
+      } else if (param !== undefined && param !== null && param !== '') {
         params = params.append(k, param);
       }
     });

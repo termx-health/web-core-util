@@ -1,6 +1,6 @@
 import {isNil} from '../object/object.util';
 
-export function join<T>(array: T[], separator = ','): string {
+export function join<T>(array: T[], separator = ','): string | undefined {
   if (isNil(array) || array.length === 0) {
     return undefined;
   }

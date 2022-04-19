@@ -8,13 +8,13 @@ export function sort<T>(array: T[], key: string, ascending: boolean = true): T[]
 
   const sortParams = key.replace(' ', '').split(',');
   return array.sort((a, b): number => {
-    for (let sortParam of sortParams) {
+    for (let param of sortParams) {
       let tempAscending = ascending;
-      if (sortParam.startsWith('-')) {
+      if (param.startsWith('-')) {
         tempAscending = false;
-        sortParam = sortParam.substring(1);
+        param = param.substring(1);
       }
-      const result = compareValues(getPathValue(a, sortParam), getPathValue(b, sortParam), tempAscending);
+      const result = compareValues(getPathValue(a, param), getPathValue(b, param), tempAscending);
       if (result && result !== 0) {
         return result;
       }
@@ -34,6 +34,7 @@ export function compareValues(val1: any, val2: any, ascending: boolean = true): 
   if (val1 instanceof Date && val2 instanceof Date) {
     return compareDates(val1, val2, ascending);
   }
+  return 0;
 }
 
 

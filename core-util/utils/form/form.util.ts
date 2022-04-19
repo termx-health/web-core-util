@@ -1,4 +1,4 @@
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormControlOptions, FormGroup, NgForm, ValidatorFn, Validators} from '@angular/forms';
 import {isNil} from '../object/object.util';
 
 export function validateForm(form: FormGroup | FormArray | NgForm): boolean {
@@ -14,10 +14,10 @@ export function markAsDirty(form: FormGroup | FormArray | NgForm): void {
   if (isNil(form)) {
     return;
   }
-  if (form['form']) {
+  if ((form as NgForm)['form']) {
     (form as NgForm).form.markAsDirty();
   }
-  if (form['markAsDirty']) {
+  if ((form as FormGroup | FormArray)['markAsDirty']) {
     (form as FormGroup | FormArray).markAsDirty();
   }
 
@@ -36,10 +36,10 @@ export function markAsPristine(form: FormGroup | FormArray | NgForm): void {
   if (isNil(form)) {
     return;
   }
-  if (form['form']) {
+  if ((form as NgForm)['form']) {
     (form as NgForm).form.markAsPristine();
   }
-  if (form['markAsPristine']) {
+  if ((form as FormGroup | FormArray)['markAsPristine']) {
     (form as FormGroup | FormArray).markAsPristine();
   }
 
@@ -55,11 +55,11 @@ export function markAsPristine(form: FormGroup | FormArray | NgForm): void {
 }
 
 
-export function toggleControls(formBuilder: FormBuilder, form: FormGroup, enabled: boolean, controls: {[key: string]: AbstractControl}): void {
+export function toggleControls(formBuilder: FormBuilder, form: FormGroup, enabled: boolean,
+  controls: {[key: string]: [state: any, validators: ValidatorFn | ValidatorFn[] | FormControlOptions | null]}): void {
   if (enabled) {
-    Object.keys(controls).forEach(k => {
-      const control = formBuilder.control(controls[k][0], controls[k][1]);
-      form.addControl(k, control);
+    Object.entries(controls).forEach(([k, [state, validators]]) => {
+      form.addControl(k, formBuilder.control(state, validators));
     });
   } else {
     Object.keys(controls).forEach(k => form.removeControl(k));
@@ -72,10 +72,8 @@ export function toggleRequired(control: AbstractControl, required: boolean): voi
   }
   if (required) {
     control.setValidators(Validators.required);
-    control['required'] = true;
   } else {
     control.clearValidators();
-    control['required'] = false;
   }
   control.updateValueAndValidity();
 }

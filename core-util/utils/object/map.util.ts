@@ -6,5 +6,5 @@ export function collect<T>(array: T[], fn: (x: T) => string | number | symbol): 
   return array.reduce((acc, el) => {
     const key = fn(el);
     return ({...acc, [key]: [...(acc[key] || []), el]});
-  }, {});
+  }, {} as any);
 }

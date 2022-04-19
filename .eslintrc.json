@@ -26,22 +26,6 @@
           {
             "ignoreRestArgs": false
           }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "prefix": "ku",
-            "style": "kebab-case",
-            "type": "element"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "prefix": "ku",
-            "style": "camelCase",
-            "type": "attribute"
-          }
         ]
       }
     }

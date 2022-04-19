@@ -1,11 +1,11 @@
-import {Inject, Optional, Pipe, PipeTransform} from '@angular/core';
+import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 
 import {DateRange} from '../../models';
 import {I18nBasePipe, I18nService} from '../../i18n';
 import {KW_CU_NAMESPACE} from '../../core-util.token';
-import {equalsDeep} from '../../utils';
-import {map} from 'rxjs/operators';
+import {equalsDeep, isNil} from '../../utils';
+import {defaultIfEmpty, map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
 
 export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
@@ -15,57 +15,51 @@ export class FormattedPeriodParams {
   public minPrecision?: FormattedPeriodPrecision = 'day';
 }
 
-const YEAR = 'year';
-const MONTH = 'month';
-const DAY = 'day';
-const HOUR = 'hour';
-const MINUTE = 'minute';
-const SECOND = 'second';
 
-const TRANSLATION_MAP: { [key in FormattedPeriodPrecision]?: string } = {
-  [YEAR]: 'core.period.years',
-  [MONTH]: 'core.period.months',
-  [DAY]: 'core.period.days',
-  [HOUR]: 'core.period.hours',
-  [MINUTE]: 'core.period.minutes',
-  [SECOND]: 'core.period.seconds'
+const TRANSLATION_MAP: { [key in FormattedPeriodPrecision]: string } = {
+  year: 'core.period.years',
+  month: 'core.period.months',
+  day: 'core.period.days',
+  hour: 'core.period.hours',
+  minute: 'core.period.minutes',
+  second: 'core.period.seconds'
 };
 
 @Pipe({
   name: 'formattedPeriod',
   pure: false
 })
-export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
-  private translatedValue: string;
-  private lastPeriod: DateRange | Date;
-  private lastParams: FormattedPeriodParams;
+export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
+  private translatedValue: string = '';
+  private latestPeriod: DateRange | Date | undefined;
+  private latestParams: FormattedPeriodParams | undefined;
 
   public constructor(
     @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
-    protected translateService: I18nService
+    protected override translateService: I18nService
   ) {
     super(translateService);
   }
 
-  public updateValue(tokens: {precision: string, val: number}[]): void {
+  public updateValue(tokens: {precision: FormattedPeriodPrecision, val: number}[]): void {
     const prefix = this.namespace ? `${this.namespace}.` : '';
-    const reqs = tokens.map(t => this.translateService.get(`${prefix}${TRANSLATION_MAP[t.precision]}`).pipe(map(trs => `${t.val}${trs}`)));
+    const reqs = tokens.map(t => this.translateService.get(`${prefix}${TRANSLATION_MAP[t.precision]}`).pipe(map(trs => `${t.val}${trs}`))) || [];
 
-    forkJoin(reqs).subscribe((strings: string[]) => {
+    forkJoin(reqs).pipe(defaultIfEmpty([])).subscribe((strings: string[]) => {
       this.translatedValue = strings.join(' ');
     });
   }
 
   public transform(period: DateRange | Date, params: FormattedPeriodParams = {}): string {
-    if (!period) {
+    if (isNil(period)) {
       return '';
     }
-    if (equalsDeep(period, this.lastPeriod) && equalsDeep(params, this.lastParams)) {
+    if (equalsDeep(period, this.latestPeriod) && equalsDeep(params, this.latestParams)) {
       return this.translatedValue;
     }
 
-    this.lastPeriod = period;
-    this.lastParams = params;
+    this.latestPeriod = period;
+    this.latestParams = params;
 
     const tokens = this.getTranslationKey(period, {
       precision: params.precision || 'day',
@@ -75,8 +69,8 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
 
     this._dispose();
     this._subscribeOnChanges(() => {
-      if (this.lastPeriod) {
-        this.lastPeriod = null;
+      if (this.latestPeriod) {
+        this.latestPeriod = undefined;
         this.updateValue(tokens);
       }
     });
@@ -85,24 +79,24 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
   }
 
 
-  private getTranslationKey(period: DateRange | Date, params: FormattedPeriodParams): {precision: string, val: number}[] {
+  private getTranslationKey(period: DateRange | Date, params: FormattedPeriodParams): {precision: FormattedPeriodPrecision, val: number}[] {
     const startDate = period.hasOwnProperty('lower') ? moment((<DateRange>period).lower) : moment(<Date>period);
     const endDate = period.hasOwnProperty('lower') ? moment((<DateRange>period).upper || new Date()) : moment();
     const duration = moment.duration(endDate.diff(startDate));
 
-    const precisionMap = {
-      [YEAR]: duration.years(),
-      [MONTH]: duration.months(),
-      [DAY]: duration.days(),
-      [HOUR]: duration.hours(),
-      [MINUTE]: duration.minutes(),
-      [SECOND]: duration.seconds()
+    const precisionMap: { [key in FormattedPeriodPrecision]: number } = {
+      year: duration.years(),
+      month: duration.months(),
+      day: duration.days(),
+      hour: duration.hours(),
+      minute: duration.minutes(),
+      second: duration.seconds()
     };
 
     const tokens = [];
 
     let force = false;
-    for (const precision of [YEAR, MONTH, DAY, HOUR, MINUTE, SECOND]) {
+    for (const precision of ['year', 'month', 'day', 'hour', 'minute', 'second'] as FormattedPeriodPrecision[]) {
       const val = precisionMap[precision];
       force = force || val > 0 || params.minPrecision === precision || params.precision === precision;
       if (force) {
@@ -113,5 +107,10 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform {
         return tokens;
       }
     }
+    return [];
+  }
+
+  public ngOnDestroy(): void {
+    this._dispose();
   }
 }

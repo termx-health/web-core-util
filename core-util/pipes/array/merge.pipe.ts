@@ -5,7 +5,7 @@ import {getPathValue, isNil, uniqueBy} from '../../utils';
   name: 'merge'
 })
 export class MergePipe implements PipeTransform {
-  public transform<T>(target: T[], source: T[], fn: string | ((x: T) => any)): T[] {
+  public transform<T>(target: T[], source: T[], fn: string | ((x: T) => any)): T[] | undefined {
     if (isNil(target)) {
       target = [];
     }

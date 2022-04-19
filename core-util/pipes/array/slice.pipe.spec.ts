@@ -6,7 +6,7 @@ describe('SlicePipe', () => {
   const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   it('should slice', waitForAsync(() => {
-    expect(pipe.transform(null, null)).toEqual(null);
+    expect(pipe.transform(null, null)).toEqual(undefined);
     expect(pipe.transform([], null)).toEqual([]);
     expect(pipe.transform('foo', null)).toEqual('foo');
     expect(pipe.transform('foobar', 4)).toEqual('foob');

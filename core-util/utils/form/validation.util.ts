@@ -18,39 +18,41 @@ export function periodValidator(lowerRequired = true, upperRequired = true): Val
 
 export function dateRangeValidator(fromFieldName: string = 'validFrom', toFieldName: string = 'validTo'): ValidatorFn {
   return (c: AbstractControl) => {
-    const mFrom = moment(c.get(fromFieldName).value);
-    const mTo = moment(c.get(toFieldName).value);
+    const mFrom = moment(c.get(fromFieldName)?.value);
+    const mTo = moment(c.get(toFieldName)?.value);
     return !(mFrom.isValid() && mTo.isValid()) || mFrom.isBefore(mTo) ? null : {invalid: true};
   };
 }
 
 
-export function validFromValidator(form: FormGroup, toFieldName = 'validTo', granularity = 'minute'): ValidatorFn {
+export function validFromValidator(form: FormGroup, fieldName: string, granularity = 'minute'): ValidatorFn {
   return (c: AbstractControl) => {
-    if (form && form.controls[toFieldName].value) {
-      if (isAfter(c.value, form.controls[toFieldName].value, granularity as DateUtilUnit)) {
+    if (form && form.controls[fieldName].value) {
+      if (isAfter(c.value, form.controls[fieldName].value, granularity as DateUtilUnit)) {
         return {invalid: true};
       }
-      form.controls[toFieldName].setErrors(null);
+      form.controls[fieldName].setErrors(null);
     }
+    return null;
   };
 }
 
 
-export function validToValidator(form: FormGroup, fromFieldName = 'validFrom', granularity = 'minute'): ValidatorFn {
+export function validToValidator(form: FormGroup, fieldName: string, granularity = 'minute'): ValidatorFn {
   return (c: AbstractControl) => {
     if (form && c.value) {
-      if (isBefore(c.value, form.controls[fromFieldName].value, granularity as DateUtilUnit)) {
+      if (isBefore(c.value, form.controls[fieldName].value, granularity as DateUtilUnit)) {
         return {invalid: true};
       }
-      setTimeout(() => form.controls[fromFieldName].setErrors(null));
+      setTimeout(() => form.controls[fieldName].setErrors(null));
     }
+    return null;
   };
 }
 
 
-export function pathValidator(path: (string | number)[] | string, validator: ValidatorFn): ValidatorFn {
-  return (c: AbstractControl) => validator(c.get(path));
+export function pathValidator(path: Array<string | number> | string, validator: ValidatorFn): ValidatorFn {
+  return (c: AbstractControl) => validator(c.get(path) as AbstractControl);
 }
 
 export function conditionalValidator(condition: ((value: any) => boolean), validator: ValidatorFn): ValidatorFn {

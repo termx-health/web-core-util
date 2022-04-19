@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'inpure',
   pure: false
 })
-// force pipes to run on every change. use with caution
+// Forces pipe to run on every change. Use with caution!
 export class InpurePipe implements PipeTransform {
   public transform(input: any): any {
     return Array.isArray(input) ? [...input] : typeof (input) === 'object' ? {...input} : input;

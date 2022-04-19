@@ -8,42 +8,38 @@ import {I18nBasePipe, I18nService} from '../../i18n';
   pure: false
 })
 export class LocalDatePipe extends I18nBasePipe implements PipeTransform, OnDestroy {
-  private formattedDate: string = '';
+  private formattedDate: string | undefined = '';
 
-  private lastDate: Date | string | number;
-  private lastParams = {
-    format: null,
-    timezone: null,
-    locale: null
-  };
+  private latestDate: Date | string | number | undefined;
+  private latestParams: {format?: string | undefined, timezone?: string | undefined, locale?: string | undefined} = {};
 
-  public constructor(protected translateService: I18nService) {
+  public constructor(protected override translateService: I18nService) {
     super(translateService);
   }
 
-  public updateValue(date: Date | string | number, format?: string, timezone?: string, locale?: string): void {
-    this.formattedDate = formatDate(date, format || getDateFormat(LIB_CONTEXT.locale), locale, timezone)
-    this.lastDate = date;
-    this.lastParams = {format, timezone, locale};
+  public updateValue(date?: Date | string | number, format?: string, timezone?: string, locale?: string): void {
+    this.formattedDate = formatDate(date, format || getDateFormat(LIB_CONTEXT.locale), locale, timezone);
+    this.latestDate = date;
+    this.latestParams = {format, timezone, locale};
   }
 
-  public transform(date: Date | string | number, format?: string, timezone?: string, locale?: string): string {
+  public transform(date?: Date | string | number, format?: string, timezone?: string, locale?: string): string | undefined {
     if (isNil(date)) {
       return '';
     }
 
-    if (equalsDeep(date, this.lastDate) && equalsDeep({format, timezone, locale}, this.lastParams)) {
+    if (equalsDeep(date, this.latestDate) && equalsDeep({format, timezone, locale}, this.latestParams)) {
       return this.formattedDate;
     }
 
-    this.lastDate = date;
-    this.lastParams = {format, timezone, locale};
+    this.latestDate = date;
+    this.latestParams = {format, timezone, locale};
     this.updateValue(date, format, timezone, locale);
 
     this._dispose();
     this._subscribeOnChanges(() => {
-      if (this.lastDate) {
-        this.lastDate = null;
+      if (this.latestDate) {
+        this.latestDate = undefined;
         this.updateValue(date, format, timezone, locale);
       }
     });

@@ -11,10 +11,10 @@ import {I18nBasePipe} from './i18n-base.pipe';
 export class I18nPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
 
-  private lastKey: string;
-  private lastParams: I18nTranslateParams;
+  private latestKey: string | undefined;
+  private latestParams: I18nTranslateParams | undefined;
 
-  public constructor(protected translateService: I18nService) {
+  public constructor(protected override translateService: I18nService) {
     super(translateService);
   }
 
@@ -22,8 +22,8 @@ export class I18nPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
   public updateValue(key: string, params?: I18nTranslateParams): void {
     this._translate(key, params, (res: string): void => {
       this.translatedValue = isDefined(res) ? res : key;
-      this.lastKey = key;
-      this.lastParams = params;
+      this.latestKey = key;
+      this.latestParams = params;
     });
   }
 
@@ -33,18 +33,18 @@ export class I18nPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
       return key;
     }
 
-    if (equalsDeep(key, this.lastKey) && equalsDeep(params, this.lastParams)) {
+    if (equalsDeep(key, this.latestKey) && equalsDeep(params, this.latestParams)) {
       return this.translatedValue;
     }
 
-    this.lastKey = key;
-    this.lastParams = params;
+    this.latestKey = key;
+    this.latestParams = params;
     this.updateValue(key, params);
 
     this._dispose();
     this._subscribeOnChanges(() => {
-      if (this.lastKey) {
-        this.lastKey = null;
+      if (this.latestKey) {
+        this.latestKey = undefined;
         this.updateValue(key, params);
       }
     });

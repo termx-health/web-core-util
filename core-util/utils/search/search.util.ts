@@ -1,11 +1,11 @@
-import {isNil} from '../object/object.util';
+import {isDefined, isNil} from '../object/object.util';
 
 export type SearchNeedle = string | string [] | number | number[];
 export type SearchMatchingFn = (hay: string, needle: string) => boolean;
 
 
-const defaultMatchingFn = (hay: string, needle: string): boolean => hay && needle === hay;
-const regexMatchingFn = (hay: string, needle: string): boolean => hay && new RegExp(needle, 'i').test(hay);
+const defaultMatchingFn = (hay: string, needle: string): boolean => isDefined(hay) && needle === hay;
+const regexMatchingFn = (hay: string, needle: string): boolean => isDefined(hay) && new RegExp(needle, 'i').test(hay);
 
 export const searchFilterFn = (item: any, filter: {[path: string]: SearchNeedle}): boolean => filterFn(item, filter, defaultMatchingFn);
 export const searchFilter = (item: any, text: string): boolean => searchFilterFn(item, {'*': text});
@@ -23,7 +23,7 @@ const filterFn = (item: object, filter: {[path: string]: SearchNeedle}, matchFn:
 };
 
 
-export function matchesPath(obj: object, path: string, needle: SearchNeedle, matchFn: SearchMatchingFn = defaultMatchingFn): boolean {
+export function matchesPath(obj: any | undefined, path: string, needle: SearchNeedle, matchFn: SearchMatchingFn = defaultMatchingFn): boolean {
   if (isNil(obj)) {
     return false;
   }

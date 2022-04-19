@@ -5,9 +5,9 @@ import {isNil} from '../../utils';
   name: 'slice'
 })
 export class SlicePipe implements PipeTransform {
-  public transform<T>(input: string | T[], limit: number, offset: number = 0): string | T[] {
+  public transform<T>(input: string | T[], limit: number, offset: number = 0): string | T[] | undefined {
     if (isNil(input)) {
-      return null;
+      return undefined;
     }
     if (isNil(limit)) {
       return input;

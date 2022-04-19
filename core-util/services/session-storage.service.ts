@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {isDefined} from '../utils';
 
 @Injectable({providedIn: 'root'})
 export class SessionStorageService {
@@ -7,6 +8,9 @@ export class SessionStorageService {
   }
 
   public get(key: string): any {
-    return JSON.parse(sessionStorage.getItem(key));
+    const obj = sessionStorage.getItem(key);
+    if (isDefined(obj)) {
+      return JSON.parse(obj!);
+    }
   }
 }

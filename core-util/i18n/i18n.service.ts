@@ -1,13 +1,12 @@
 import {EventEmitter, Inject, Injectable, OnDestroy, Optional, Output} from '@angular/core';
 
 
-import {KW_CU_LOCALE_ID} from './i18n.token';
-import {HttpClient} from '@angular/common/http';
+import {LOCALE_ID} from './i18n.token';
 import {I18nStore, I18nTranslation} from './i18n.store';
-import {Observable, shareReplay, Subscription, tap} from 'rxjs';
+import {Observable, of, shareReplay, Subscription, tap} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {getPathValue} from '../utils';
-import {I18nHttpTranslateLoader, I18nTranslateLoader} from './i18n.loader';
+import {getPathValue, isDefined, isNil} from '../utils';
+import {I18nTranslateLoader} from './i18n.loader';
 
 
 export type I18nTranslateParams = {[param: string]: any};
@@ -26,12 +25,11 @@ export class I18nService implements OnDestroy {
   private _subscriptions: {[key: string]: Subscription} = {};
 
   public constructor(
-    @Optional() @Inject(KW_CU_LOCALE_ID) locale: string,
-    @Optional() private translateLoader: I18nTranslateLoader,
-    private httpClient: HttpClient
+    @Optional() @Inject(LOCALE_ID) locale: string,
+    @Optional() translateLoader: I18nTranslateLoader
   ) {
     this._store = new I18nStore();
-    this._loader = translateLoader || new I18nHttpTranslateLoader(httpClient);
+    this._loader = translateLoader;
 
     this._subscriptions['localeChange'] = this._store.langChange.subscribe(val => this.localeChange.emit(val));
     this._subscriptions['translationChange'] = this._store.translationChange.subscribe(val => this.translationChange.emit(val));
@@ -53,8 +51,14 @@ export class I18nService implements OnDestroy {
 
   public get(key: string, params?: I18nTranslateParams): Observable<string> {
     const localeId = this._store.currentLang;
-    const req = this._translationRequests[localeId] = this._translationRequests[localeId] || this.getTranslations(localeId);
-    return req.pipe(map(trs => this.parseTranslation(trs, key, params)));
+    if (isNil(localeId)) {
+      return of(key);
+    }
+    if (isDefined(this._loader)) {
+      const req: Observable<I18nTranslation> = this._translationRequests[localeId] = this._translationRequests[localeId] || this.getTranslations(localeId);
+      return req.pipe(map((trs) => this.parseTranslation(trs, key, params)));
+    }
+    return of(key);
   }
 
 
@@ -62,9 +66,9 @@ export class I18nService implements OnDestroy {
     return this._loader.loadTranslate(localeId).pipe(tap(trs => this._store.addTranslations(trs)), shareReplay(1));
   }
 
-  private parseTranslation(translations: I18nTranslation, key: string, params: I18nTranslateParams): string {
+  private parseTranslation(translations: I18nTranslation | undefined, key: string, params?: I18nTranslateParams): string {
     // currently, only flat map is supported! {{obj1.obj2.obj3.key}} is yet to be implemented!
-    let content = getPathValue(translations, key) as string;
+    let content = getPathValue(translations, key);
     if (typeof content === 'string') {
       if (params) {
         Object.keys(params).forEach(key => (content = content.replace(new RegExp(`\{\{${key}\}\}`, 'g'), params[key])));

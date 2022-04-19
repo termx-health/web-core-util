@@ -6,8 +6,6 @@
 npm run build
 ```
 
-*It builds packages and puts them directly into `node_modules` allowing seamless navigation in IDE*
-
 ### Local Paths (dev)
 
 * Run`npm run watch`
@@ -77,6 +75,13 @@ Install as dependency.
       ]
    })
    ```
+3. To use locales other than **en**
+    ```ts
+    import localeEt from '@angular/common/locales/et';
+    import {registerLocaleData} from '@angular/common';
+    
+    registerLocaleData(localeEt)
+    ```
 
     * Alternative configuration with core-util namespace
     ```ts

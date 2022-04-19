@@ -6,7 +6,7 @@ import {SearchNeedle, textFilterFn} from '../../utils';
   name: 'textSearch'
 })
 export class TextSearchPipe extends SearchPipe implements PipeTransform {
-  public filterFn<T>(item: T, filter: {[p: string]: SearchNeedle}): boolean {
+  public override filterFn<T>(item: T, filter: {[p: string]: SearchNeedle}): boolean {
     return textFilterFn(item, filter);
   }
 }

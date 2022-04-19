@@ -5,7 +5,6 @@ import {isNil, searchFilterFn, SearchNeedle} from '../../utils';
   name: 'search'
 })
 export class SearchPipe implements PipeTransform {
-
   public transform<T>(values: T[], filter: {[path: string]: SearchNeedle}): T[] {
     if (isNil(values)) {
       return [];

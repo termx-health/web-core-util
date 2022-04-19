@@ -1,11 +1,10 @@
 import moment from 'moment/moment';
-import {unitOfTime} from 'moment';
 import {DateRange} from '../../models';
 import {formatDate} from '@angular/common';
 import {LIB_CONTEXT} from '../../core-util.context';
-import {isNil} from '../object/object.util';
+import {isDefined, isNil} from '../object/object.util';
 
-export type DateUtilUnit = unitOfTime.DurationConstructor;
+export type DateUtilUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
 
 export function fromString(date: string): Date {
   return moment(date).toDate();
@@ -19,8 +18,8 @@ export function now(unit?: DateUtilUnit): Date {
  * Formats a date according to locale rules.
  * Use Angular format rules! // https://angular.io/api/common/DatePipe#custom-format-options
  */
-export function format(date: Date | string | number, format: string, locale = LIB_CONTEXT.locale, timezone?: string): string {
-  return formatDate(date, format, locale, timezone);
+export function format(date: Date | string | number | undefined, format: string, locale = LIB_CONTEXT.locale, timezone?: string): string | undefined {
+  return isDefined(date) ? formatDate(date, format, locale, timezone) : undefined;
 }
 
 export function isBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
@@ -56,13 +55,13 @@ export function endOf(date: Date, unit: DateUtilUnit): Date {
 }
 
 export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'day'): boolean {
-  if (isNil(range)) {
+  if (isNil(range) || isNil(date)) {
     return true;
   }
   const _range = new DateRange(range);
   const _rangeLower = _range.lower ? startOf(_range.lower, unit) : null;
   const _rangeUpper = _range.upper ? startOf(_range.upper, unit) : null;
-  const _date = date ? startOf(date, unit) : null;
+  const _date = startOf(date, unit);
 
   const valid = {lower: true, upper: true};
   if (_rangeLower) {
@@ -93,17 +92,16 @@ export function next(unit: DateUtilUnit, amount = 1): DateRange {
 }
 
 
-export function mergeDateTime(date: Date, time: Date): Date {
-  if (isNil(date)) {
-    return null;
+export function mergeDateTime(date: Date, time: Date): Date | undefined {
+  if (isDefined(date)) {
+    const d = moment(date);
+    const t = moment(time);
+    d.set('hour', t.get('hour'));
+    d.set('minute', t.get('minute'));
+    d.set('second', t.get('second'));
+    d.set('millisecond', 0);
+    return d.toDate();
   }
-  const d = moment(date);
-  const t = moment(time);
-  d.set('hour', t.get('hour'));
-  d.set('minute', t.get('minute'));
-  d.set('second', t.get('second'));
-  d.set('millisecond', 0);
-  return d.toDate();
 }
 
 

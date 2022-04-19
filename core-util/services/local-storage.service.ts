@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {isDefined} from '../utils';
 
 @Injectable({providedIn: 'root'})
 export class LocalStorageService {
@@ -7,7 +8,10 @@ export class LocalStorageService {
   }
 
   public get(key: string): any {
-    return JSON.parse(localStorage.getItem(key));
+    const obj = localStorage.getItem(key);
+    if (isDefined(obj)) {
+      return JSON.parse(obj!);
+    }
   }
 
 }

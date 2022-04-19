@@ -8,6 +8,8 @@
     "./assets"
   ],
   "allowedNonPeerDependencies": [
-    "lodash"
+    "lodash",
+    "@types/lodash",
+    "moment"
   ]
 }

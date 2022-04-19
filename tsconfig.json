@@ -3,15 +3,24 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "downlevelIteration": true,
-    "module": "ES6",
-    "importHelpers": true,
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "esModuleInterop": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "module": "ES6",
     "target": "ES6",
     "typeRoots": [
       "node_modules/@types/!(node)"
@@ -20,15 +29,7 @@
       "ES2019",
       "dom"
     ],
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "noImplicitReturns": false,
-    "noImplicitThis": false,
-    "noImplicitOverride": false,
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "strict": false,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "types": [
       "jasmine"
     ]

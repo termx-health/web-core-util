@@ -18,10 +18,10 @@ export class PrintService {
       html = `<head><style type="text/css">${this.getCss(opts)}</style></head>`;
       html += '<body>' + content + '</body>';
     }
-    iframe.contentWindow.document.write(html);
-    iframe.contentWindow.document.close();
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
+    iframe.contentWindow!.document.write(html);
+    iframe.contentWindow!.document.close();
+    iframe.contentWindow!.focus();
+    iframe.contentWindow!.print();
     setTimeout(() => iframe.remove());
   }
 

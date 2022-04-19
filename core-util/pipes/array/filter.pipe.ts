@@ -5,12 +5,12 @@ import {isNil} from '../../utils';
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  public transform<T, A>(values: Array<T>, filter: (f: T, arg: A) => boolean, fnArg?: A): Array<T> {
-    if (isNil(filter)) {
-      return values;
-    }
+  public transform<T, A>(values: T[], filter: (f: T, arg?: A) => boolean, fnArg?: A): T[] {
     if (isNil(values)) {
       return [];
+    }
+    if (isNil(filter)) {
+      return values;
     }
     return values.filter(item => filter(item, fnArg));
   }

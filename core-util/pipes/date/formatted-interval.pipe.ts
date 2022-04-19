@@ -1,62 +1,76 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import {Interval} from '../../models';
-import {I18nService} from '../../i18n';
+import {I18nBasePipe, I18nService} from '../../i18n';
+import {equalsDeep, isNil} from '../../utils';
+import {KW_CU_NAMESPACE} from '../../core-util.token';
+import {defaultIfEmpty, map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
+
+
+export type FormattedIntervalPrecision = keyof Interval
+
+const TRANSLATION_MAP: { [key in FormattedIntervalPrecision]: string } = {
+  years: 'core.period.years',
+  months: 'core.period.months',
+  days: 'core.period.days',
+  hours: 'core.period.hours',
+  minutes: 'core.period.minutes',
+  seconds: 'core.period.seconds'
+};
 
 @Pipe({
-  name: 'formattedInterval'
+  name: 'formattedInterval',
+  pure: false
 })
-export class FormattedIntervalPipe implements PipeTransform {
+export class FormattedIntervalPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
+  private translatedValue: string = '';
+  private latestInterval: Interval | undefined;
 
-  public YEAR = 'year';
-  public MONTH = 'month';
-  public DAY = 'day';
-  public HOUR = 'hour';
-  public MINUTE = 'minute';
-  public SECOND = 'second';
+  public constructor(
+    @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
+    protected override translateService: I18nService
+  ) {
+    super(translateService);
+  }
 
-  private translationKeys: { [key: string]: string };
-
-  public constructor(private translateService: I18nService) {
-    this.translationKeys = {};
-    this.translationKeys[this.YEAR] = 'core.period.years';
-    this.translationKeys[this.MONTH] = 'core.period.months';
-    this.translationKeys[this.DAY] = 'core.period.days';
-    this.translationKeys[this.HOUR] = 'core.period.hours';
-    this.translationKeys[this.MINUTE] = 'core.period.minutes';
-    this.translationKeys[this.SECOND] = 'core.period.seconds';
+  public updateValue(tokens: {val: number, key: string}[]): void {
+    const prefix = this.namespace ? `${this.namespace}.` : '';
+    const reqs = tokens.map(t => this.translateService.get(`${prefix}${t.key}`).pipe(map(trs => `${t.val}${trs}`))) || [];
+    forkJoin(reqs).pipe(defaultIfEmpty([])).subscribe((strings: string[]) => {
+      this.translatedValue = strings.length ? strings.join(' ') : '0';
+    });
   }
 
   public transform(interval: Interval): string {
-    if (!interval) {
+    if (isNil(interval)) {
       return '';
     }
-    const out = [];
-    if (interval.years > 0) {
-      out.push(interval.years + this.tr(this.YEAR));
+    if (equalsDeep(interval, this.latestInterval)) {
+      return this.translatedValue;
     }
-    if (interval.months > 0) {
-      out.push(interval.months + this.tr(this.MONTH));
-    }
-    if (interval.days > 0) {
-      out.push(interval.days + this.tr(this.DAY));
-    }
-    if (interval.hours > 0) {
-      out.push(interval.hours + this.tr(this.HOUR));
-    }
-    if (interval.minutes > 0) {
-      out.push(interval.minutes + this.tr(this.MINUTE));
-    }
-    if (interval.seconds > 0) {
-      out.push(interval.seconds + this.tr(this.SECOND));
-    }
-    if (interval.years === 0 && interval.months === 0 && interval.days === 0 && interval.hours === 0 && interval.minutes === 0 && interval.seconds === 0) {
-      out.push(0);
-    }
-    return out.join(' ');
+
+    this.latestInterval = interval;
+    const tokens = this.getTranslationKey(interval);
+    this.updateValue(tokens);
+
+    this._dispose();
+    this._subscribeOnChanges(() => {
+      if (this.latestInterval) {
+        this.latestInterval = undefined;
+        this.updateValue(tokens);
+      }
+    });
+
+    return this.translatedValue;
   }
 
-  private tr(precision: string): string {
-    return this.translateService.instant(this.translationKeys[precision]);
+
+  private getTranslationKey(interval: Interval): {val: number, key: string}[] {
+    const steps: FormattedIntervalPrecision[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+    return steps.filter(key => interval[key]).filter(key => interval[key]! > 0).map(key => ({val: interval[key]!, key: TRANSLATION_MAP[key]}));
   }
 
+  public ngOnDestroy(): void {
+    this._dispose();
+  }
 }

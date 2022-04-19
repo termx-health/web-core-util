@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule, Provider} from '@angular/core';
 import {I18nPipe} from './i18n.pipe';
-import {KW_CU_LOCALE_ID} from './i18n.token';
+import {LOCALE_ID} from './i18n.token';
+import {flat} from '../utils';
 
 
 export interface I18nModuleConfig {
@@ -13,12 +14,14 @@ export interface I18nModuleConfig {
   exports: [I18nPipe]
 })
 export class I18nModule {
-  public static forRoot(config: I18nModuleConfig): ModuleWithProviders<I18nModule> {
+  public static forRoot(config: I18nModuleConfig | undefined): ModuleWithProviders<I18nModule> {
     return {
       ngModule: I18nModule,
       providers: [
-        {provide: KW_CU_LOCALE_ID, useValue: config.locale},
-        config.loader
+        flat([
+          config?.locale ? [{provide: LOCALE_ID, useValue: config.locale}] : [],
+          config?.loader ? [config?.loader] : []
+        ])
       ]
     };
   }

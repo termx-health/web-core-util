@@ -9,7 +9,7 @@
     "noUnusedParameters": false
   },
   "files": [
-    "./test.ts"
+    "lib/test.ts"
   ],
   "include": [
     "**/*.spec.ts",

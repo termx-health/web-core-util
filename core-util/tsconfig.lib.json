@@ -8,7 +8,7 @@
     "types": []
   },
   "exclude": [
-    "./test.ts",
+    "lib/test.ts",
     "**/*.spec.ts"
   ]
 }

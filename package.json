@@ -8,7 +8,7 @@
     "build:util": "ng build core-util",
     "watch": "ng build core-util --watch --configuration development",
     "test": "ng test",
-    "test-ci": "ng test --watch=false --progress=false --browsers=ChromeHeadless --code-coverage=false",
+    "test:ci": "ng test --watch=false --progress=false --browsers=ChromeHeadless --code-coverage=false",
     "lint": "ng lint",
     "publish": "scripts/publish.sh"
   },
@@ -21,7 +21,6 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
-    "@ngx-translate/core": "^13.0.0",
     "moment": "^2.29.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

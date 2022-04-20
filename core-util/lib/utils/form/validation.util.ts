@@ -1,5 +1,5 @@
 import {AbstractControl, FormGroup, ValidatorFn} from '@angular/forms';
-import {DateRange} from 'core-util/models/range/date-range';
+import {DateRange} from 'core-util/lib/models/range/date-range';
 import {DateUtilUnit, isAfter, isBefore} from '../date/date.util';
 import moment from 'moment/moment';
 

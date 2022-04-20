@@ -43,7 +43,7 @@ Install as dependency.
         "src/assets",
         {
           "glob": "**/*",
-          "input": "./node_modules/@kodality-web/core-util/assets/i18n",
+          "input": "./node_modules/@kodality-web/core-util/lib/assets/i18n",
           "output": "/assets/i18n/core-util/"
         }
       ]

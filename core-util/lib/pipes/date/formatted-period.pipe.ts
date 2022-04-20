@@ -3,7 +3,7 @@ import moment from 'moment/moment';
 
 import {DateRange} from '../../models';
 import {I18nBasePipe, I18nService} from '../../i18n';
-import {KW_CU_NAMESPACE} from '../../core-util.token';
+import {APP_NAMESPACE} from '../../core-util.token';
 import {equalsDeep, isNil} from '../../utils';
 import {defaultIfEmpty, map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
@@ -35,7 +35,7 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform, 
   private latestParams: FormattedPeriodParams | undefined;
 
   public constructor(
-    @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
+    @Optional() @Inject(APP_NAMESPACE) private namespace: string,
     protected override translateService: I18nService
   ) {
     super(translateService);

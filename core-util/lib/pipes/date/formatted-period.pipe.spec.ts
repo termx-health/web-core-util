@@ -25,16 +25,18 @@ describe('FormattedPeriodPipe', () => {
     expect(pipe.transform(null)).toEqual('');
     expect(pipe.transform(moment().subtract(1, 'day').toDate())).toEqual('1d');
     expect(pipe.transform({
-      lower: moment('2010-01-01T00:00').toDate(),
-      upper: moment('2010-01-02T01:00').toDate()}
+        lower: moment('2010-01-01T00:00').toDate(),
+        upper: moment('2010-01-02T01:00').toDate()
+      }
     )).toEqual('1d');
     expect(pipe.transform({
       lower: moment('2010-01-01T00:00').toDate(),
       upper: moment('2011-02-02T01:00').toDate()
     })).toEqual('1y 1m 1d');
     expect(pipe.transform({
-      lower: moment('2010-01-01T00:00').toDate(),
-      upper: moment('2011-02-01T01:00').toDate()}
+        lower: moment('2010-01-01T00:00').toDate(),
+        upper: moment('2011-02-01T01:00').toDate()
+      }
     )).toEqual('1y 1m 0d');
     expect(pipe.transform({
       lower: moment('2010-01-01T00:00').toDate(),

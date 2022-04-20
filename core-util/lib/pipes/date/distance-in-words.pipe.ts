@@ -1,6 +1,6 @@
 import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
-import {KW_CU_NAMESPACE} from '../../core-util.token';
+import {APP_NAMESPACE} from '../../core-util.token';
 import {equalsDeep, isDefined, isNil} from '../../utils';
 import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
 
@@ -13,7 +13,7 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
   private latestDate: Date | undefined;
 
   public constructor(
-    @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
+    @Optional() @Inject(APP_NAMESPACE) private namespace: string,
     protected override translateService: I18nService
   ) {
     super(translateService);

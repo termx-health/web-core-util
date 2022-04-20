@@ -2,7 +2,7 @@ import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import {Interval} from '../../models';
 import {I18nBasePipe, I18nService} from '../../i18n';
 import {equalsDeep, isNil} from '../../utils';
-import {KW_CU_NAMESPACE} from '../../core-util.token';
+import {APP_NAMESPACE} from '../../core-util.token';
 import {defaultIfEmpty, map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
 
@@ -27,7 +27,7 @@ export class FormattedIntervalPipe extends I18nBasePipe implements PipeTransform
   private latestInterval: Interval | undefined;
 
   public constructor(
-    @Optional() @Inject(KW_CU_NAMESPACE) private namespace: string,
+    @Optional() @Inject(APP_NAMESPACE) private namespace: string,
     protected override translateService: I18nService
   ) {
     super(translateService);
@@ -67,7 +67,10 @@ export class FormattedIntervalPipe extends I18nBasePipe implements PipeTransform
 
   private getTranslationKey(interval: Interval): {val: number, key: string}[] {
     const steps: FormattedIntervalPrecision[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
-    return steps.filter(key => interval[key]).filter(key => interval[key]! > 0).map(key => ({val: interval[key]!, key: TRANSLATION_MAP[key]}));
+    return steps
+      .filter(key => interval[key])
+      .filter(key => interval[key]! > 0)
+      .map(key => ({val: interval[key]!, key: TRANSLATION_MAP[key]}));
   }
 
   public ngOnDestroy(): void {

@@ -32,7 +32,7 @@ describe('SearchHttpParams', () => {
   }));
 
   it('date', waitForAsync(() => {
-    const p = SearchHttpParams.build({a:  new Date('2010-10-10T10:10:10+03:00')});
+    const p = SearchHttpParams.build({a: new Date('2010-10-10T10:10:10+03:00')});
     expect(p.keys()).toEqual(['a']);
     expect(p.getAll('a')).toEqual(['2010-10-10T07:10:10.000Z']);
   }));

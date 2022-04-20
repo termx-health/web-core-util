@@ -2,7 +2,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CorePipesModule} from './pipes';
 import {I18nModule, I18nModuleConfig, I18nService, LOCALE_ID} from './i18n';
-import {KW_CU_NAMESPACE} from './core-util.token';
+import {APP_NAMESPACE} from './core-util.token';
 import moment from 'moment/moment';
 import {LIB_CONTEXT} from './core-util.context';
 import {flat} from './utils';
@@ -33,7 +33,7 @@ export class CoreUtilModule {
     return {
       ngModule: CoreUtilModule,
       providers: flat([
-        config?.namespace ? [{provide: KW_CU_NAMESPACE, useValue: config.namespace}] : [],
+        config?.namespace ? [{provide: APP_NAMESPACE, useValue: config.namespace}] : [],
         config?.locale ? [{provide: LOCALE_ID, useValue: config.locale}] : [],
         config?.loader ? [config?.loader] : []
       ])

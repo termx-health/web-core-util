@@ -1,14 +1,15 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {isNil} from '../../utils';
 
 @Pipe({
   name: 'substring'
 })
 export class SubstringPipe implements PipeTransform {
-  public transform(value: string, startIndex:number, endIndex?: number): string {
-    if (!startIndex && startIndex != 0) {
-      return value.substring(0);
+  public transform(value: string, startIndex: number, endIndex?: number): string {
+    if (isNil(startIndex)) {
+      return value;
     }
-    if (!endIndex || endIndex <= startIndex) {
+    if (isNil(endIndex) || endIndex <= startIndex) {
       return value.substring(startIndex);
     }
     return value.substring(startIndex, endIndex);

@@ -14,3 +14,4 @@ export * from './serialization/json.util';
 export * from './form/form.util';
 export * from './form/validation.util';
 export * from './form/input.util';
+export * from './convert/convert.util';

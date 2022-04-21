@@ -8,6 +8,7 @@
     "./lib/assets"
   ],
   "allowedNonPeerDependencies": [
+    "@angular/cdk",
     "lodash",
     "@types/lodash",
     "moment"

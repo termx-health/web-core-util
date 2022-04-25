@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "scripts/build.sh",
-    "build:util": "ng build core-util",
     "watch": "ng build core-util --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --watch=false --progress=false --browsers=ChromeHeadless --code-coverage=false",

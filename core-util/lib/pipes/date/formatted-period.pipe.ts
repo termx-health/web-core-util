@@ -1,6 +1,5 @@
 import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
-
 import {DateRange} from '../../models';
 import {I18nBasePipe, I18nService} from '../../i18n';
 import {APP_NAMESPACE} from '../../core-util.token';
@@ -50,7 +49,7 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform, 
     });
   }
 
-  public transform(period: DateRange | Date, params: FormattedPeriodParams = {}): string {
+  public transform(period?: DateRange | Date, params: FormattedPeriodParams = {}): string {
     if (isNil(period)) {
       return '';
     }

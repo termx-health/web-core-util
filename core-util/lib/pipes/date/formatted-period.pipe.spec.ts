@@ -7,7 +7,7 @@ import {Observable, of} from 'rxjs';
 describe('FormattedPeriodPipe', () => {
 
   const translateService: any = {
-    get(key: string | Array<string>, params?: Object): Observable<string> {
+    get(key: string | Array<string>): Observable<string> {
       const t: any = {};
       t['core.period.years'] = 'y';
       t['core.period.months'] = 'm';
@@ -20,9 +20,9 @@ describe('FormattedPeriodPipe', () => {
   };
 
 
-  const pipe = new FormattedPeriodPipe(null, translateService);
+  const pipe = new FormattedPeriodPipe('', translateService);
   it('should format period', async(() => {
-    expect(pipe.transform(null)).toEqual('');
+    expect(pipe.transform(undefined)).toEqual('');
     expect(pipe.transform(moment().subtract(1, 'day').toDate())).toEqual('1d');
     expect(pipe.transform({
         lower: moment('2010-01-01T00:00').toDate(),

@@ -7,7 +7,6 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
-    "noImplicitReturns": false,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noUnusedParameters": true,
@@ -20,18 +19,11 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "module": "ES6",
-    "target": "ES6",
-    "typeRoots": [
-      "node_modules/@types/!(node)"
-    ],
+    "target": "es2017",
+    "module": "es2020",
     "lib": [
-      "ES2019",
+      "es2020",
       "dom"
-    ],
-    "skipLibCheck": false,
-    "types": [
-      "jasmine"
     ]
   }
 }

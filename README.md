@@ -33,49 +33,8 @@ npm run publish
 
 Install as dependency.
 
-### Translations
-
-1. Import library assets into project in `angular.json`
-    ```json
-     {
-      "assets": [
-        "src/favicon.ico",
-        "src/assets",
-        {
-          "glob": "**/*",
-          "input": "./node_modules/@kodality-web/core-util/lib/assets/i18n",
-          "output": "/assets/i18n/core-util/"
-        }
-      ]
-    }
-    ```
-2. Configure `I18nModule` in `app.module.ts`
-    ```ts
-    export function translateLoader(http: HttpClient): I18nTranslateLoader {
-      // files get deep merged
-      return new I18nHttpTranslateLoader(http, {
-        resources: [
-          {prefix: './assets/i18n'},
-          {prefix: './assets/i18n/core-util'}
-        ]
-      });
-    }
-
-    @NgModule({
-      //... omitted properties
-      imports: [
-        CoreUtilModule,
-        I18nModule.forRoot({
-          loader: {
-            provide: I18nTranslateLoader,
-            useFactory: translateLoader,
-            deps: [HttpClient]
-          }
-        })
-      ]
-   })
-   ```
-3. To use locales other than **en**
+### Library translations
+* In order to use locales other than **en**
     ```ts
     import localeEt from '@angular/common/locales/et';
     import {registerLocaleData} from '@angular/common';
@@ -83,35 +42,8 @@ Install as dependency.
     registerLocaleData(localeEt)
     ```
 
-    * Alternative configuration with core-util namespace
+* Proxy **ngx-translate** lang changes to `I18nModule`
     ```ts
-    export function translateLoader(http: HttpClient): I18nTranslateLoader {
-      return new I18nHttpTranslateLoader(http, {
-        resources: [
-          {prefix: './assets/i18n'},
-          {prefix: './assets/i18n/core-util', namespace: 'the-best-module'}
-        ]
-      });
-    }
-
-    @NgModule({
-      //... omitted properties
-      imports: [
-        CoreUtilModule.forRoot({
-          namespace: 'the-best-module'
-        }),
-        I18nModule.forRoot({
-          loader: {
-            provide: I18nTranslateLoader,
-            useFactory: translateLoader,
-            deps: [HttpClient]
-          }
-        })
-      ]
-   })
-   ```
-    * To use translations along ngx-translate, simply proxy changes to `I18nModule`
-   ```ts
     export class AppModule {
       constructor(
         private translateService: TranslateService,
@@ -121,10 +53,9 @@ Install as dependency.
           this.i18nService.use(lang);
         })
       }
-   }
+    }
     ```
 
-   Inspired by **ngx-translate**.  
-   Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
+Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
 
 

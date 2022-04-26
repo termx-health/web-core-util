@@ -1,39 +1,38 @@
 import {DistanceInWordsPipe} from './distance-in-words.pipe';
-import {Observable, of} from 'rxjs';
 import {EventEmitter} from '@angular/core';
 
 describe('DistanceInWordsPipe', () => {
 
   const translateService: any = {
-    get(key: string | Array<string>, params?: any): Observable<string> {
-      if (key === 'core.pipe.distance-in-words.today') {
-        return of('today');
+    instant(key: string, params?: any): string {
+      if (key === 'core.pipe.distanceInWords.today') {
+        return 'today';
       }
-      if (key === 'core.pipe.distance-in-words.yesterday') {
-        return of('yesterday');
+      if (key === 'core.pipe.distanceInWords.yesterday') {
+        return 'yesterday';
       }
-      if (key === 'core.pipe.distance-in-words.days' && params.days == 2) {
-        return of('2 days ago');
+      if (key === 'core.pipe.distanceInWords.days' && params.days == 2) {
+        return '2 days ago';
       }
-      if (key === 'core.pipe.distance-in-words.weeks' && params.weeks == 2) {
-        return of('more than 2 week(s) ago');
+      if (key === 'core.pipe.distanceInWords.weeks' && params.weeks == 2) {
+        return 'more than 2 week(s) ago';
       }
-      if (key === 'core.pipe.distance-in-words.months' && params.months == 2) {
-        return of('more than 2 month(s) ago');
+      if (key === 'core.pipe.distanceInWords.months' && params.months == 2) {
+        return 'more than 2 month(s) ago';
       }
-      if (key === 'core.pipe.distance-in-words.year') {
-        return of('more than year ago');
+      if (key === 'core.pipe.distanceInWords.year') {
+        return 'more than year ago';
       }
-      if (key === 'core.pipe.distance-in-words.more-than') {
-        return of('more than');
+      if (key === 'core.pipe.distanceInWords.more-than') {
+        return 'more than';
       }
-      return of(null);
+      return key;
     },
     localeChange: new EventEmitter(),
     translationChange: new EventEmitter()
   };
 
-  const pipe = new DistanceInWordsPipe(null, translateService);
+  const pipe = new DistanceInWordsPipe(translateService);
   it('should return distance date as words', async () => {
     let today = new Date();
     expect(pipe.transform(today)).toEqual('today');

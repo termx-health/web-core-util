@@ -1,0 +1,25 @@
+import {Locale} from './locale';
+
+export const en: Locale = {
+  core: {
+    period: {
+      days: "d",
+      hours: "h",
+      minutes: "m",
+      months: "mon",
+      seconds: "s",
+      years: "y"
+    },
+    pipe: {
+      distanceInWords: {
+        yesterday: "yesterday",
+        today: "today",
+        days: "more than {{days}} day(s) ago",
+        weeks: "more than {{weeks}} week(s) ago",
+        months: "more than {{months}} month(s) ago",
+        year: "more than year ago"
+      }
+    }
+  }
+};
+

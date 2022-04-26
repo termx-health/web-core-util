@@ -1,11 +1,8 @@
-import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
+import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 import {DateRange} from '../../models';
 import {I18nBasePipe, I18nService} from '../../i18n';
-import {APP_NAMESPACE} from '../../core-util.token';
 import {equalsDeep, isNil} from '../../utils';
-import {defaultIfEmpty, map} from 'rxjs/operators';
-import {forkJoin} from 'rxjs';
 
 export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
 
@@ -33,20 +30,13 @@ export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform, 
   private latestPeriod: DateRange | Date | undefined;
   private latestParams: FormattedPeriodParams | undefined;
 
-  public constructor(
-    @Optional() @Inject(APP_NAMESPACE) private namespace: string,
-    protected override translateService: I18nService
-  ) {
+  public constructor(protected override translateService: I18nService) {
     super(translateService);
   }
 
   public updateValue(tokens: {precision: FormattedPeriodPrecision, val: number}[]): void {
-    const prefix = this.namespace ? `${this.namespace}.` : '';
-    const reqs = tokens.map(t => this.translateService.get(`${prefix}${TRANSLATION_MAP[t.precision]}`).pipe(map(trs => `${t.val}${trs}`))) || [];
-
-    forkJoin(reqs).pipe(defaultIfEmpty([])).subscribe((strings: string[]) => {
-      this.translatedValue = strings.join(' ');
-    });
+    const strings = tokens.map(t => `${t.val}${this.translateService.instant(TRANSLATION_MAP[t.precision])}`);
+    this.translatedValue = strings.join(' ');
   }
 
   public transform(period?: DateRange | Date, params: FormattedPeriodParams = {}): string {

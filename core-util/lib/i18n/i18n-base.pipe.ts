@@ -14,7 +14,7 @@ export abstract class I18nBasePipe {
       onTranslate?.(res);
       // this.ref.markForCheck();
     };
-    this.translateService.get(key, params).subscribe(_onTranslate);
+    _onTranslate(this.translateService.instant(key, params));
   }
 
 

@@ -1,6 +1,5 @@
-import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
+import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
-import {APP_NAMESPACE} from '../../core-util.token';
 import {equalsDeep, isDefined, isNil} from '../../utils';
 import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
 
@@ -12,18 +11,14 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
   private translatedValue: string = '';
   private latestDate: Date | undefined;
 
-  public constructor(
-    @Optional() @Inject(APP_NAMESPACE) private namespace: string,
-    protected override translateService: I18nService
-  ) {
+  public constructor(protected override translateService: I18nService) {
     super(translateService);
   }
 
 
   public updateValue(date: Date, key: string, params?: I18nTranslateParams): void {
-    const prefix = this.namespace ? `${this.namespace}.` : '';
-    this._translate(`${prefix}${key}`, params, (res: string): void => {
-      this.translatedValue = isDefined(res) ? res : `${prefix}${key}`;
+    this._translate(key, params, (res: string): void => {
+      this.translatedValue = isDefined(res) ? res : key;
       this.latestDate = date;
     });
   }
@@ -56,21 +51,21 @@ export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, 
     const daysDiff = moment(new Date()).diff(date, 'days');
 
     if (daysDiff === 0) {
-      return {key: `core.pipe.distance-in-words.today`};
+      return {key: `core.pipe.distanceInWords.today`};
     }
     if (daysDiff === 1) {
-      return {key: `core.pipe.distance-in-words.yesterday`};
+      return {key: `core.pipe.distanceInWords.yesterday`};
     }
     if (daysDiff > 1 && daysDiff <= 7) {
-      return {key: `core.pipe.distance-in-words.days`, params: {days: daysDiff}};
+      return {key: `core.pipe.distanceInWords.days`, params: {days: daysDiff}};
     }
     if (daysDiff > 7 && daysDiff <= 30) {
-      return {key: `core.pipe.distance-in-words.weeks`, params: {weeks: Math.round(daysDiff / 7)}};
+      return {key: `core.pipe.distanceInWords.weeks`, params: {weeks: Math.round(daysDiff / 7)}};
     }
     if (daysDiff > 30 && daysDiff < 365) {
-      return {key: `core.pipe.distance-in-words.months`, params: {months: Math.round(daysDiff / 30)}};
+      return {key: `core.pipe.distanceInWords.months`, params: {months: Math.round(daysDiff / 30)}};
     }
-    return {key: `core.pipe.distance-in-words.year`};
+    return {key: `core.pipe.distanceInWords.year`};
   }
 
 

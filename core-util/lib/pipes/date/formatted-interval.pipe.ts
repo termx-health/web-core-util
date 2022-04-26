@@ -1,10 +1,7 @@
-import {Inject, OnDestroy, Optional, Pipe, PipeTransform} from '@angular/core';
+import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {Interval} from '../../models';
 import {I18nBasePipe, I18nService} from '../../i18n';
 import {equalsDeep, isNil} from '../../utils';
-import {APP_NAMESPACE} from '../../core-util.token';
-import {defaultIfEmpty, map} from 'rxjs/operators';
-import {forkJoin} from 'rxjs';
 
 
 export type FormattedIntervalPrecision = keyof Interval
@@ -26,19 +23,13 @@ export class FormattedIntervalPipe extends I18nBasePipe implements PipeTransform
   private translatedValue: string = '';
   private latestInterval: Interval | undefined;
 
-  public constructor(
-    @Optional() @Inject(APP_NAMESPACE) private namespace: string,
-    protected override translateService: I18nService
-  ) {
+  public constructor(protected override translateService: I18nService) {
     super(translateService);
   }
 
   public updateValue(tokens: {val: number, key: string}[]): void {
-    const prefix = this.namespace ? `${this.namespace}.` : '';
-    const reqs = tokens.map(t => this.translateService.get(`${prefix}${t.key}`).pipe(map(trs => `${t.val}${trs}`))) || [];
-    forkJoin(reqs).pipe(defaultIfEmpty([])).subscribe((strings: string[]) => {
-      this.translatedValue = strings.length ? strings.join(' ') : '0';
-    });
+    const strings = tokens.map(t => `${t.val}${this.translateService.instant(t.key)}`);
+    this.translatedValue = strings.length ? strings.join(' ') : '0';
   }
 
   public transform(interval: Interval): string {

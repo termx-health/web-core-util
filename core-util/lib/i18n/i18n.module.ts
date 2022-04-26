@@ -1,17 +1,15 @@
-import {ModuleWithProviders, NgModule, Provider} from '@angular/core';
-import {I18nPipe} from './i18n.pipe';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {LOCALE_ID} from './i18n.token';
 import {flat} from '../utils';
 
 
 export interface I18nModuleConfig {
-  locale?: string,
-  loader?: Provider;
+  locale?: string
 }
 
 @NgModule({
-  declarations: [I18nPipe],
-  exports: [I18nPipe]
+  declarations: [],
+  exports: []
 })
 export class I18nModule {
   public static forRoot(config: I18nModuleConfig | undefined): ModuleWithProviders<I18nModule> {
@@ -19,8 +17,7 @@ export class I18nModule {
       ngModule: I18nModule,
       providers: [
         flat([
-          config?.locale ? [{provide: LOCALE_ID, useValue: config.locale}] : [],
-          config?.loader ? [config?.loader] : []
+          config?.locale ? [{provide: LOCALE_ID, useValue: config.locale}] : []
         ])
       ]
     };

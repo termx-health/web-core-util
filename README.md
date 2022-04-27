@@ -34,27 +34,27 @@ npm run publish
 Install as dependency.
 
 ### Library translations
-* In order to use locales other than **en**
-    ```ts
-    import localeEt from '@angular/common/locales/et';
-    import {registerLocaleData} from '@angular/common';
-    
-    registerLocaleData(localeEt)
-    ```
+In order to use locales other than **en**
+  ```ts
+  import localeEt from '@angular/common/locales/et';
+  import {registerLocaleData} from '@angular/common';
+  
+  registerLocaleData(localeEt)
+  ```
 
-* Proxy **ngx-translate** lang changes to `I18nModule`
-    ```ts
-    export class AppModule {
-      constructor(
-        private translateService: TranslateService,
-        private i18nService: I18nService
-      ) {
-        this.translateService.onLangChange.subscribe(({lang}) => {
-          this.i18nService.use(lang);
-        })
-      }
+Proxy **ngx-translate** lang changes to `I18nModule`
+  ```ts
+  export class AppModule {
+    constructor(
+      private translateService: TranslateService,
+      private i18nService: I18nService
+    ) {
+      this.translateService.onLangChange.subscribe(({lang}) => {
+        this.i18nService.use(lang);
+      })
     }
-    ```
+  }
+  ```
 
 Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
 

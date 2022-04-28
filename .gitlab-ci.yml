@@ -1,19 +1,7 @@
-image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder:latest
+image: registry.gitlab.com/kodality-public/gitlab-builders/ng
 
 stages:
   - build
-
-
-fast:
-  stage: build
-  script:
-    - npm install
-    - npm run test:ci
-    - npm run build
-  except:
-    - main
-    - /^r\d*\.\d*\.\d*$/
-
 
 .release:
   before_script:
@@ -24,7 +12,6 @@ fast:
     - npm run test:ci
     - npm run build
     - npm run publish ${VERSION}
-
 
 snapshot:
   extends: .release

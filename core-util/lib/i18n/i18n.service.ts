@@ -30,6 +30,9 @@ export class I18nService implements OnDestroy {
     this.use(locale);
   }
 
+  public get currentLang(): string | undefined {
+    return this._store.currentLang;
+  }
 
   public use(localeId: string): void {
     if (localeId) {

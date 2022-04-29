@@ -1,9 +1,10 @@
 import {BehaviorSubject} from 'rxjs';
-import {isDefined} from '../utils';
-import {EN, ET, Locale} from './locales';
+import {isDefined, mergeDeep} from '../utils';
+import {Locale} from './locale';
+import {EN, ET} from '../locales';
 
 
-export class I18nStore {
+export class CoreI18nStore {
   private _currentLang: string | undefined = undefined;
   private _translations: {[lang: string]: Locale} = {
     en: EN,
@@ -11,6 +12,7 @@ export class I18nStore {
   };
 
   public readonly langChange = new BehaviorSubject<string | undefined>(this._currentLang);
+  public readonly translationChange = new BehaviorSubject<{[lang: string]: Locale}>(this._translations);
 
 
   public use(lang: string): void {
@@ -18,6 +20,13 @@ export class I18nStore {
     this.langChange.next(lang);
   }
 
+
+  public addTranslations(lang: string, locale: Locale): void {
+    if (isDefined(lang) && isDefined(locale)) {
+      this._translations[lang] = mergeDeep((this._translations[lang] || {}), locale);
+      this.translationChange.next(this._translations);
+    }
+  }
 
   public get translations(): Locale | undefined {
     if (isDefined(this._currentLang)) {

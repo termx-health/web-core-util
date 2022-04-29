@@ -2,19 +2,19 @@ import {EventEmitter, Inject, Injectable, OnDestroy, Optional, Output} from '@an
 
 
 import {LOCALE_ID} from './i18n.token';
-import {I18nStore} from './i18n.store';
+import {CoreI18nStore} from './i18n.store';
 import {Subscription} from 'rxjs';
 import {getPathValue} from '../utils';
-import {Locale} from './locales';
+import {Locale} from './locale';
 
 
-export type I18nTranslateParams = {[param: string]: any};
+export type CoreI18nTranslateParams = {[param: string]: any};
 
 @Injectable({
   providedIn: 'root'
 })
-export class I18nService implements OnDestroy {
-  private _store: I18nStore;
+export class CoreI18nService implements OnDestroy {
+  private _store: CoreI18nStore;
 
   @Output() public localeChange = new EventEmitter<string>();
   @Output() public translationChange = new EventEmitter<{[localeId: string]: Locale}>();
@@ -24,15 +24,13 @@ export class I18nService implements OnDestroy {
   public constructor(
     @Optional() @Inject(LOCALE_ID) locale: string,
   ) {
-    this._store = new I18nStore();
+    this._store = new CoreI18nStore();
     this._subscriptions['localeChange'] = this._store.langChange.subscribe(val => this.localeChange.emit(val));
+    this._subscriptions['translationChange'] = this._store.translationChange.subscribe(val => this.translationChange.emit(val));
 
     this.use(locale);
   }
 
-  public get currentLang(): string | undefined {
-    return this._store.currentLang;
-  }
 
   public use(localeId: string): void {
     if (localeId) {
@@ -40,12 +38,16 @@ export class I18nService implements OnDestroy {
     }
   }
 
-  public instant(key: string, params?: I18nTranslateParams): string {
+  public instant(key: string, params?: CoreI18nTranslateParams): string {
     // NB: translations may be missing
     return this.parseTranslation(this._store.translations, key, params);
   }
 
-  private parseTranslation(translations: Locale | undefined, key: string, params?: I18nTranslateParams): string {
+  public add(lang: string, locale: Locale): void {
+    return this._store.addTranslations(lang, locale);
+  }
+
+  private parseTranslation(translations: Locale | undefined, key: string, params?: CoreI18nTranslateParams): string {
     // currently, only flat map is supported! {{obj1.obj2.obj3.key}} is yet to be implemented!
     let content = getPathValue(translations, key);
     if (typeof content === 'string') {
@@ -57,10 +59,16 @@ export class I18nService implements OnDestroy {
     return key;
   }
 
+
   public ngOnDestroy(): void {
     if (this._subscriptions) {
       Object.values(this._subscriptions).forEach(s => s.unsubscribe());
       this._subscriptions = {};
     }
+  }
+
+
+  public get currentLang(): string | undefined {
+    return this._store.currentLang;
   }
 }

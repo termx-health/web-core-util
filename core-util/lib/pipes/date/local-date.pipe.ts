@@ -1,19 +1,19 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {equalsDeep, format as formatDate, getDateFormat, isNil} from '../../utils';
 import {LIB_CONTEXT} from '../../core-util.context';
-import {I18nBasePipe, I18nService} from '../../i18n';
+import {CoreI18nBasePipe, CoreI18nService} from '../../i18n';
 
 @Pipe({
   name: 'localDate',
   pure: false
 })
-export class LocalDatePipe extends I18nBasePipe implements PipeTransform, OnDestroy {
+export class LocalDatePipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private formattedDate: string | undefined = '';
 
   private latestDate: Date | string | number | undefined;
   private latestParams: {format?: string | undefined, timezone?: string | undefined, locale?: string | undefined} = {};
 
-  public constructor(protected override translateService: I18nService) {
+  public constructor(protected override translateService: CoreI18nService) {
     super(translateService);
   }
 

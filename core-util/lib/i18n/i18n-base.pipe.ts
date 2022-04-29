@@ -1,15 +1,15 @@
-import {I18nService, I18nTranslateParams} from './i18n.service';
+import {CoreI18nService, CoreI18nTranslateParams} from './i18n.service';
 import {Subscription} from 'rxjs';
 
 
-export abstract class I18nBasePipe {
+export abstract class CoreI18nBasePipe {
   private localeChange: Subscription | undefined;
   private translateChange: Subscription | undefined;
 
-  protected constructor(protected translateService: I18nService) { }
+  protected constructor(protected translateService: CoreI18nService) { }
 
 
-  public _translate(key: string, params?: I18nTranslateParams, onTranslate?: (res: string) => void): void {
+  public _translate(key: string, params?: CoreI18nTranslateParams, onTranslate?: (res: string) => void): void {
     const _onTranslate = (res: string): void => {
       onTranslate?.(res);
       // this.ref.markForCheck();

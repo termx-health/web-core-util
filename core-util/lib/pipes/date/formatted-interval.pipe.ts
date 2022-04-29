@@ -1,6 +1,6 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {Interval} from '../../models';
-import {I18nBasePipe, I18nService} from '../../i18n';
+import {CoreI18nBasePipe, CoreI18nService} from '../../i18n';
 import {equalsDeep, isNil} from '../../utils';
 
 
@@ -19,11 +19,11 @@ const TRANSLATION_MAP: { [key in FormattedIntervalPrecision]: string } = {
   name: 'formattedInterval',
   pure: false
 })
-export class FormattedIntervalPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
+export class FormattedIntervalPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
   private latestInterval: Interval | undefined;
 
-  public constructor(protected override translateService: I18nService) {
+  public constructor(protected override translateService: CoreI18nService) {
     super(translateService);
   }
 

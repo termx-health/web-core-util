@@ -1,6 +1,4 @@
-import {Locale} from './locale';
-
-export const et: Locale = {
+export const et = {
   core: {
     period: {
       days: "p",

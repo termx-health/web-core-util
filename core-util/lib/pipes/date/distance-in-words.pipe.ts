@@ -1,22 +1,22 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 import {equalsDeep, isDefined, isNil} from '../../utils';
-import {I18nBasePipe, I18nService, I18nTranslateParams} from '../../i18n';
+import {CoreI18nBasePipe, CoreI18nService, CoreI18nTranslateParams} from '../../i18n';
 
 @Pipe({
   name: 'distanceInWords',
   pure: false
 })
-export class DistanceInWordsPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
+export class DistanceInWordsPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
   private latestDate: Date | undefined;
 
-  public constructor(protected override translateService: I18nService) {
+  public constructor(protected override translateService: CoreI18nService) {
     super(translateService);
   }
 
 
-  public updateValue(date: Date, key: string, params?: I18nTranslateParams): void {
+  public updateValue(date: Date, key: string, params?: CoreI18nTranslateParams): void {
     this._translate(key, params, (res: string): void => {
       this.translatedValue = isDefined(res) ? res : key;
       this.latestDate = date;

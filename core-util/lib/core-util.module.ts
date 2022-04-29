@@ -1,26 +1,26 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CorePipesModule} from './pipes';
-import {I18nModule, I18nModuleConfig, I18nService, LOCALE_ID} from './i18n';
+import {CoreI18nModule, CoreI18nModuleConfig, CoreI18nService, LOCALE_ID} from './i18n';
 import moment from 'moment/moment';
 import {LIB_CONTEXT} from './core-util.context';
 import {flat} from './utils';
 
 
-export interface CoreUtilModuleConfig extends I18nModuleConfig {
+export interface CoreUtilModuleConfig extends CoreI18nModuleConfig {
 }
 
 @NgModule({
   imports: [
     CommonModule,
-    I18nModule
+    CoreI18nModule
   ],
   exports: [
     CorePipesModule
   ]
 })
 export class CoreUtilModule {
-  public constructor(protected i18nService: I18nService) {
+  public constructor(protected i18nService: CoreI18nService) {
     i18nService.localeChange.subscribe(locale => {
       LIB_CONTEXT.locale = locale;
       moment.locale(locale); // maybe is not needed? should be handled outside?

@@ -1,7 +1,7 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import moment from 'moment/moment';
 import {DateRange} from '../../models';
-import {I18nBasePipe, I18nService} from '../../i18n';
+import {CoreI18nBasePipe, CoreI18nService} from '../../i18n';
 import {equalsDeep, isNil} from '../../utils';
 
 export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
@@ -25,12 +25,12 @@ const TRANSLATION_MAP: { [key in FormattedPeriodPrecision]: string } = {
   name: 'formattedPeriod',
   pure: false
 })
-export class FormattedPeriodPipe extends I18nBasePipe implements PipeTransform, OnDestroy {
+export class FormattedPeriodPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
   private latestPeriod: DateRange | Date | undefined;
   private latestParams: FormattedPeriodParams | undefined;
 
-  public constructor(protected override translateService: I18nService) {
+  public constructor(protected override translateService: CoreI18nService) {
     super(translateService);
   }
 

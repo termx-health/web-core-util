@@ -1,7 +1,7 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormControlOptions, FormGroup, NgForm, ValidatorFn, Validators} from '@angular/forms';
 import {isNil} from '../object/object.util';
 
-export function validateForm(form: FormGroup | FormArray | NgForm): boolean {
+export function validateForm(form?: FormGroup | FormArray | NgForm): boolean {
   if (form && form.invalid) {
     markAsDirty(form);
     return false;
@@ -10,7 +10,7 @@ export function validateForm(form: FormGroup | FormArray | NgForm): boolean {
 }
 
 
-export function markAsDirty(form: FormGroup | FormArray | NgForm): void {
+export function markAsDirty(form?: FormGroup | FormArray | NgForm): void {
   if (isNil(form)) {
     return;
   }
@@ -32,7 +32,7 @@ export function markAsDirty(form: FormGroup | FormArray | NgForm): void {
   });
 }
 
-export function markAsPristine(form: FormGroup | FormArray | NgForm): void {
+export function markAsPristine(form?: FormGroup | FormArray | NgForm): void {
   if (isNil(form)) {
     return;
   }

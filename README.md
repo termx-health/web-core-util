@@ -47,7 +47,7 @@ Proxy **ngx-translate** lang changes to `I18nModule`
   export class AppModule {
     constructor(
       private translateService: TranslateService,
-      private i18nService: I18nService
+      private i18nService: CoreI18nService
     ) {
       this.translateService.onLangChange.subscribe(({lang}) => {
         this.i18nService.use(lang);

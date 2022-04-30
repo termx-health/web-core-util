@@ -1,15 +1,11 @@
 import {BehaviorSubject} from 'rxjs';
 import {isDefined, mergeDeep} from '../utils';
 import {Locale} from './locale';
-import {EN, ET} from '../locales';
 
 
 export class CoreI18nStore {
   private _currentLang: string | undefined = undefined;
-  private _translations: {[lang: string]: Locale} = {
-    en: EN,
-    et: ET,
-  };
+  private _translations: {[lang: string]: Locale} = {};
 
   public readonly langChange = new BehaviorSubject<string | undefined>(this._currentLang);
   public readonly translationChange = new BehaviorSubject<{[lang: string]: Locale}>(this._translations);

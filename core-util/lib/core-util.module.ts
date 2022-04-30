@@ -5,6 +5,7 @@ import {CoreI18nModule, CoreI18nModuleConfig, CoreI18nService, LOCALE_ID} from '
 import moment from 'moment/moment';
 import {LIB_CONTEXT} from './core-util.context';
 import {flat} from './utils';
+import {EN, ET} from './locales';
 
 
 export interface CoreUtilModuleConfig extends CoreI18nModuleConfig {
@@ -21,6 +22,7 @@ export interface CoreUtilModuleConfig extends CoreI18nModuleConfig {
 })
 export class CoreUtilModule {
   public constructor(protected i18nService: CoreI18nService) {
+    i18nService.add({'en': EN, 'et': ET});
     i18nService.localeChange.subscribe(locale => {
       LIB_CONTEXT.locale = locale;
       moment.locale(locale); // maybe is not needed? should be handled outside?

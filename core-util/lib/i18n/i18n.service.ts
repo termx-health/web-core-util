@@ -1,14 +1,16 @@
 import {EventEmitter, Inject, Injectable, OnDestroy, Optional, Output} from '@angular/core';
 
 
-import {LOCALE_ID} from './i18n.token';
+import {LOCALE_ID, TRANSLATION_HANDLER} from './i18n.token';
 import {CoreI18nStore} from './i18n.store';
 import {Subscription} from 'rxjs';
-import {getPathValue} from '../utils';
+import {getPathValue, isDefined, isNil} from '../utils';
 import {Locale} from './locale';
 
 
 export type CoreI18nTranslateParams = {[param: string]: any};
+export type CoreI18nTranslationHandler = (key: string, params: any) => string;
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export class CoreI18nService implements OnDestroy {
 
   public constructor(
     @Optional() @Inject(LOCALE_ID) locale: string,
+    @Optional() @Inject(TRANSLATION_HANDLER) private translationHandler?: CoreI18nTranslationHandler,
   ) {
     this._store = new CoreI18nStore();
     this._subscriptions['localeChange'] = this._store.langChange.subscribe(val => this.localeChange.emit(val));
@@ -40,14 +43,30 @@ export class CoreI18nService implements OnDestroy {
 
   public instant(key: string, params?: CoreI18nTranslateParams): string {
     // NB: translations may be missing
-    return this.parseTranslation(this._store.translations, key, params);
+    if (isNil(this.currentLang)) {
+      return key;
+    }
+    let res = this.parseTranslation(this._store.translations, key, params);
+    if (isNil(res) && isDefined(this.translationHandler)) {
+      res = this.translationHandler(key, params);
+    }
+    return res || key;
   }
 
-  public add(lang: string, locale: Locale): void {
-    return this._store.addTranslations(lang, locale);
+  public add(lang: string, locale: Locale): void ;
+  public add(data: {[lang: string]: Locale}): void;
+  public add(...args: unknown[]): void {
+    if (args.length === 2) {
+      const [lang, locale] = args as [string, Locale];
+      return this._store.addTranslations(lang, locale);
+    }
+    if (args.length == 1) {
+      const data = args[0] as {[lang: string]: Locale};
+      Object.entries(data).forEach(([lang, locale]) => this._store.addTranslations(lang, locale));
+    }
   }
 
-  private parseTranslation(translations: Locale | undefined, key: string, params?: CoreI18nTranslateParams): string {
+  private parseTranslation(translations: Locale | undefined, key: string, params?: CoreI18nTranslateParams): string | undefined {
     // currently, only flat map is supported! {{obj1.obj2.obj3.key}} is yet to be implemented!
     let content = getPathValue(translations, key);
     if (typeof content === 'string') {
@@ -56,7 +75,6 @@ export class CoreI18nService implements OnDestroy {
       }
       return content;
     }
-    return key;
   }
 
 

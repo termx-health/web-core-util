@@ -22,7 +22,7 @@ export interface CoreUtilModuleConfig extends CoreI18nModuleConfig {
 })
 export class CoreUtilModule {
   public constructor(protected i18nService: CoreI18nService) {
-    i18nService.add({'en': EN, 'et': ET});
+    i18nService.addTranslations({'en': EN, 'et': ET});
     i18nService.localeChange.subscribe(locale => {
       LIB_CONTEXT.locale = locale;
       moment.locale(locale); // maybe is not needed? should be handled outside?

@@ -42,7 +42,6 @@ export class CoreI18nService implements OnDestroy {
   }
 
   public instant(key: string, params?: CoreI18nTranslateParams): string {
-    // NB: translations may be missing
     if (isNil(this.currentLang)) {
       return key;
     }
@@ -53,19 +52,6 @@ export class CoreI18nService implements OnDestroy {
     return res || key;
   }
 
-  public add(lang: string, locale: Locale): void ;
-  public add(data: {[lang: string]: Locale}): void;
-  public add(...args: unknown[]): void {
-    if (args.length === 2) {
-      const [lang, locale] = args as [string, Locale];
-      return this._store.addTranslations(lang, locale);
-    }
-    if (args.length == 1) {
-      const data = args[0] as {[lang: string]: Locale};
-      Object.entries(data).forEach(([lang, locale]) => this._store.addTranslations(lang, locale));
-    }
-  }
-
   private parseTranslation(translations: Locale | undefined, key: string, params?: CoreI18nTranslateParams): string | undefined {
     // currently, only flat map is supported! {{obj1.obj2.obj3.key}} is yet to be implemented!
     let content = getPathValue(translations, key);
@@ -74,6 +60,19 @@ export class CoreI18nService implements OnDestroy {
         Object.keys(params).forEach(key => (content = content.replace(new RegExp(`\{\{${key}\}\}`, 'g'), params[key])));
       }
       return content;
+    }
+  }
+
+  public addTranslations(lang: string, locale: Locale): void ;
+  public addTranslations(data: {[lang: string]: Locale}): void;
+  public addTranslations(...args: unknown[]): void {
+    if (args.length === 2) {
+      const [lang, locale] = args as [string, Locale];
+      return this._store.addTranslations(lang, locale);
+    }
+    if (args.length == 1) {
+      const data = args[0] as {[lang: string]: Locale};
+      Object.entries(data).forEach(([lang, locale]) => this._store.addTranslations(lang, locale));
     }
   }
 

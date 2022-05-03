@@ -5,6 +5,7 @@ export class QueryParams {
   public sort?: string | string[];
   public limit?: number = DEFAULT_LIMIT;
   public offset?: number = DEFAULT_OFFSET;
+  public page?: number;
 
   public constructor() {
     Object.defineProperty(this, 'page', {

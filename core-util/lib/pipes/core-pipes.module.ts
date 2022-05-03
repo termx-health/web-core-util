@@ -18,6 +18,7 @@ import {ApplyPipe} from './common/apply.pipe';
 import {InpurePipe} from './common/inpure.pipe';
 import {KeysPipe} from './common/keys.pipe';
 import {ValuesPipe} from './common/values.pipe';
+import {ToBooleanPipe} from './convert/to-boolean.pipe';
 import {SearchPipe} from './search/search.pipe';
 import {TextSearchPipe} from './search/text-search.pipe';
 import {AbbreviatePipe} from './string/abbreviate.pipe';
@@ -48,6 +49,7 @@ const pipes = [
   InpurePipe,
   KeysPipe,
   ValuesPipe,
+  ToBooleanPipe,
   SearchPipe,
   TextSearchPipe,
   AbbreviatePipe,

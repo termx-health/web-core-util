@@ -25,4 +25,5 @@ export * from './string/reverse.pipe';
 export * from './string/split.pipe';
 export * from './string/substring.pipe';
 export * from './core-pipes.module';
+export * from './convert/to-boolean.pipe';
 

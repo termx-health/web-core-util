@@ -15,10 +15,7 @@ const TRANSLATION_MAP: { [key in FormattedIntervalPrecision]: string } = {
   seconds: 'core.period.seconds'
 };
 
-@Pipe({
-  name: 'formattedInterval',
-  pure: false
-})
+@Pipe({name: 'formattedInterval', pure: false})
 export class FormattedIntervalPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
   private latestInterval: Interval | undefined;

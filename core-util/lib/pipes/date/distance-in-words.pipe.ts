@@ -3,10 +3,7 @@ import moment from 'moment/moment';
 import {equalsDeep, isDefined, isNil} from '../../utils';
 import {CoreI18nBasePipe, CoreI18nService, CoreI18nTranslateParams} from '../../i18n';
 
-@Pipe({
-  name: 'distanceInWords',
-  pure: false
-})
+@Pipe({name: 'distanceInWords', pure: false})
 export class DistanceInWordsPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
   private latestDate: Date | undefined;

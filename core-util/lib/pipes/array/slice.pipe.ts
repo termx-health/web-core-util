@@ -1,9 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {isNil} from '../../utils';
 
-@Pipe({
-  name: 'slice'
-})
+@Pipe({name: 'aSlice'})
 export class SlicePipe implements PipeTransform {
   public transform<T>(input: string | T[], limit: number, offset: number = 0): string | T[] | undefined {
     if (isNil(input)) {

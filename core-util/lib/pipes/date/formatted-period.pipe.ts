@@ -21,10 +21,7 @@ const TRANSLATION_MAP: { [key in FormattedPeriodPrecision]: string } = {
   second: 'core.period.seconds'
 };
 
-@Pipe({
-  name: 'formattedPeriod',
-  pure: false
-})
+@Pipe({name: 'formattedPeriod', pure: false})
 export class FormattedPeriodPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private translatedValue: string = '';
   private latestPeriod: DateRange | Date | undefined;

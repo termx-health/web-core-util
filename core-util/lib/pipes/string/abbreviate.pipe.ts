@@ -1,9 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {isNil} from '../../utils';
 
-@Pipe({
-  name: 'abbreviate'
-})
+@Pipe({name: 'abbreviate'})
 export class AbbreviatePipe implements PipeTransform {
   public transform(value: string, maxLength: number, ellipsis = '...'): string {
     if (isNil(value) || isNil(maxLength)) {

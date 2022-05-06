@@ -3,10 +3,7 @@ import {equalsDeep, format as formatDate, getDateFormat, isNil} from '../../util
 import {LIB_CONTEXT} from '../../core-util.context';
 import {CoreI18nBasePipe, CoreI18nService} from '../../i18n';
 
-@Pipe({
-  name: 'localDate',
-  pure: false
-})
+@Pipe({name: 'localDate', pure: false})
 export class LocalDatePipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
   private formattedDate: string | undefined = '';
 

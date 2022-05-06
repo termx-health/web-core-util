@@ -1,9 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {getPathValue, isNil, uniqueBy} from '../../utils';
 
-@Pipe({
-  name: 'merge'
-})
+@Pipe({name: 'merge'})
 export class MergePipe implements PipeTransform {
   public transform<T>(target: T[], source: T[], fn: string | ((x: T) => any)): T[] | undefined {
     if (isNil(target)) {

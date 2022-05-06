@@ -1,9 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {isNil, sort} from '../../utils';
 
-@Pipe({
-  name: 'sort'
-})
+@Pipe({name: 'sort'})
 export class SortPipe implements PipeTransform {
   public transform<T>(array: T[], key: string, direction?: 'ascend' | string): T[] {
     direction = direction || 'ascend';

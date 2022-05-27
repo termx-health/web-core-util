@@ -3,7 +3,7 @@ import {getDateTimeFormat} from '../../utils';
 import {LIB_CONTEXT} from '../../core-util.context';
 import {LocalDatePipe} from './local-date.pipe';
 
-@Pipe({name: 'localDateTime'})
+@Pipe({name: 'localDateTime', pure: false})
 export class LocalDateTimePipe extends LocalDatePipe implements PipeTransform {
   public override transform(date?: Date | string | number, format?: string, timezone?: string, locale?: string): string | undefined {
     const _format = format || getDateTimeFormat(LIB_CONTEXT.locale);

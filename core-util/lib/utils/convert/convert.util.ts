@@ -6,7 +6,7 @@ export function toBoolean(value: boolean | string): boolean {
 
 export function toNumber(value: number | string): number | undefined {
   const v = Number(value);
-  return isNaN(v) ? v : undefined;
+  return isFinite(v) ? v : undefined;
 }
 
 function propDecoratorFactory<T, D>(fn: (v: T) => D): (target: any, propName: string) => void {

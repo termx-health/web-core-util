@@ -4,6 +4,11 @@ export function toBoolean(value: boolean | string): boolean {
   return coerceBooleanProperty(value);
 }
 
+export function toNumber(value: number | string): number | undefined {
+  const v = Number(value);
+  return isNaN(v) ? v : undefined;
+}
+
 function propDecoratorFactory<T, D>(fn: (v: T) => D): (target: any, propName: string) => void {
   function propDecorator(target: any, propName: string, originalDescriptor?: TypedPropertyDescriptor<any>): any {
     const privatePropName = `$$__kuPropDecorator__${propName}`;
@@ -27,4 +32,8 @@ function propDecoratorFactory<T, D>(fn: (v: T) => D): (target: any, propName: st
 
 export function BooleanInput(): any {
   return propDecoratorFactory(toBoolean);
+}
+
+export function NumberInput(): any {
+  return propDecoratorFactory(toNumber);
 }

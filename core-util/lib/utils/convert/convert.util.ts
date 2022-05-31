@@ -1,4 +1,5 @@
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
+import {isNil} from '../object/object.util';
 
 export function toBoolean(value: boolean | string): boolean {
   return coerceBooleanProperty(value);
@@ -7,6 +8,13 @@ export function toBoolean(value: boolean | string): boolean {
 export function toNumber(value: number | string): number | undefined {
   const v = Number(value);
   return isFinite(v) ? v : undefined;
+}
+
+export function toString(value: number | string): string | undefined {
+  if (isNil(value)) {
+    return value;
+  }
+  return value.toString();
 }
 
 function propDecoratorFactory<T, D>(fn: (v: T) => D): (target: any, propName: string) => void {

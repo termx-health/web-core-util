@@ -6,6 +6,7 @@ import moment from 'moment/moment';
 import {LIB_CONTEXT} from './core-util.context';
 import {flat} from './utils';
 import {EN, ET} from './locales';
+import {CoreDirectivesModule} from './directives';
 
 
 export interface CoreUtilModuleConfig extends CoreI18nModuleConfig {
@@ -17,7 +18,8 @@ export interface CoreUtilModuleConfig extends CoreI18nModuleConfig {
     CoreI18nModule
   ],
   exports: [
-    CorePipesModule
+    CorePipesModule,
+    CoreDirectivesModule
   ]
 })
 export class CoreUtilModule {

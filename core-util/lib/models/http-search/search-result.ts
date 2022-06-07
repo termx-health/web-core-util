@@ -1,5 +1,5 @@
 export class SearchResult<T> {
-  public data: Array<T> = [];
+  public data: T[] = [];
   public meta?: SearchMeta = {};
 
   public static empty<T>(): SearchResult<T> {

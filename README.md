@@ -31,7 +31,9 @@ npm run publish
 
 ## Setup
 
-Install as dependency.
+```shell
+npm i @kodality-web/core-util@^0.0.0-SNAPSHOT
+```
 
 ### Library translations
 

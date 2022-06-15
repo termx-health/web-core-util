@@ -36,4 +36,16 @@ describe('SearchHttpParams', () => {
     expect(p.keys()).toEqual(['a']);
     expect(p.getAll('a')).toEqual(['2010-10-10T07:10:10.000Z']);
   }));
+
+  it('date-array', waitForAsync(() => {
+    const p = SearchHttpParams.build({a: [[new Date('2010-10-15T10:10:10+03:00')], [new Date('2010-10-21T10:10:10+03:00')]]});
+    expect(p.keys()).toEqual(['a']);
+    expect(p.getAll('a')).toEqual(['2010-10-15T07:10:10.000Z', '2010-10-21T07:10:10.000Z']);
+  }));
+
+  it('date-array-array', waitForAsync(() => {
+    const p = SearchHttpParams.build({a: [[new Date('2010-10-20T10:10:10+03:00'), new Date('2010-10-21T10:10:10+03:00')]]});
+    expect(p.keys()).toEqual(['a']);
+    expect(p.getAll('a')).toEqual(['2010-10-20T07:10:10.000Z,2010-10-21T07:10:10.000Z']);
+  }));
 });

@@ -1,5 +1,4 @@
 import {HttpParameterCodec, HttpParams} from '@angular/common/http';
-import moment from 'moment/moment';
 
 export class SearchHttpParams {
   public static build(query: any): HttpParams {
@@ -7,25 +6,34 @@ export class SearchHttpParams {
     if (!query) {
       return params;
     }
-    Object.keys(query).forEach(k => {
-      const param = query[k];
-      if (param && typeof param.getMonth === 'function') {
-        params = params.append(k, moment(param).toISOString());
-      } else if (Array.isArray(param)) {
+
+    Object.keys(query).forEach(key => {
+      const param = query[key];
+      if (Array.isArray(param)) {
         param.forEach(p => {
           if (Array.isArray(p)) {
-            params = p.length === 0 ? params : params.append(k, p.join(','));
+            params = p.length === 0 ? params : params.append(key, p.map(this.transformParam).join(','));
           } else {
-            params = params.append(k, p);
+            params = params.append(key, this.transformParam(p));
           }
         });
-      } else if (param !== undefined && param !== null && param !== '') {
-        params = params.append(k, param);
+      } else if (param !== undefined && param !== null) {
+        params = params.append(key, this.transformParam(param));
       }
     });
-
     return params;
   }
+
+  private static transformParam<T>(param: T): string | number | boolean {
+    if (param && Array.isArray(param)) {
+      return param.join(',');
+    }
+    if (param && param instanceof Date) {
+      return param.toISOString();
+    }
+    return param?.toString();
+  };
+
 }
 
 class CustomEncoder implements HttpParameterCodec {

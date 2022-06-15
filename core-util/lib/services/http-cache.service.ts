@@ -11,5 +11,4 @@ export class HttpCacheService {
     }
     return this.cache[key];
   }
-
 }

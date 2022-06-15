@@ -13,5 +13,4 @@ export class LocalStorageService {
       return JSON.parse(obj!);
     }
   }
-
 }

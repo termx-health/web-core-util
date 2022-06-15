@@ -24,17 +24,17 @@ export class SearchHttpParams {
     return params;
   }
 
-  private static transformParam<T>(param: T): string | number | boolean {
+  private static transformParam<T extends {}>(param: T): string | number | boolean {
     if (param && Array.isArray(param)) {
       return param.join(',');
     }
     if (param && param instanceof Date) {
       return param.toISOString();
     }
-    return param?.toString();
+    return param.toString();
   };
-
 }
+
 
 class CustomEncoder implements HttpParameterCodec {
   //https://github.com/angular/angular/issues/18261#issuecomment-338354119

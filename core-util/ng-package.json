@@ -9,8 +9,7 @@
   ],
   "allowedNonPeerDependencies": [
     "@angular/cdk",
-    "lodash",
-    "@types/lodash",
-    "moment"
+    "date-fns",
+    "lodash"
   ]
 }

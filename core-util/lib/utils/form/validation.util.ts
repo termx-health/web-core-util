@@ -1,7 +1,7 @@
 import {AbstractControl, FormGroup, ValidatorFn} from '@angular/forms';
 import {DateRange} from 'core-util/lib/models/range/date-range';
 import {DateUtilUnit, isAfter, isBefore} from '../date/date.util';
-import moment from 'moment/moment';
+import {isValid} from 'date-fns';
 
 export function periodValidator(lowerRequired = true, upperRequired = true): ValidatorFn {
   return (c: AbstractControl) => {
@@ -18,9 +18,9 @@ export function periodValidator(lowerRequired = true, upperRequired = true): Val
 
 export function dateRangeValidator(fromFieldName: string = 'validFrom', toFieldName: string = 'validTo'): ValidatorFn {
   return (c: AbstractControl) => {
-    const mFrom = moment(c.get(fromFieldName)?.value);
-    const mTo = moment(c.get(toFieldName)?.value);
-    return !(mFrom.isValid() && mTo.isValid()) || mFrom.isBefore(mTo) ? null : {invalid: true};
+    const mFrom = new Date(c.get(fromFieldName)?.value);
+    const mTo = new Date(c.get(toFieldName)?.value);
+    return !(isValid(mFrom) && isValid(mTo)) || isBefore(mFrom, mTo) ? null : {invalid: true};
   };
 }
 

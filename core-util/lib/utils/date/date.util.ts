@@ -1,13 +1,46 @@
-import moment from 'moment/moment';
 import {DateRange} from '../../models';
 import {formatDate} from '@angular/common';
 import {LIB_CONTEXT} from '../../core-util.context';
 import {isDefined, isNil} from '../object/object.util';
+import {
+  add as _add,
+  differenceInDays,
+  differenceInHours,
+  differenceInMilliseconds,
+  differenceInMinutes,
+  differenceInMonths,
+  differenceInSeconds,
+  differenceInWeeks,
+  differenceInYears,
+  endOfDay,
+  endOfHour,
+  endOfMinute,
+  endOfMonth,
+  endOfSecond,
+  endOfWeek,
+  endOfYear,
+  getHours,
+  getMilliseconds,
+  getMinutes,
+  getSeconds,
+  setHours,
+  setMilliseconds,
+  setMinutes,
+  setSeconds,
+  startOfDay,
+  startOfHour,
+  startOfMinute,
+  startOfMonth,
+  startOfSecond,
+  startOfWeek,
+  startOfYear,
+  sub
+} from 'date-fns';
 
-export type DateUtilUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+export type DateUtilUnit = "years" | "months" | "weeks" | "days" | "hours" | "minutes" | "seconds" | "milliseconds";
 
 export function fromString(date: string): Date {
-  return moment(date).toDate();
+  return new Date(date);
 }
 
 export function now(unit?: DateUtilUnit): Date {
@@ -22,39 +55,75 @@ export function format(date: Date | string | number | undefined, format: string,
   return isDefined(date) ? formatDate(date, format, locale, timezone) : undefined;
 }
 
+export function isEqual(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
+  return diff(d1, d2, granularity) === 0;
+}
+
 export function isBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return moment(d1).isBefore(moment(d2), granularity);
+  return diff(d1, d2, granularity) < 0;
 }
 
 export function isAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return moment(d1).isAfter(moment(d2), granularity);
+  return diff(d1, d2, granularity) > 0;
 }
 
 export function isSameOrBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return moment(d1).isSameOrBefore(moment(d2), granularity);
+  return diff(d1, d2, granularity) <= 0;
 }
 
 export function isSameOrAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return moment(d1).isSameOrAfter(moment(d2), granularity);
+  return diff(d1, d2, granularity) >= 0;
 }
 
 export function add(date: Date, amount: number, unit: DateUtilUnit): Date {
-  return moment(date).add(amount, unit).toDate();
+  return _add(date, {[amount]: unit} as Duration);
 }
 
 export function subtract(date: Date, amount: number, unit: DateUtilUnit): Date {
-  return moment(date).subtract(amount, unit).toDate();
+  return sub(date, {[amount]: unit} as Duration);
 }
 
 export function startOf(date: Date, unit: DateUtilUnit): Date {
-  return moment(date).startOf(unit).toDate();
+  const funs: {[u: string]: (d: Date) => Date} = {
+    seconds: startOfSecond,
+    minutes: startOfMinute,
+    hours: startOfHour,
+    days: startOfDay,
+    weeks: startOfWeek,
+    months: startOfMonth,
+    years: startOfYear
+  };
+  return funs[unit](date);
 }
 
 export function endOf(date: Date, unit: DateUtilUnit): Date {
-  return moment(date).endOf(unit).toDate();
+  const funs: {[u: string]: (d: Date) => Date} = {
+    seconds: endOfSecond,
+    minutes: endOfMinute,
+    hours: endOfHour,
+    days: endOfDay,
+    weeks: endOfWeek,
+    months: endOfMonth,
+    years: endOfYear
+  };
+  return funs[unit as string](date);
 }
 
-export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'day'): boolean {
+export function diff(date1: Date, date2: Date, unit: DateUtilUnit = 'milliseconds'): number {
+  const funs: { [u in DateUtilUnit]: (dateLeft: Date | number, dateRight: Date | number) => number } = {
+    milliseconds: differenceInMilliseconds,
+    seconds: differenceInSeconds,
+    minutes: differenceInMinutes,
+    hours: differenceInHours,
+    days: differenceInDays,
+    weeks: differenceInWeeks,
+    months: differenceInMonths,
+    years: differenceInYears
+  };
+  return funs[unit](date1, date2);
+}
+
+export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'days'): boolean {
   if (isNil(range) || isNil(date)) {
     return true;
   }
@@ -94,13 +163,11 @@ export function next(unit: DateUtilUnit, amount = 1): DateRange {
 
 export function mergeDateTime(date: Date, time: Date): Date | undefined {
   if (isDefined(date)) {
-    const d = moment(date);
-    const t = moment(time);
-    d.set('hour', t.get('hour'));
-    d.set('minute', t.get('minute'));
-    d.set('second', t.get('second'));
-    d.set('millisecond', 0);
-    return d.toDate();
+    date = setHours(date, getHours(time));
+    date = setMinutes(date, getMinutes(time));
+    date = setSeconds(date, getSeconds(time));
+    date = setMilliseconds(date, getMilliseconds(time));
+    return date;
   }
 }
 

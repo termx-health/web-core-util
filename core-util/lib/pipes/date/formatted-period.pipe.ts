@@ -1,8 +1,8 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import moment from 'moment/moment';
 import {DateRange} from '../../models';
 import {CoreI18nBasePipe, CoreI18nService} from '../../i18n';
 import {equalsDeep, isNil} from '../../utils';
+import {intervalToDuration} from 'date-fns';
 
 export type FormattedPeriodPrecision = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
 
@@ -66,17 +66,17 @@ export class FormattedPeriodPipe extends CoreI18nBasePipe implements PipeTransfo
 
 
   private getTranslationKey(period: DateRange | Date, params: FormattedPeriodParams): {precision: FormattedPeriodPrecision, val: number}[] {
-    const startDate = period.hasOwnProperty('lower') ? moment((<DateRange>period).lower) : moment(<Date>period);
-    const endDate = period.hasOwnProperty('lower') ? moment((<DateRange>period).upper || new Date()) : moment();
-    const duration = moment.duration(endDate.diff(startDate));
+    const startDate = period.hasOwnProperty('lower') ? new Date((<DateRange>period).lower!) : new Date(<Date>period);
+    const endDate = period.hasOwnProperty('lower') ? new Date((<DateRange>period).upper!) : new Date();
+    const duration = intervalToDuration({start: startDate, end: endDate});
 
     const precisionMap: { [key in FormattedPeriodPrecision]: number } = {
-      year: duration.years(),
-      month: duration.months(),
-      day: duration.days(),
-      hour: duration.hours(),
-      minute: duration.minutes(),
-      second: duration.seconds()
+      year: duration.years || 0,
+      month: duration.months || 0,
+      day: duration.days || 0,
+      hour: duration.hours || 0,
+      minute: duration.minutes || 0,
+      second: duration.seconds || 0
     };
 
     const tokens = [];

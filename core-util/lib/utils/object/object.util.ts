@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import cloneDeep from 'lodash.clonedeep';
+import isEqual from 'lodash.isequal';
+import merge from 'lodash.merge';
 
 
 export function isObject(value: any): boolean {
@@ -15,15 +17,15 @@ export function isNil(value: any): value is (undefined | null) {
 
 
 export function equalsDeep<T>(o1: T, o2: T): boolean {
-  return _.isEqual(o1, o2);
+  return isEqual(o1, o2);
 }
 
 export function copyDeep<T>(obj: T): T {
-  return _.cloneDeep(obj);
+  return cloneDeep(obj);
 }
 
 export function mergeDeep<T>(target: T, source: T): T {
-  return _.merge(target, source);
+  return merge(target, source);
 }
 
 export function omit<T extends {[key: string]: any}>(obj: T, omitBy = (value: any): boolean => isNil(value)): T {

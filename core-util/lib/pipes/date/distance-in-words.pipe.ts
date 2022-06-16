@@ -1,7 +1,7 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import moment from 'moment/moment';
 import {equalsDeep, isDefined, isNil} from '../../utils';
 import {CoreI18nBasePipe, CoreI18nService, CoreI18nTranslateParams} from '../../i18n';
+import {differenceInDays} from 'date-fns';
 
 @Pipe({name: 'distanceInWords', pure: false})
 export class DistanceInWordsPipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
@@ -45,7 +45,7 @@ export class DistanceInWordsPipe extends CoreI18nBasePipe implements PipeTransfo
   }
 
   private getTranslationKey(date: Date): {key: string, params?: object} {
-    const daysDiff = moment(new Date()).diff(date, 'days');
+    const daysDiff = differenceInDays(new Date(), date);
 
     if (daysDiff === 0) {
       return {key: `core.pipe.distanceInWords.today`};

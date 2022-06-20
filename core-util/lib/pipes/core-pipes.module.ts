@@ -5,12 +5,14 @@ import {ApplyPipe} from './common/apply.pipe';
 import {ConcatPipe} from './array/concat.pipe';
 import {DistanceInWordsPipe} from './date/distance-in-words.pipe';
 import {FilterPipe} from './array/filter.pipe';
+import {FirstPipe} from './array/first.pipe';
 import {FormattedIntervalPipe} from './date/formatted-interval.pipe';
 import {FormattedPeriodPipe} from './date/formatted-period.pipe';
 import {IncludesPipe} from './array/includes.pipe';
 import {InpurePipe} from './common/inpure.pipe';
 import {JoinPipe} from './array/join.pipe';
 import {KeysPipe} from './common/keys.pipe';
+import {LastPipe} from './array/last.pipe';
 import {LocalDatePipe} from './date/local-date.pipe';
 import {LocalDateTimePipe} from './date/local-date-time.pipe';
 import {LocalTimePipe} from './date/local-time.pipe';
@@ -36,12 +38,14 @@ const pipes = [
   ConcatPipe,
   DistanceInWordsPipe,
   FilterPipe,
+  FirstPipe,
   FormattedIntervalPipe,
   FormattedPeriodPipe,
   IncludesPipe,
   InpurePipe,
   JoinPipe,
   KeysPipe,
+  LastPipe,
   LocalDatePipe,
   LocalDateTimePipe,
   LocalTimePipe,
@@ -59,7 +63,7 @@ const pipes = [
   ToBooleanPipe,
   ToNumberPipe,
   ToStringPipe,
-  ValuesPipe
+  ValuesPipe,
 ];
 
 @NgModule({

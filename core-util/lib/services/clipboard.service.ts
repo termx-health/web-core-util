@@ -3,13 +3,13 @@ import {DOCUMENT} from '@angular/common';
 
 @Injectable({providedIn: 'root'})
 export class ClipboardService {
-  private window: Window;
+  private readonly window: Window;
 
   public constructor(@Inject(DOCUMENT) public document: Document) {
     this.window = document.defaultView as Window;
   }
 
-  // todo: fix deprecated methods & check browser support/platform
+  // todo: fix deprecated methods & check browser support/platform. use cdk?
 
   public copy(content: string): void {
     this.copyFromContent(content);

@@ -1,4 +1,4 @@
-image: registry.gitlab.com/kodality-public/gitlab-builders/ng
+image: registry.gitlab.com/kodality/gitlab-builders/ng
 
 stages:
   - build

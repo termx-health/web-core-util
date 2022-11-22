@@ -24,6 +24,8 @@ build:
     - npm run build
   only:
     - branches
+  except:
+    - main
 
 snapshot:
   extends: .build_base

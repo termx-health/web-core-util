@@ -17,7 +17,7 @@ before_script:
 
 
 build:
-  stage: build_base
+  stage: build
   script:
     - npm install
     - npm run test:ci
@@ -26,7 +26,7 @@ build:
     - branches
   except:
     - main
-
+    - /^\d*\.\d*.x$/
 
 snapshot:
   extends: .build_base
@@ -35,8 +35,9 @@ snapshot:
     - main
     - /^\d*\.\d*.x$/
 
+
 release:
-  extends: .release
+  extends: .build_base
   stage: build
   variables:
     VERSION: $CI_COMMIT_TAG | xargs

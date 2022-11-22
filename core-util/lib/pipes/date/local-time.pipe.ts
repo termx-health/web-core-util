@@ -5,8 +5,7 @@ import {LIB_CONTEXT} from '../../core-util.context';
 
 @Pipe({name: 'localTime', pure: false})
 export class LocalTimePipe extends LocalDatePipe implements PipeTransform {
-  public override transform(date?: Date | string | number, format?: string, timezone?: string, locale?: string): string | undefined {
-    const _format = format || getTimeFormat(LIB_CONTEXT.locale);
-    return super.transform(date, _format, timezone, locale);
+  public override transform(date?: Date | string | number, format?: string, timezone?: string, locale: string = LIB_CONTEXT.locale): string | undefined {
+    return super.transform(date, format || getTimeFormat(locale), timezone, locale);
   }
 }

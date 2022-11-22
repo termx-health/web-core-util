@@ -1,6 +1,15 @@
 import cloneDeep from 'lodash.clonedeep';
 import isEqual from 'lodash.isequal';
 import merge from 'lodash.merge';
+import unset from 'lodash.unset';
+
+export type RecursiveKeyOf<TObj> = {
+  [TKey in keyof TObj & (string | number)]:
+  TObj[TKey] extends any[] ? `${TKey}` :
+    TObj[TKey] extends object
+      ? `${TKey}` | `${TKey}.${RecursiveKeyOf<TObj[TKey]>}`
+      : `${TKey}`;
+}[keyof TObj & (string | number)];
 
 
 export function isObject(value: any): boolean {
@@ -28,15 +37,19 @@ export function mergeDeep<T>(target: T, source: T): T {
   return merge(target, source);
 }
 
-export function omit<T extends {[key: string]: any}>(obj: T, omitBy = (value: any): boolean => isNil(value)): T {
+export function omit<T extends {[key: string]: unknown}>(obj: T, omitBy = (value: unknown): boolean => isNil(value)): T {
   const copy = copyDeep(obj);
   Object.keys(obj).filter((key) => omitBy(copy[key])).forEach(key => delete copy[key]);
   return copy;
 }
 
 
-export function getPathValue<T>(o: T, path: string): any {
-  if (isDefined(o)) {
-    return path?.split('.').reduce((obj: any, t) => obj?.[t], o);
+export function getPathValue<T, R>(obj: T | undefined, path: string | RecursiveKeyOf<T> | undefined): R | undefined {
+  if (isDefined(obj) && isDefined(path)) {
+    return path.split('.').reduce((obj: any, t) => obj?.[t], obj) as R;
   }
+}
+
+export function pathDelete<T>(o: T, path: string): void {
+  unset(o, path);
 }

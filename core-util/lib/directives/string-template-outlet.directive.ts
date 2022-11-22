@@ -2,9 +2,7 @@ import {Directive, EmbeddedViewRef, Input, OnChanges, SimpleChange, SimpleChange
 
 type Any = any;
 
-@Directive({
-  selector: '[stringTemplateOutlet]',
-})
+@Directive({selector: '[stringTemplateOutlet]'})
 export class StringTemplateOutletDirective implements OnChanges {
   private embeddedViewRef: EmbeddedViewRef<Any> | null = null;
   private context = {$implicit: null};

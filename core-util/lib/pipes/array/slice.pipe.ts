@@ -10,7 +10,6 @@ export class SlicePipe implements PipeTransform {
     if (isNil(limit)) {
       return input;
     }
-
     if (Array.isArray(input)) {
       return input.slice(offset, offset + limit);
     }

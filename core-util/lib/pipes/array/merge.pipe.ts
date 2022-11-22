@@ -10,6 +10,11 @@ export class MergePipe implements PipeTransform {
     if (!source?.length) {
       return target;
     }
-    return uniqueBy([...target.filter(Boolean), ...source.filter(Boolean)], el => typeof fn === 'string' ? getPathValue(el, fn) : fn(el));
+    return uniqueBy(
+      [...target.filter(Boolean), ...source.filter(Boolean)],
+      el => typeof fn === 'string' ? getPathValue(el, fn) : fn(el)
+    );
   }
 }
+
+

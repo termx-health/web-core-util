@@ -1,12 +1,22 @@
-export function group<T>(array: T[], fn: (el: T) => string | number | symbol): {[key: string | number | symbol]: T} {
-  return array.reduce((acc, el) => ({...acc, [fn(el)]: el}), {}) as Record<string | number | symbol, T>;
+export function group<K extends string | number | symbol, V, R = V>(
+  array: V[],
+  groupBy: (val: V) => K,
+  transform: (val: V) => R = (val): R => val as unknown as R
+): Record<K, R> {
+  return array.reduce((acc, val) => ({...acc, [groupBy(val)]: transform(val)}), {}) as Record<K, R>;
 }
 
-export function collect<T>(array: T[], fn: (x: T) => string | number | symbol): {[key: string | number | symbol]: T[]} {
-  const _acc: Record<string | number | symbol, T[]> = {};
 
-  return array.reduce((acc, el) => {
-    const key = fn(el);
-    return ({...acc, [key]: [...(acc[key] || []), el]});
-  }, _acc) as Record<string | number | symbol, T[]>;
+export function collect<K extends string | number | symbol, V, R = V>(
+  array: V[],
+  collectBy: (val: V) => K,
+  transform: (val: V) => R = (val): R => val as unknown as R
+): Record<K, R[]> {
+  const _acc = {} as Record<K, R[]>;
+
+  return array.reduce((acc, val) => {
+    const k = collectBy(val);
+    const v = transform(val);
+    return ({...acc, [k]: [...(acc[k] || []), v]});
+  }, _acc) as Record<K, R[]>;
 }

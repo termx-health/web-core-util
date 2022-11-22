@@ -76,11 +76,11 @@ export function isSameOrAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): b
 }
 
 export function add(date: Date, amount: number, unit: DateUtilUnit): Date {
-  return _add(date, {[amount]: unit} as Duration);
+  return _add(date, {[unit]: amount} as Duration);
 }
 
 export function subtract(date: Date, amount: number, unit: DateUtilUnit): Date {
-  return sub(date, {[amount]: unit} as Duration);
+  return sub(date, {[unit]: amount} as Duration);
 }
 
 export function startOf(date: Date, unit: DateUtilUnit): Date {
@@ -143,7 +143,6 @@ export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'days
   return Object.values(valid).every(Boolean);
 }
 
-
 export function previous(unit: DateUtilUnit, amount = 1): DateRange {
   const prev = add(new Date(), -1 * amount, unit);
   return new DateRange({
@@ -160,8 +159,10 @@ export function next(unit: DateUtilUnit, amount = 1): DateRange {
   });
 }
 
-
 export function mergeDateTime(date: Date, time: Date): Date | undefined {
+  if (isNil(time)) {
+    return date;
+  }
   if (isDefined(date)) {
     date = setHours(date, getHours(time));
     date = setMinutes(date, getMinutes(time));
@@ -170,7 +171,4 @@ export function mergeDateTime(date: Date, time: Date): Date | undefined {
     return date;
   }
 }
-
-
-
 

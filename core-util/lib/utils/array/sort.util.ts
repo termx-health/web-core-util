@@ -1,12 +1,12 @@
-import {getPathValue, isNil} from '../object/object.util';
+import {getPathValue, isNil, RecursiveKeyOf} from '../object/object.util';
 import {LIB_CONTEXT} from '../../core-util.context';
 
-export function sort<T>(array: T[], key: string, ascending: boolean = true): T[] {
+export function sort<T>(array: T[], key?: string | RecursiveKeyOf<T>, ascending: boolean = true): T[] {
   if (isNil(key)) {
     return array;
   }
 
-  const sortParams = key.replace(' ', '').split(',');
+  const sortParams = (key as string).replaceAll(' ', '').split(',');
   return array.sort((a, b): number => {
     for (let param of sortParams) {
       let tempAscending = ascending;
@@ -23,7 +23,6 @@ export function sort<T>(array: T[], key: string, ascending: boolean = true): T[]
   });
 }
 
-
 export function compareValues(val1: any, val2: any, ascending: boolean = true): number {
   if (typeof val1 === 'string' && typeof val2 === 'string') {
     return compareStrings(val1, val2, ascending);
@@ -34,9 +33,11 @@ export function compareValues(val1: any, val2: any, ascending: boolean = true): 
   if (val1 instanceof Date && val2 instanceof Date) {
     return compareDates(val1, val2, ascending);
   }
+  if (isNil(val1)) {
+    return -1;
+  }
   return 0;
 }
-
 
 export function compareStrings(val1: string, val2: string, ascending: boolean = true): number {
   return (ascending ? 1 : -1) * val1.toLowerCase().localeCompare(val2.toLowerCase(), LIB_CONTEXT.locale);

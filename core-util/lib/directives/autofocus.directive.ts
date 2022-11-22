@@ -1,10 +1,9 @@
 import {AfterViewInit, Directive, ElementRef, Input} from '@angular/core';
-import {findFocusableElement} from '../utils';
+import {BooleanInput, findFocusableElement} from '../utils';
 
-@Directive({
-  selector: '[autofocus], [autofocus]'
-})
+@Directive({selector: '[autofocus]'})
 export class AutofocusDirective implements AfterViewInit {
+  @Input() @BooleanInput() public autofocus: boolean | string = true;
   @Input() public focusTimeout: number = 100;
 
   public constructor(private el: ElementRef<HTMLInputElement>) {}
@@ -12,7 +11,7 @@ export class AutofocusDirective implements AfterViewInit {
   public ngAfterViewInit(): void {
     setTimeout(() => {
       const fel = findFocusableElement(this.el.nativeElement);
-      if (fel) {
+      if (fel && this.autofocus) {
         fel.focus();
       }
     }, this.focusTimeout);

@@ -1,4 +1,4 @@
-# Kodality Utils
+# Kodality Utils | Angular 14
 
 ## Build
 
@@ -74,7 +74,8 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]}
   ]
 })
-export class AppModule {}
+export class AppModule {
+}
 ```
 
 Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*

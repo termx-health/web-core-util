@@ -4,20 +4,19 @@ export function unique<T>(value: T, index: number, self: T[]): boolean {
   return self.indexOf(value) === index;
 }
 
-export function uniqueBy<T>(data: T[], fn: (x: T) => any): T[] | undefined {
+export function uniqueBy<T>(data: T[], fn: (x: T) => unknown): T[] | undefined {
   if (isNil(data)) {
     return undefined;
   }
   return Object.values(data.reduce((uniq, val) => {
-      const k = fn(val);
+      const k = fn(val) as string;
       uniq[k] = uniq[k] || val;
       return uniq;
-    }, {} as any)
+    }, {} as Record<string, T>)
   );
 }
 
 export function flat<T>(array: T[]): T[] {
-  // return array.reduce((a, b) => a.concat(b), []);
   return [...array.flat(Infinity)] as T[];
 }
 
@@ -30,3 +29,4 @@ export function remove<T>(array: T[], item: T): void {
     array.splice(i, 1);
   }
 }
+

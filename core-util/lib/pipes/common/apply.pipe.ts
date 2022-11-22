@@ -5,6 +5,6 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class ApplyPipe implements PipeTransform {
   // todo: add generics
   public transform(value: any, fun: (f: any, ...arg: any[]) => any, ...fnArg: any[]): any {
-    return fun?.(value, ...fnArg) ?? value;
+    return fun?.(value, ...fnArg);
   }
 }

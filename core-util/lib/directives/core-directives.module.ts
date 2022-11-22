@@ -9,7 +9,7 @@ const directives = [
 ];
 
 @NgModule({
-  imports: [CommonModule,],
+  imports: [CommonModule],
   declarations: directives,
   exports: directives
 })

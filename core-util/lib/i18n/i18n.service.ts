@@ -12,9 +12,7 @@ export type CoreI18nTranslateParams = {[param: string]: any};
 export type CoreI18nTranslationHandler = (key: string, params: any) => string;
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class CoreI18nService implements OnDestroy {
   private _store: CoreI18nStore;
 
@@ -47,17 +45,18 @@ export class CoreI18nService implements OnDestroy {
     }
     let res = this.parseTranslation(this._store.translations, key, params);
     if (isNil(res) && isDefined(this.translationHandler)) {
-      res = this.translationHandler(key, params);
+      res = this.translationHandler!(key, params);
     }
     return res || key;
   }
 
   private parseTranslation(translations: Locale | undefined, key: string, params?: CoreI18nTranslateParams): string | undefined {
     // currently, only flat map is supported! {{obj1.obj2.obj3.key}} is yet to be implemented!
-    let content = getPathValue(translations, key);
+    let content = getPathValue<Locale, string>(translations, key);
+
     if (typeof content === 'string') {
       if (params) {
-        Object.keys(params).forEach(key => (content = content.replace(new RegExp(`\{\{${key}\}\}`, 'g'), params[key])));
+        Object.keys(params).forEach(key => (content = content?.replace(new RegExp(`\{\{${key}\}\}`, 'g'), params[key])));
       }
       return content;
     }

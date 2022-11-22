@@ -14,8 +14,8 @@ export class LocalDatePipe extends CoreI18nBasePipe implements PipeTransform, On
     super(translateService);
   }
 
-  public updateValue(date?: Date | string | number, format?: string, timezone?: string, locale?: string): void {
-    this.formattedDate = formatDate(date, format || getDateFormat(LIB_CONTEXT.locale), locale, timezone);
+  public updateValue(date?: Date | string | number, format?: string, timezone?: string, locale: string = LIB_CONTEXT.locale): void {
+    this.formattedDate = formatDate(date, format || getDateFormat(locale), locale, timezone);
     this.latestDate = date;
     this.latestParams = {format, timezone, locale};
   }

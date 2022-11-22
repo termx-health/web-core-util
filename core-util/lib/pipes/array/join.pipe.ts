@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {join} from '../../utils';
+import {isDefined, join} from '../../utils';
 
 @Pipe({name: 'join'})
 export class JoinPipe implements PipeTransform {
@@ -7,6 +7,6 @@ export class JoinPipe implements PipeTransform {
     if (Array.isArray(elements)) {
       return join(elements, delimiter);
     }
-    return join([elements], delimiter);
+    return isDefined(elements) ? join([elements], delimiter) : undefined;
   }
 }

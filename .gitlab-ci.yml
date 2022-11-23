@@ -8,14 +8,6 @@ before_script:
   - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
 
 
-.build_base:
-  script:
-    - npm install
-    - npm run test:ci
-    - npm run build
-    - npm run publish ${VERSION}
-
-
 build:
   stage: build
   script:
@@ -28,16 +20,23 @@ build:
     - main
     - /^\d*\.\d*.x$/
 
+
+.publish_base:
+  script:
+    - npm install
+    - npm run test:ci
+    - npm run build
+    - npm run publish ${VERSION}
+
 snapshot:
-  extends: .build_base
+  extends: .publish_base
   stage: build
   only:
     - main
     - /^\d*\.\d*.x$/
 
-
 release:
-  extends: .build_base
+  extends: .publish_base
   stage: build
   variables:
     VERSION: $CI_COMMIT_TAG | xargs

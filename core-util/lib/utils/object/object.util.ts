@@ -1,7 +1,4 @@
-import cloneDeep from 'lodash.clonedeep';
-import isEqual from 'lodash.isequal';
-import merge from 'lodash.merge';
-import unset from 'lodash.unset';
+import {cloneDeep, isEqual, merge, unset} from 'lodash';
 
 export type RecursiveKeyOf<TObj> = {
   [TKey in keyof TObj & (string | number)]:

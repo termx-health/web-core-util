@@ -6,7 +6,7 @@ export function sort<T>(array: T[], key?: string | RecursiveKeyOf<T>, ascending:
     return array;
   }
 
-  const sortParams = (key as string).replaceAll(' ', '').split(',');
+  const sortParams = key.replaceAll(' ', '').split(',');
   return array.sort((a, b): number => {
     for (let param of sortParams) {
       let tempAscending = ascending;

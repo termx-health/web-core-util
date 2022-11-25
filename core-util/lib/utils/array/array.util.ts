@@ -20,13 +20,14 @@ export function flat<T>(array: T[]): T[] {
   return [...array.flat(Infinity)] as T[];
 }
 
-export function remove<T>(array: T[], item: T): void {
+export function remove<T>(array: T[], item: T): T[] {
   if (isNil(array) || isNil(item)) {
-    return undefined;
+    return array;
   }
   const i = array.indexOf(item);
   if (i !== -1) {
     array.splice(i, 1);
   }
+  return [...array];
 }
 

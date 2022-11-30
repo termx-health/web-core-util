@@ -6,7 +6,7 @@ VERSION=$1
 if [ -z $VERSION ]; then
   v=$(cat package.json | sed -n 's/^ *"version": "\(.*\)",/\1/p')
   ts=$(date +%s)
-  VERSION=$(echo "$v" | sed "s/.0.0$/.0.0-SNAPSHOT.$ts/g")
+  VERSION=$(echo "$v" | sed "s/.0.0$/.0.0-snapshot.$ts/g")
 fi
 [[ -z VERSION ]] && echo "give me a version" && exit 1
 echo "publishing $VERSION"

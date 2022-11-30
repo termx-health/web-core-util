@@ -39,7 +39,7 @@ import {
 
 export type DateUtilUnit = "years" | "months" | "weeks" | "days" | "hours" | "minutes" | "seconds" | "milliseconds";
 
-export function fromString(date: string): Date {
+export function from(date: string | Date): Date {
   return new Date(date);
 }
 

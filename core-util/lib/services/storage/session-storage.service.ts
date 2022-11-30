@@ -13,4 +13,8 @@ export class SessionStorageService {
       return JSON.parse(obj!);
     }
   }
+
+  public remove(key: string): void {
+    sessionStorage.removeItem(key);
+  }
 }

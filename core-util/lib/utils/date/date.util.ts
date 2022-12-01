@@ -56,31 +56,31 @@ export function format(date: Date | string | number | undefined, format: string,
 }
 
 export function isEqual(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return diff(d1, d2, granularity) === 0;
+  return diff(from(d1), from(d2), granularity) === 0;
 }
 
 export function isBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return diff(d1, d2, granularity) < 0;
+  return diff(from(d1), from(d2), granularity) < 0;
 }
 
 export function isAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return diff(d1, d2, granularity) > 0;
+  return diff(from(d1), from(d2), granularity) > 0;
 }
 
 export function isSameOrBefore(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return diff(d1, d2, granularity) <= 0;
+  return diff(from(d1), from(d2), granularity) <= 0;
 }
 
 export function isSameOrAfter(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {
-  return diff(d1, d2, granularity) >= 0;
+  return diff(from(d1), from(d2), granularity) >= 0;
 }
 
 export function add(date: Date, amount: number, unit: DateUtilUnit): Date {
-  return _add(date, {[unit]: amount} as Duration);
+  return _add(from(date), {[unit]: amount} as Duration);
 }
 
 export function subtract(date: Date, amount: number, unit: DateUtilUnit): Date {
-  return sub(date, {[unit]: amount} as Duration);
+  return sub(from(date), {[unit]: amount} as Duration);
 }
 
 export function startOf(date: Date, unit: DateUtilUnit): Date {
@@ -93,7 +93,7 @@ export function startOf(date: Date, unit: DateUtilUnit): Date {
     months: startOfMonth,
     years: startOfYear
   };
-  return funs[unit](date);
+  return funs[unit](from(date));
 }
 
 export function endOf(date: Date, unit: DateUtilUnit): Date {
@@ -106,7 +106,7 @@ export function endOf(date: Date, unit: DateUtilUnit): Date {
     months: endOfMonth,
     years: endOfYear
   };
-  return funs[unit as string](date);
+  return funs[unit as string](from(date));
 }
 
 export function diff(date1: Date, date2: Date, unit: DateUtilUnit = 'milliseconds'): number {

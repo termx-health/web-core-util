@@ -1,6 +1,4 @@
 import {DateRange} from '../../models';
-import {formatDate} from '@angular/common';
-import {LIB_CONTEXT} from '../../core-util.context';
 import {isDefined, isNil} from '../object/object.util';
 import {
   add as _add,
@@ -19,10 +17,13 @@ import {
   endOfSecond,
   endOfWeek,
   endOfYear,
+  format as _format,
   getHours,
   getMilliseconds,
   getMinutes,
   getSeconds,
+  parse as _parse,
+  isValid as _isValid,
   setHours,
   setMilliseconds,
   setMinutes,
@@ -48,11 +49,18 @@ export function now(unit?: DateUtilUnit): Date {
 }
 
 /**
- * Formats a date according to locale rules.
- * Use Angular format rules! // https://angular.io/api/common/DatePipe#custom-format-options
+ * Formats a date according to date-fns format rules. https://date-fns.org/v2.29.3/docs/format
  */
-export function format(date: Date | string | number | undefined, format: string, locale = LIB_CONTEXT.locale, timezone?: string): string | undefined {
-  return isDefined(date) ? formatDate(date, format, locale, timezone) : undefined;
+export function format(date: Date | string | number | undefined, format: string): string | undefined {
+  return isDefined(date) ? _format(new Date(date), format) : undefined;
+}
+
+export function parse(date: string, format: string): Date | undefined {
+  return isDefined(date) ? _parse(date, format, new Date()) : undefined;
+}
+
+export function isValid(date: Date | string): boolean {
+  return _isValid(date);
 }
 
 export function isEqual(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {

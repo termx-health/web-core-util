@@ -8,36 +8,36 @@ export class LocalDatePipe extends CoreI18nBasePipe implements PipeTransform, On
   private formattedDate: string | undefined = '';
 
   private latestDate: Date | string | number | undefined;
-  private latestParams: {format?: string | undefined, timezone?: string | undefined, locale?: string | undefined} = {};
+  private latestParams: {format?: string | undefined, locale?: string | undefined} = {};
 
   public constructor(protected override translateService: CoreI18nService) {
     super(translateService);
   }
 
-  public updateValue(date?: Date | string | number, format?: string, timezone?: string, locale: string = LIB_CONTEXT.locale): void {
-    this.formattedDate = formatDate(date, format || getDateFormat(locale), locale, timezone);
+  public updateValue(date?: Date | string | number, format?: string, locale: string = LIB_CONTEXT.locale): void {
+    this.formattedDate = formatDate(date, format || getDateFormat(locale));
     this.latestDate = date;
-    this.latestParams = {format, timezone, locale};
+    this.latestParams = {format, locale};
   }
 
-  public transform(date?: Date | string | number, format?: string, timezone?: string, locale?: string): string | undefined {
+  public transform(date?: Date | string | number, format?: string, locale?: string): string | undefined {
     if (isNil(date)) {
       return '';
     }
 
-    if (equalsDeep(date, this.latestDate) && equalsDeep({format, timezone, locale}, this.latestParams)) {
+    if (equalsDeep(date, this.latestDate) && equalsDeep({format, locale}, this.latestParams)) {
       return this.formattedDate;
     }
 
     this.latestDate = date;
-    this.latestParams = {format, timezone, locale};
-    this.updateValue(date, format, timezone, locale);
+    this.latestParams = {format, locale};
+    this.updateValue(date, format, locale);
 
     this._dispose();
     this._subscribeOnChanges(() => {
       if (this.latestDate) {
         this.latestDate = undefined;
-        this.updateValue(date, format, timezone, locale);
+        this.updateValue(date, format, locale);
       }
     });
 

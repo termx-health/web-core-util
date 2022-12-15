@@ -4,7 +4,7 @@ import {EventEmitter, Inject, Injectable, OnDestroy, Optional, Output} from '@an
 import {LOCALE_ID, TRANSLATION_HANDLER} from './i18n.token';
 import {CoreI18nStore} from './i18n.store';
 import {Subscription} from 'rxjs';
-import {getPathValue, isDefined, isNil} from '../utils';
+import {getPathValue, isNil} from '../utils';
 import {Locale} from './locale';
 
 
@@ -43,10 +43,16 @@ export class CoreI18nService implements OnDestroy {
     if (isNil(this.currentLang)) {
       return key;
     }
-    let res = this.parseTranslation(this._store.translations, key, params);
-    if (isNil(res) && isDefined(this.translationHandler)) {
-      res = this.translationHandler!(key, params);
+
+    let res;
+    if (this.translationHandler) {
+      res = this.translationHandler(key, params);
     }
+    if (!res || res === key) {
+      // fixme: 'res === key' is it ngx-translate specific?
+      res = this.parseTranslation(this._store.translations, key, params);
+    }
+
     return res || key;
   }
 

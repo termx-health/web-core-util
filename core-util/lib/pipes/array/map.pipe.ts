@@ -6,7 +6,7 @@ import {getPathValue, isNil, RecursiveKeyOf} from '../../utils';
 export class MapPipe implements PipeTransform {
   public transform<T, R>(
     values: T | T[],
-    mapper: ((f: T, ...args: any[]) => R | undefined) | RecursiveKeyOf<T>,
+    mapper: ((f: T, ...args: any[]) => R | undefined) | RecursiveKeyOf<T> | any,
     ...fnArgs: any[]
   ): R | (R | undefined)[] | undefined {
     if (isNil(values)) {

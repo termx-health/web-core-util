@@ -67,7 +67,7 @@ export class FormattedPeriodPipe extends CoreI18nBasePipe implements PipeTransfo
 
   private getTranslationKey(period: DateRange | Date, params: FormattedPeriodParams): {precision: FormattedPeriodPrecision, val: number}[] {
     const startDate = period.hasOwnProperty('lower') ? new Date((<DateRange>period).lower!) : new Date(<Date>period);
-    const endDate = period.hasOwnProperty('lower') ? new Date((<DateRange>period).upper!) : new Date();
+    const endDate = period.hasOwnProperty('upper') ? new Date((<DateRange>period).upper!) : new Date();
     const duration = intervalToDuration({start: startDate, end: endDate});
 
     const precisionMap: { [key in FormattedPeriodPrecision]: number } = {

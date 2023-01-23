@@ -1,4 +1,4 @@
-import {DateRange} from '../../models';
+import {DateRange, Interval} from '../../models';
 import {isDefined, isNil} from '../object/object.util';
 import {
   add as _add,
@@ -35,7 +35,8 @@ import {
   startOfSecond,
   startOfWeek,
   startOfYear,
-  sub
+  sub,
+  intervalToDuration
 } from 'date-fns';
 
 export type DateUtilUnit = "years" | "months" | "weeks" | "days" | "hours" | "minutes" | "seconds" | "milliseconds";
@@ -128,7 +129,7 @@ export function diff(date1: Date, date2: Date, unit: DateUtilUnit = 'millisecond
     months: differenceInMonths,
     years: differenceInYears
   };
-  return funs[unit](date1, date2);
+  return funs[unit](from(date1), from(date2));
 }
 
 export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'days'): boolean {
@@ -149,6 +150,11 @@ export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'days
   }
 
   return Object.values(valid).every(Boolean);
+}
+
+export function rangeToInterval(range: DateRange): Interval {
+  const _range = new DateRange(range);
+  return intervalToDuration({start: _range.lower as Date, end: _range.upper as Date});
 }
 
 export function previous(unit: DateUtilUnit, amount = 1): DateRange {

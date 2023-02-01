@@ -1,5 +1,5 @@
 import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import {equalsDeep, isDefined, isNil} from '../../utils';
+import {equalsDeep, from, isDefined, isNil} from '../../utils';
 import {CoreI18nBasePipe, CoreI18nService, CoreI18nTranslateParams} from '../../i18n';
 import {differenceInDays} from 'date-fns';
 
@@ -21,10 +21,12 @@ export class DistanceInWordsPipe extends CoreI18nBasePipe implements PipeTransfo
   }
 
 
-  public transform(date: Date): string {
-    if (isNil(date)) {
+  public transform(_date: Date): string {
+    if (isNil(_date)) {
       return '';
     }
+
+    const date = from(_date);
     if (equalsDeep(date, this.latestDate)) {
       return this.translatedValue;
     }

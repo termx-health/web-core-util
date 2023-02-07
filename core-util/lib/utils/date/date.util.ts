@@ -60,7 +60,7 @@ export function parse(date: string, format: string): Date | undefined {
   return isDefined(date) ? _parse(date, format, new Date()) : undefined;
 }
 
-export function isValid(date: Date | string): boolean {
+export function isValid(date: Date | string | undefined): boolean {
   return isDefined(date) && _isValid(from(date));
 }
 

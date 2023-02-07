@@ -61,7 +61,7 @@ export function parse(date: string, format: string): Date | undefined {
 }
 
 export function isValid(date: Date | string): boolean {
-  return _isValid(date);
+  return isDefined(date) && _isValid(from(date));
 }
 
 export function isEqual(d1: Date, d2: Date, granularity?: DateUtilUnit): boolean {

@@ -132,7 +132,7 @@ export function diff(date1: Date, date2: Date, unit: DateUtilUnit = 'millisecond
   return funs[unit](from(date1), from(date2));
 }
 
-export function inRange(range: DateRange, date: Date, unit: DateUtilUnit = 'days'): boolean {
+export function inRange(range: DateRange, date: Date, unit: DateUtilUnit): boolean {
   if (isNil(range) || isNil(date)) {
     return true;
   }

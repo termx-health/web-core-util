@@ -13,28 +13,28 @@ it('check inRange when date is in range', waitForAsync(() => {
   expect(inRange({
     lower: new Date(2022, 1, 11),
     upper: new Date(2022, 1, 13)
-  }, new Date(2022, 1, 12))).toBe(true);
+  }, new Date(2022, 1, 12), 'days')).toBe(true);
 }));
 
 it('check inRange when date equals to lower boundary', waitForAsync(() => {
   expect(inRange({
     lower: new Date(2022, 1, 11),
     upper: new Date(2022, 1, 13)
-  }, new Date(2022, 1, 11))).toBe(true);
+  }, new Date(2022, 1, 11), 'days')).toBe(true);
 }));
 
 it('check inRange when date equals to upper boundary', waitForAsync(() => {
   expect(inRange({
     lower: new Date(2022, 1, 11),
     upper: new Date(2022, 1, 13)
-  }, new Date(2022, 1, 13))).toBe(true);
+  }, new Date(2022, 1, 13), 'days')).toBe(true);
 }));
 
 it('check inRange when date is out of range', waitForAsync(() => {
   expect(inRange({
     lower: new Date(2022, 1, 11),
     upper: new Date(2022, 1, 13)
-  }, new Date(2022, 1, 14))).toBe(false);
+  }, new Date(2022, 1, 14), 'days')).toBe(false);
 }));
 
 it('check inRange when date is out of range upper bound (inclusive false)', waitForAsync(() => {
@@ -43,7 +43,7 @@ it('check inRange when date is out of range upper bound (inclusive false)', wait
     upper: new Date(2022, 1, 13),
     lowerInclusive: false,
     upperInclusive: false
-  }, new Date(2022, 1, 13))).toBe(false);
+  }, new Date(2022, 1, 13), 'days')).toBe(false);
 }));
 
 it('check inRange when date is out of range lower bound (inclusive false)', waitForAsync(() => {
@@ -52,33 +52,33 @@ it('check inRange when date is out of range lower bound (inclusive false)', wait
     upper: new Date(2022, 1, 13),
     lowerInclusive: false,
     upperInclusive: false
-  }, new Date(2022, 1, 11))).toBe(false);
+  }, new Date(2022, 1, 11), 'days')).toBe(false);
 }));
 
 it('check inRange when date is in range (no lower boundary)', waitForAsync(() => {
   expect(inRange({
     lower: null,
     upper: new Date(2022, 1, 13)
-  }, new Date(2022, 1, 11))).toBe(true);
+  }, new Date(2022, 1, 11), 'days')).toBe(true);
 }));
 
 it('check inRange when date is out of range (no lower boundary)', waitForAsync(() => {
   expect(inRange({
     lower: null,
     upper: new Date(2022, 1, 13)
-  }, new Date(2022, 1, 14))).toBe(false);
+  }, new Date(2022, 1, 14), 'days')).toBe(false);
 }));
 
 it('check inRange when date is in range (no upper boundary)', waitForAsync(() => {
   expect(inRange({
     lower: new Date(2022, 1, 13),
     upper: null
-  }, new Date(2022, 1, 14))).toBe(true);
+  }, new Date(2022, 1, 14), 'days')).toBe(true);
 }));
 
 it('check inRange when date is out of range (no upper boundary)', waitForAsync(() => {
   expect(inRange({
     lower: new Date(2022, 1, 13),
     upper: null
-  }, new Date(2022, 1, 12))).toBe(false);
+  }, new Date(2022, 1, 12), 'days')).toBe(false);
 }));

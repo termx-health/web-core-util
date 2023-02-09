@@ -1,8 +1,8 @@
 {
   "name": "@kodality-web/core-util",
   "peerDependencies": {
-    "@angular/common": "^14.0.0",
-    "@angular/core": "^14.0.0"
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0"
   },
   "dependencies": {
     "@angular/cdk": "^14.0.0",

@@ -36,8 +36,19 @@ import {
   startOfWeek,
   startOfYear,
   sub,
-  intervalToDuration
+  intervalToDuration, Locale
 } from 'date-fns';
+import {enUS, ru, et, uz, uzCyrl} from 'date-fns/locale';
+import {getLocale} from './local-date.util';
+
+const locales: Record<string, Locale> = {
+  'en': enUS,
+  'ru': ru,
+  'et': et,
+
+  'uz': uz, 'uz-LATN': uz, 'uz-Latn': uz,
+  'uz-CYRL': uzCyrl, 'uz-Cyrl': uzCyrl
+};
 
 export type DateUtilUnit = "years" | "months" | "weeks" | "days" | "hours" | "minutes" | "seconds" | "milliseconds";
 
@@ -53,7 +64,7 @@ export function now(unit?: DateUtilUnit): Date {
  * Formats a date according to date-fns format rules. https://date-fns.org/v2.29.3/docs/format
  */
 export function format(date: Date | string | number | undefined, format: string): string | undefined {
-  return isDefined(date) ? _format(new Date(date), format) : undefined;
+  return isDefined(date) ? _format(new Date(date), format, {locale: locales[getLocale()]}) : undefined;
 }
 
 export function parse(date: string, format: string): Date | undefined {

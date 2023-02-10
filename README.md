@@ -1,5 +1,7 @@
 # Kodality Utils | Angular 14
 
+*Use `14.x.x` version for 14+ Angular projects*
+
 ## Build
 
 ```shell
@@ -20,6 +22,13 @@ npm run build
        ```
     * run `npm install`
     * add `projects.$name.architect.build.options.preserveSymlinks: true` to `angular.json`
+
+## Locales
+
+If any locale is missing:
+
+* Add translation file to `locales` folder and provide it as translation to `i18nService` in `core-util.module.ts`
+* Import necessary `date-fns` locale in `date.util.ts` file
 
 ## Publish
 
@@ -79,5 +88,4 @@ export class AppModule {
 ```
 
 Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
-
 

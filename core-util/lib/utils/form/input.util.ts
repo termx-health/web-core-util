@@ -16,3 +16,20 @@ export function findFocusableElement(el: Element): HTMLElement | undefined {
     }
   }
 }
+
+
+export function findFocusableElements(el: Element): HTMLElement[] {
+  const els: HTMLElement[] = [];
+
+  if (isNil(el)) {
+    return els;
+  }
+
+  if (el instanceof HTMLElement && el.tabIndex !== -1) {
+    els.push(el);
+  }
+  for (let i = 0; i < el.children.length; i++) {
+    els.push(...findFocusableElements(el.children.item(i)!));
+  }
+  return els;
+}

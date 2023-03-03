@@ -1,6 +1,6 @@
-# Kodality Utils | Angular 14
+# Kodality Utils
 
-*Use `14.x.x` version for 14+ Angular projects*
+Angular 15
 
 ## Build
 

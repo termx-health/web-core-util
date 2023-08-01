@@ -16,8 +16,8 @@ export function uniqueBy<T>(data: T[], fn: (x: T) => unknown): T[] | undefined {
   );
 }
 
-export function duplicate<T>(el: T, idx: number, self: T[]): boolean {
-  return self.indexOf(el) !== idx;
+export function duplicate<T>(el: T, _idx: number, self: T[]): boolean {
+  return self.indexOf(el) !== self.lastIndexOf(el);
 }
 
 export function duplicateBy<T>(data: T[], fn: (x: T) => unknown): T[] | undefined {

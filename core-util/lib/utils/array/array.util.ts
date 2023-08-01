@@ -10,10 +10,29 @@ export function uniqueBy<T>(data: T[], fn: (x: T) => unknown): T[] | undefined {
   }
   return Object.values(data.reduce((uniq, val) => {
       const k = fn(val) as string;
-      uniq[k] = uniq[k] || val;
+      uniq[k] = uniq[k] ?? val;
       return uniq;
     }, {} as Record<string, T>)
   );
+}
+
+export function duplicate<T>(el: T, idx: number, self: T[]): boolean {
+  return self.indexOf(el) !== idx;
+}
+
+export function duplicateBy<T>(data: T[], fn: (x: T) => unknown): T[] | undefined {
+  if (isNil(data)) {
+    return undefined;
+  }
+  const dups: Record<string, {cnt: number, els: T[]}> = {};
+  data.forEach(val => {
+    const k = fn(val) as string;
+    const d = dups[k] ??= {cnt: 0, els: []};
+    d.cnt++;
+    d.els.push(val);
+  });
+
+  return Object.values(dups).filter(d => d.cnt > 1).map(d => d.els).flat();
 }
 
 export function flat<T>(array: T[]): T[] {

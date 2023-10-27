@@ -22,8 +22,10 @@ import {
   getMilliseconds,
   getMinutes,
   getSeconds,
-  parse as _parse,
+  intervalToDuration,
   isValid as _isValid,
+  Locale,
+  parse as _parse,
   setHours,
   setMilliseconds,
   setMinutes,
@@ -36,9 +38,12 @@ import {
   startOfWeek,
   startOfYear,
   sub,
-  intervalToDuration, Locale
 } from 'date-fns';
-import {enUS, ru, et, uz, uzCyrl} from 'date-fns/locale';
+import enUS from 'date-fns/locale/en-US/index.js';
+import et from 'date-fns/locale/et/index.js';
+import ru from 'date-fns/locale/ru/index.js';
+import uz from 'date-fns/locale/uz/index.js';
+import uzCyrl from 'date-fns/locale/uz-Cyrl/index.js';
 import {getLocale} from './local-date.util';
 
 const locales: Record<string, Locale> = {

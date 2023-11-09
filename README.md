@@ -1,6 +1,6 @@
 # Kodality Utils
 
-Angular 15
+![version](https://img.shields.io/badge/dynamic/json?color=blue&label=Version&query=$[:1].name&url=https://gitlab.com/api/v4/projects/35124799/repository/tags?search=16.&)
 
 ## Build
 

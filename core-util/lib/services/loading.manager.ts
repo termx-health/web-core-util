@@ -30,7 +30,7 @@ export class LoadingManager<K extends string> {
   }
 
 
-  public get state(): LoadingManager<K>['_state'] {
+  public get state(): Partial<Record<K, boolean>> {
     return this._state;
   }
 }

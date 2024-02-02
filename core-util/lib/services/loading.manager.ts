@@ -1,21 +1,21 @@
 import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 
-export class LoadingManager {
-  private _loading: {[key: string]: number} = {};
-  private _state: {[key: string]: boolean} = {};
+export class LoadingManager<K extends string> {
+  private _loading: Partial<Record<K, number>> = {};
+  private _state: Partial<Record<K, boolean>> = {};
 
-  public start(key: string): void {
+  public start(key: K): void {
     this._loading[key] = (this._loading[key] ?? 0) + 1;
-    this._state[key] = this._loading[key] > 0;
+    this._state[key] = this._loading[key]! > 0;
   }
 
-  public stop(key: string): void {
+  public stop(key: K): void {
     this._loading[key] = (this._loading[key] ?? 0) - 1;
-    this._state[key] = this._loading[key] > 0;
+    this._state[key] = this._loading[key]! > 0;
   }
 
-  public wrap<T>(key: string, obs: Observable<T>): Observable<T> {
+  public wrap<T>(key: K, obs: Observable<T>): Observable<T> {
     this.start(key);
     return obs.pipe(finalize(() => this.stop(key)));
   }
@@ -25,12 +25,12 @@ export class LoadingManager {
     return this.isLoadingExcept();
   }
 
-  public isLoadingExcept(...exclude: string[]): boolean {
-    return Object.keys(this.state).filter(k => !exclude.includes(k)).some(k => this.state[k]);
+  public isLoadingExcept(...exclude: K[]): boolean {
+    return (Object.keys(this.state) as K[]).filter(k => !exclude.includes(k)).some(k => this.state[k]);
   }
 
 
-  public get state(): {[key: string]: boolean} {
+  public get state(): LoadingManager<K>['_state'] {
     return this._state;
   }
 }

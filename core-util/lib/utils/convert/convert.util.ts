@@ -10,7 +10,7 @@ export function toNumber(value: number | string): number | undefined {
   return isFinite(v) ? v : undefined;
 }
 
-export function toString<T extends Object>(value: T | number | string): string | undefined {
+export function toString(value: object | number | string): string | undefined {
   if (isNil(value)) {
     return undefined;
   }

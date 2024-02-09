@@ -3,7 +3,7 @@ import {isNil} from '../../utils';
 
 @Pipe({name: 'keys'})
 export class KeysPipe implements PipeTransform {
-  public transform(input: any): string[] {
+  public transform(input: object): string[] {
     if (isNil(input)) {
       return [];
     }

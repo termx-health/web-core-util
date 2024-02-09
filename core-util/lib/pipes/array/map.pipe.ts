@@ -4,11 +4,11 @@ import {getPathValue, isNil, RecursiveKeyOf} from '../../utils';
 
 @Pipe({name: 'map'})
 export class MapPipe implements PipeTransform {
-  public transform<T, R>(
+  public transform<T, R = T, U extends unknown[] = []>(
     values: T | T[],
-    mapper: ((f: T, ...args: any[]) => R | undefined) | RecursiveKeyOf<T> | any,
-    ...fnArgs: any[]
-  ): R | (R | undefined)[] | undefined {
+    mapper: ((f: T, ...args: U) => R | undefined) | RecursiveKeyOf<T> | never,
+    ...fnArgs: U
+  ): (R | undefined) | (R | undefined)[] {
     if (isNil(values)) {
       return undefined;
     }

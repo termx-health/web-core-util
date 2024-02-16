@@ -1,13 +1,25 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormControlOptions, FormGroup, NgForm, ValidatorFn, Validators} from '@angular/forms';
 import {isDefined, isNil} from '../object/object.util';
 
-export function validateForm(form?: FormGroup | FormArray | NgForm): boolean {
+/**
+ * @deprecated previously validateForm(), but has different validation method
+ */
+export function _validateForm(form?: FormGroup | FormArray | NgForm): boolean {
   if (form?.invalid) {
     markAsDirty(form);
     return false;
   }
   return true;
 }
+
+export function validateForm(form?: FormGroup | FormArray | NgForm): boolean {
+  if (isDefined(form)) {
+    markAsDirty(form);
+    return form.valid!;
+  }
+  return true;
+}
+
 
 export function markAsDirty(form?: FormGroup | FormArray | NgForm): void {
   if (isNil(form)) {
@@ -20,16 +32,19 @@ export function markAsDirty(form?: FormGroup | FormArray | NgForm): void {
     form.markAsDirty();
   }
 
-  Object.values(form.controls).forEach((c: any) => {
-    if (c instanceof FormControl) {
-      c.markAsDirty();
-      c.updateValueAndValidity({emitEvent: false});
-    }
-    if (c instanceof FormArray || c instanceof FormGroup) {
-      markAsDirty(c as FormGroup | FormArray);
-    }
-  });
+  Object.values(form.controls).forEach((c: AbstractControl) => markControlAsDirty(c));
 }
+
+export function markControlAsDirty(c: AbstractControl): void {
+  if (c instanceof FormControl) {
+    c.markAsDirty();
+    c.updateValueAndValidity({emitEvent: false});
+  }
+  if (c instanceof FormArray || c instanceof FormGroup) {
+    markAsDirty(c as FormGroup | FormArray);
+  }
+}
+
 
 export function markAsPristine(form?: FormGroup | FormArray | NgForm): void {
   if (isNil(form)) {
@@ -42,16 +57,19 @@ export function markAsPristine(form?: FormGroup | FormArray | NgForm): void {
     form.markAsPristine();
   }
 
-  Object.values(form.controls).forEach((c: AbstractControl) => {
-    if (c instanceof FormControl) {
-      c.markAsPristine();
-      c.updateValueAndValidity({emitEvent: false});
-    }
-    if (c instanceof FormArray || c instanceof FormGroup) {
-      markAsPristine(c as FormGroup | FormArray);
-    }
-  });
+  Object.values(form.controls).forEach((c: AbstractControl) => markControlAsPristine(c));
 }
+
+export function markControlAsPristine(c: AbstractControl): void {
+  if (c instanceof FormControl) {
+    c.markAsPristine();
+    c.updateValueAndValidity({emitEvent: false});
+  }
+  if (c instanceof FormArray || c instanceof FormGroup) {
+    markAsPristine(c as FormGroup | FormArray);
+  }
+}
+
 
 export function toggleControls(
   fb: FormBuilder,

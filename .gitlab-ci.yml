@@ -1,5 +1,15 @@
 image: registry.gitlab.com/kodality/gitlab-builders/ng:14
 
+cache:
+  key:
+    files:
+      - package-lock.json
+  policy: pull-push
+  paths:
+    - .npm/
+    - node_modules/
+
+
 stages:
   - build
 
@@ -17,7 +27,6 @@ build:
   only:
     - branches
   except:
-    - main
     - /^\d*\.\d*.x$/
 
 
@@ -28,14 +37,13 @@ build:
     - npm run build
     - npm run publish ${VERSION}
 
-snapshot:
+snapshot_release:
   extends: .publish_base
   stage: build
   only:
-    - main
     - /^\d*\.\d*.x$/
 
-release:
+version_release:
   extends: .publish_base
   stage: build
   variables:

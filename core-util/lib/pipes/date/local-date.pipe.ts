@@ -1,7 +1,7 @@
-import {OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import {equalsDeep, format as formatDate, getDateFormat, isNil, isValid} from '../../utils';
-import {LIB_CONTEXT} from '../../core-util.context';
-import {CoreI18nBasePipe, CoreI18nService} from '../../i18n';
+import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { equalsDeep, format as formatDate, getDateFormat, isNil, isValid } from '../../utils';
+import { LIB_CONTEXT } from '../../core-util.context';
+import { CoreI18nBasePipe, CoreI18nService } from '../../i18n';
 
 @Pipe({name: 'localDate', pure: false})
 export class LocalDatePipe extends CoreI18nBasePipe implements PipeTransform, OnDestroy {
@@ -20,13 +20,9 @@ export class LocalDatePipe extends CoreI18nBasePipe implements PipeTransform, On
     this.latestParams = {format, locale};
   }
 
-  public transform(date?: Date | string, format?: string, locale?: string, local?: boolean): string | undefined {
+  public transform(date?: Date | string, format?: string, locale?: string): string | undefined {
     if (isNil(date)) {
       return '';
-    }
-
-    if (local) {
-      date = `${date}T00:00:00`;
     }
 
     if (equalsDeep(date, this.latestDate) && equalsDeep({format, locale}, this.latestParams)) {

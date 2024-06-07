@@ -1,5 +1,5 @@
-import {waitForAsync} from '@angular/core/testing';
-import {inRange, mergeDateTime} from './date.util';
+import { waitForAsync } from '@angular/core/testing';
+import { format, inRange, mergeDateTime } from './date.util';
 
 // mergeDateTime
 it('merge time into date', waitForAsync(() => {
@@ -7,6 +7,13 @@ it('merge time into date', waitForAsync(() => {
     .toEqual(new Date(2022, 1, 10, 13, 31));
 }));
 
+// format
+it('format date', waitForAsync(() => {
+  expect(format('2024-04-20', 'yyyy-MM-dd')).toEqual('2024-04-20');
+  expect(format('2024-04-20', 'yyyy-MM-dd HH:mm')).toEqual('2024-04-20 00:00');
+  expect(format('2024-04-20T00:00:00', 'yyyy-MM-dd HH:mm')).toEqual('2024-04-20 00:00');
+  // expect(format('2024-04-20T00:00:00Z', 'yyyy-MM-dd HH:mm')).toEqual('2024-04-20 12:00');
+}));
 
 // inRange
 it('check inRange when date is in range', waitForAsync(() => {

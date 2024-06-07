@@ -1,5 +1,5 @@
-import {DateRange, Interval} from '../../models';
-import {isDefined, isNil} from '../object/object.util';
+import { DateRange, Interval } from '../../models';
+import { isDefined, isNil } from '../object/object.util';
 import {
   add as _add,
   differenceInDays,
@@ -44,7 +44,7 @@ import et from 'date-fns/locale/et/index.js';
 import ru from 'date-fns/locale/ru/index.js';
 import uz from 'date-fns/locale/uz/index.js';
 import uzCyrl from 'date-fns/locale/uz-Cyrl/index.js';
-import {getLocale} from './local-date.util';
+import { getLocale } from './local-date.util';
 
 const locales: Record<string, Locale> = {
   'en': enUS,
@@ -57,7 +57,16 @@ const locales: Record<string, Locale> = {
 
 export type DateUtilUnit = "years" | "months" | "weeks" | "days" | "hours" | "minutes" | "seconds" | "milliseconds";
 
-export function from(date: string | Date): Date {
+export function from(date: string | Date | number): Date {
+  if (typeof date === 'string') {
+    const dateFormat = 'yyyy-MM-dd';
+    if (dateFormat.length === date.length) {
+      // assume client's timezone, if only date is provided
+      // -5: 2024-04-20 -> 2024-04-20T05:00:00.000Z
+      // +3: 2024-04-20 -> 2024-04-19T21:00:00.000Z
+      date = new Date(date).toISOString().slice(0, -1);
+    }
+  }
   return new Date(date);
 }
 
@@ -69,7 +78,7 @@ export function now(unit?: DateUtilUnit): Date {
  * Formats a date according to date-fns format rules. https://date-fns.org/v2.29.3/docs/format
  */
 export function format(date: Date | string | number | undefined, format: string): string | undefined {
-  return isDefined(date) ? _format(new Date(date), format, {locale: locales[getLocale()]}) : undefined;
+  return isDefined(date) ? _format(from(date), format, {locale: locales[getLocale()]}) : undefined;
 }
 
 export function parse(date: string, format: string): Date | undefined {

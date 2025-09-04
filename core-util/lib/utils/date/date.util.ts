@@ -10,6 +10,7 @@ import {
   differenceInSeconds,
   differenceInWeeks,
   differenceInYears,
+  Duration,
   endOfDay,
   endOfHour,
   endOfMinute,
@@ -39,12 +40,12 @@ import {
   startOfYear,
   sub,
 } from 'date-fns';
-import enUS from 'date-fns/locale/en-US/index.js';
-import et from 'date-fns/locale/et/index.js';
-import ru from 'date-fns/locale/ru/index.js';
-import uz from 'date-fns/locale/uz/index.js';
-import uzCyrl from 'date-fns/locale/uz-Cyrl/index.js';
-import { getLocale } from './local-date.util';
+import {enUS} from 'date-fns/locale/en-US';
+import {et} from 'date-fns/locale/et';
+import {ru} from 'date-fns/locale/ru';
+import {uz} from 'date-fns/locale/uz';
+import {uzCyrl} from 'date-fns/locale/uz-Cyrl';
+import {getLocale} from './local-date.util';
 
 const locales: Record<string, Locale> = {
   'en': enUS,

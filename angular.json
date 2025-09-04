@@ -16,7 +16,7 @@
       "prefix": "ku",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "core-util/ng-package.json"
           },
@@ -31,7 +31,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "main": "core-util/lib/test.ts",
             "tsConfig": "core-util/tsconfig.spec.json",

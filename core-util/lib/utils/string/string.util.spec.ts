@@ -1,7 +1,7 @@
-import {async} from '@angular/core/testing';
+import {waitForAsync} from '@angular/core/testing';
 import {equalsIgnoreCase} from './string.util';
 
-it('check equalsIgnoreCase', async(() => {
+it('check equalsIgnoreCase', waitForAsync(() => {
   expect(equalsIgnoreCase(null, null)).toBe(true);
   expect(equalsIgnoreCase(null, undefined)).toBe(true);
   expect(equalsIgnoreCase('ab', 'ab')).toBe(true);

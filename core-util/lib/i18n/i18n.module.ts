@@ -9,7 +9,7 @@ export interface CoreI18nModuleConfig {
 }
 
 @NgModule({
-  declarations: [CoreI18nPipe],
+  imports: [CoreI18nPipe],
   exports: [CoreI18nPipe]
 })
 export class CoreI18nModule {

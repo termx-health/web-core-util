@@ -1,4 +1,4 @@
-image: registry.gitlab.com/kodality/gitlab-builders/ng:latest
+image: registry.gitlab.com/kodality/gitlab-builders/ng:20
 
 cache:
   key:

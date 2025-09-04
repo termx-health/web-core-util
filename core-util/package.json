@@ -4,12 +4,12 @@
   "author": "Kodality",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@angular/common": ">=16.0.0",
-    "@angular/core": ">=16.0.0"
+    "@angular/common": ">=20.0.0",
+    "@angular/core": ">=20.0.0"
   },
   "dependencies": {
-    "@angular/cdk": ">=16.0.0",
-    "date-fns": "^2.29.3",
+    "@angular/cdk": ">=20.0.0",
+    "date-fns": "^4.1.0",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

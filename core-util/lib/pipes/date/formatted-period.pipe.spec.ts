@@ -1,5 +1,5 @@
 import {FormattedPeriodPipe} from './formatted-period.pipe';
-import {async} from '@angular/core/testing';
+import {waitForAsync} from '@angular/core/testing';
 import {EventEmitter} from '@angular/core';
 import {subDays} from 'date-fns';
 
@@ -20,7 +20,7 @@ describe('FormattedPeriodPipe', () => {
 
 
   const pipe = new FormattedPeriodPipe(translateService);
-  it('should format period', async(() => {
+  it('should format period', waitForAsync(() => {
     expect(pipe.transform(undefined)).toEqual('');
     expect(pipe.transform(subDays(new Date(), 1))).toEqual('1d');
     expect(pipe.transform({

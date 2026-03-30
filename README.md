@@ -1,91 +1,53 @@
-# Kodality Utils
+# TermX Web Commons
 
-![version](https://img.shields.io/badge/dynamic/json?color=blue&label=Version&query=$[:1].name&url=https://gitlab.com/api/v4/projects/35124799/repository/tags?search=16.&)
+Shared Angular libraries for the [TermX](https://github.com/termx-health) ecosystem.
+
+## Libraries
+
+| Package | Description |
+|---------|-------------|
+| `@termx-health/core-util` | Core utilities, i18n, pipes, services |
+| `@termx-health/ui` | UI component library (forms, tables, modals, etc.) |
+| `@termx-health/util` | Shared models and pipes |
+| `@termx-health/markdown` | Markdown renderer component |
+| `@termx-health/markdown-parser` | Markdown parser (markdown-it + plugins) |
+| `@termx-health/quill` | Rich text editor wrapper |
 
 ## Build
 
 ```shell
+npm install
 npm run build
 ```
 
-### Local Paths (dev)
+All 6 libraries are built in dependency order via `scripts/build.sh`.
 
-* Run`npm run watch`
-* In projects that calls libraries:
-    * Configure `package.json`
-      ```json
-       {
-          "dependencies": {
-             "@kodality-web/core-util": "file:path_to_this_project/dist/core-util"
-          }
-       }
-       ```
-    * run `npm install`
-    * add `projects.$name.architect.build.options.preserveSymlinks: true` to `angular.json`
+## Publishing
 
-## Locales
-
-If any locale is missing:
-
-* Add translation file to `locales` folder and provide it as translation to `i18nService` in `core-util.module.ts`
-* Import necessary `date-fns` locale in `date.util.ts` file
-
-## Publish
-
-```shell
-npm login --registry=https://kexus.kodality.com/repository/npm/
-npm set @kodality-web:registry https://kexus.kodality.com/repository/npm/
-npm run publish
-```
+Packages are published automatically to [GitHub Packages](https://github.com/orgs/termx-health/packages) on push to `main` or `20.0.x` when a library's `package.json` changes.
 
 ## Setup
 
+Add the GitHub Packages registry to your project's `.npmrc`:
+
+```
+@termx-health:registry=https://npm.pkg.github.com/
+```
+
+Install the packages:
+
 ```shell
-npm i @kodality-web/core-util@^0.0.0-SNAPSHOT
+npm i @termx-health/core-util @termx-health/ui @termx-health/util
 ```
 
-### Library translations
+## Locales
 
-In order to use locales other than **en**
+To add a missing locale:
 
-  ```ts
-  import localeEt from '@angular/common/locales/et';
-import {registerLocaleData} from '@angular/common';
+- Add a translation file to `core-util/lib/locales/` and register it in `core-util.module.ts`
+- Import the corresponding `date-fns` locale in `date.util.ts`
 
-registerLocaleData(localeEt)
-  ```
+## License
 
-Proxy **ngx-translate** lang changes to `CoreI18nModule`
-
-  ```ts
-  export class AppModule {
-  constructor(
-    private translateService: TranslateService,
-    private i18nService: CoreI18nService
-  ) {
-    this.translateService.onLangChange.subscribe(({lang}) => {
-      this.i18nService.use(lang);
-    })
-  }
-}
-  ```
-
-Proxy **ngx-translate** traslations to `CoreI18nModule`
-
-```ts
-export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
-  return (key, params) => translateService.instant(key, params);
-}
-
-@NgModule({
-  // imports & declarations & stuff
-  providers: [
-    {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]}
-  ]
-})
-export class AppModule {
-}
-```
-
-Useful resource: *https://stackblitz.com/edit/translations-and-lazy-loading?file=src%2Fapp%2Fnon-lazy-loaded%2Fnon-lazy-loaded.module.ts*
+Apache-2.0
 

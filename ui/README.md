@@ -1,35 +1,16 @@
-# UI
+# @termx-health/ui
 
-See `modules/ui/src/components/_example` folder for the file structure of the component.
+UI component library for the TermX ecosystem.
+
+See `src/components/_example` for the component file structure.
 
 ### Type coercion
 
-Use `@BooleanInput()` decorator to coerce any type to boolean. Don't forget to add `ngAcceptInputType_*` static property to class with `boolean | string` type.
+Use `@BooleanInput()` to coerce any input to boolean:
 
 ```ts
 class ExampleComponent {
   public static ngAcceptInputType_mProperty: boolean | string;
-
   @Input() @BooleanInput() public mProperty: boolean;
-}
-```
-
-### Property configuration
-
-```ts
-class ExampleComponent {
-  public _mModuleName: MuiConfigKey = 'exampleComponent';
-
-  @Input() @WithConfig() public mProperty: string;
-
-  public constructor(public configService: MuiConfigService) { }
-}
-```
-
-```ts
-export interface MuiConfig {
-  exampleComponent?: {
-    mProperty: string
-  };
 }
 ```

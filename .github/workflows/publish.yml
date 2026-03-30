@@ -32,6 +32,28 @@ jobs:
           node-version: '22.x'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@termx-health'
+      - name: Check versions before publish
+        run: |
+          check_version() {
+            local dir="$1" filter="$2"
+            if [ "$filter" != "true" ]; then return; fi
+            local name=$(node -p "require('./$dir/package.json').name")
+            local version=$(node -p "require('./$dir/package.json').version")
+            echo "Checking $name@$version..."
+            if npm view "$name@$version" version --registry=https://npm.pkg.github.com 2>/dev/null; then
+              echo "::error::$name@$version already exists on the registry. Bump the version in $dir/package.json before pushing."
+              exit 1
+            fi
+            echo "  OK — $name@$version is not yet published."
+          }
+          check_version core-util "${{ steps.filter.outputs.core-util }}"
+          check_version ui "${{ steps.filter.outputs.ui }}"
+          check_version util "${{ steps.filter.outputs.util }}"
+          check_version quill "${{ steps.filter.outputs.quill }}"
+          check_version markdown "${{ steps.filter.outputs.markdown }}"
+          check_version markdown-parser "${{ steps.filter.outputs.markdown-parser }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: npm ci
       - name: Build

@@ -1,0 +1,60 @@
+@import "../../../style/index";
+
+.dividerBorder {
+  position: relative;
+  content: '';
+  top: 50%;
+  width: 100%;
+  border-top: 1px solid transparent;
+  border-top-color: inherit;
+  border-bottom: 0;
+  transform: translateY(50%);
+}
+
+
+.m-divider {
+  display: flex;
+  position: relative;
+  border-color: @mui-border-color;
+  margin-block: 1.5rem;
+
+  &--vertical {
+    width: 1px;
+    height: 1em;
+    background: @mui-border-color;
+    margin: auto .375em;
+  }
+
+  .m-divider__text {
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0 1rem;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &::before {
+    .dividerBorder;
+  }
+
+  &::after {
+    .dividerBorder;
+  }
+
+  &--left {
+    &::before {
+      width: 5rem;
+      max-width: 20%;
+    }
+  }
+
+  &--right {
+    &::after {
+      width: 5rem;
+      max-width: 20%;
+    }
+  }
+}

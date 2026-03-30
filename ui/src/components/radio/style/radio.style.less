@@ -1,0 +1,155 @@
+@import "../../../style/index";
+
+
+// based on NG-zorro's styles
+
+@radio-size: 1.12rem;
+@radio-button-bg: @mui-bg-component;
+@radio-dot-color: @mui-primary-color;
+@radio-dot-size: 0.66rem;
+
+
+.m-radio-group {
+  &--vertical {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+.m-radio-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  cursor: pointer;
+
+  &-disabled {
+    cursor: not-allowed;
+  }
+}
+
+
+.m-radio {
+  position: relative;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+
+  .m-radio-wrapper:hover &,
+  &:hover .m-radio-inner,
+  &-input:focus + .m-radio-inner {
+    border-color: @radio-dot-color;
+  }
+
+  &-input:focus + .m-radio-inner {
+    box-shadow: @mui-shadow-base;
+  }
+
+
+  &-inner {
+    position: relative;
+    display: block;
+    width: @radio-size;
+    height: @radio-size;
+
+    background-color: @radio-button-bg;
+    border: @mui-border-width solid @mui-border-color;
+    border-radius: 50%;
+    transition: all 0.2s;
+
+
+    &::after {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+      width: @radio-size;
+      height: @radio-size;
+
+      margin-top: -(@radio-size / 2);
+      margin-left: -(@radio-size / 2);
+
+      background-color: @radio-dot-color;
+      border-radius: @radio-size;
+
+      transform: scale(0);
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+      content: ' ';
+    }
+  }
+
+  &-input {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    cursor: pointer;
+    opacity: 0;
+  }
+}
+
+
+.m-radio-checked .m-radio-inner {
+  border-color: @radio-dot-color;
+
+  &::after {
+    transform: scale((unit(@radio-dot-size) / unit(@radio-size)));
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+
+.m-radio-disabled {
+  cursor: not-allowed;
+
+  .m-radio-inner {
+    background-color: @mui-bg-color-light;
+    border-color: @mui-border-color !important;
+    cursor: not-allowed;
+
+    &::after {
+      background-color: @mui-text-color-disabled;
+    }
+  }
+
+  .m-radio-input {
+    cursor: not-allowed;
+  }
+
+  & + span {
+    color: @mui-text-color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+
+span.m-radio + * {
+  padding-inline: 0.5rem;
+}
+
+
+.scaled {
+  @base-unit: 14rem;
+
+  .ant-radio-button-wrapper {
+    height: (32 / @base-unit);
+    padding: 0 (15 / @base-unit);
+    font-size: 1rem;
+    line-height: (30 / @base-unit);
+  }
+
+  .ant-radio-group-large .ant-radio-button-wrapper {
+    height: (40 / @base-unit);
+    font-size: (16 / @base-unit);
+    line-height: (38 / @base-unit);
+  }
+
+
+  .ant-radio-group-small .ant-radio-button-wrapper {
+    height: (24 / @base-unit);
+    padding: 0 (7 / @base-unit);
+    line-height: (22 / @base-unit);
+  }
+}

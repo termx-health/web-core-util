@@ -1,0 +1,61 @@
+<m-spinner mSize="small" [mLoading]="loading">
+  <nz-select class="m-select"
+    #input
+      m-input
+      [id]="name"
+      [ngModel]="val"
+      (ngModelChange)="fireOnChange($event)"
+      (nzOnSearch)="inputValueChange($event)"
+
+      [nzSize]="small ? 'small' : 'default'"
+      [nzPlaceHolder]="placeholder | i18n"
+      [nzSuffixIcon]="icon === 'search' ? searchIcon : selectIcon"
+      [nzMaxMultipleCount]="maxMultipleCount || 123456789"
+      [nzFilterOption]="filterOptionsInner"
+      [compareWith]="compareWith | apply:getCompareWith"
+
+      [nzShowSearch]="true"
+      [nzDropdownMatchSelectWidth]="false"
+      [nzAllowClear]="allowClear | toBoolean"
+      [nzMode]="multiple ? 'multiple' : tags ? 'tags' : 'default'"
+
+      [nzDisabled]="disabled | toBoolean"
+      [required]="required"
+
+      (keydown)="onKeypress($event)"
+      (keyup.enter)="findSuitableValue()"
+      (keydown.tab)="findSuitableValue()"
+  >
+    <nz-option
+        *ngFor="let option of options"
+        [nzLabel]="option.mLabel | i18n"
+        [nzValue]="option.mValue"
+        [nzDisabled]="option.disabled | toBoolean"
+        [nzCustomContent]="!!option?.mLabelTemplate || option?.mLabel?.length! > ABBREVIATE_LENGTH"
+    >
+      <ng-template *ngIf="option.mLabelTemplate" [ngTemplateOutlet]="option.mLabelTemplate"></ng-template>
+      <m-abbreviate *ngIf="!option.mLabelTemplate" [mValue]="option.mLabel" [mLength]="ABBREVIATE_LENGTH"></m-abbreviate>
+    </nz-option>
+
+    <nz-option nzCustomContent *ngFor="let button of selectButtons; let index = index" [nzValue]="'m-select-button-' + index">
+      <div class="m-select__search-button">
+        <span *stringTemplateOutlet="button.mLabel">
+          {{button.mLabel | toString | i18n}}
+        </span>
+
+        <span class="m-select__search-button__hotkeys" *ngIf="button.mHotkey">
+          <ng-container *ngFor="let key of button.mHotkey | split:'+'; let isLast = last">
+            <kbd>{{key}}</kbd><span *ngIf="!isLast">+</span>
+          </ng-container>
+        </span>
+      </div>
+    </nz-option>
+  </nz-select>
+</m-spinner>
+
+<ng-template #selectIcon>
+  <i nz-icon nzType="down" nzTheme="outline"></i>
+</ng-template>
+<ng-template #searchIcon>
+  <i nz-icon nzType="search" nzTheme="outline"></i>
+</ng-template>

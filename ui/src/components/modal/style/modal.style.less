@@ -1,0 +1,90 @@
+@import "../../../style/index";
+
+
+.m-modal {
+  &__title {
+    .m-title--bold;
+  }
+
+  &__description {
+    .m-subtitle;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__fixed-close-button {
+    position: absolute;
+    right: 1em;
+    z-index: 1;
+  }
+}
+
+
+.m-modal-overlay-panel {
+  position: absolute !important;
+  top: 0;
+  z-index: 900;
+
+  background: #0000003d;
+  height: 100vh; /* fallback */
+  height: 100dvh;
+  width: 100vw;
+
+  display: grid;
+}
+
+
+.m-modal-wrapper {
+  position: relative;
+  margin: 1rem;
+  width: 44rem;
+  border-radius: @mui-border-radius-component;
+
+  max-width: calc(100vw - 2em);
+  max-height: calc(100vh - 2em); /* fallback */
+  max-height: calc(100dvh - 2em);
+  overflow: auto;
+
+  &--top {
+    align-self: flex-start;
+    justify-self: center;
+  }
+
+  &--bottom {
+    align-self: flex-end;
+    justify-self: center;
+  }
+
+  &--left {
+    align-self: center;
+    justify-self: flex-start;
+  }
+
+  &--right {
+    align-self: center;
+    justify-self: flex-end;
+  }
+
+  &--center {
+    align-self: center;
+    justify-self: center;
+  }
+
+  .m-card-header {
+    background-color: @mui-bg-component;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .m-card-footer {
+    background-color: @mui-bg-component;
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+  }
+}

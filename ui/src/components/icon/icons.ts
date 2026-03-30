@@ -1,0 +1,42 @@
+export const ICONS: {[key: string]: {source: string, options?: any}} = {};
+
+['step-backward', 'step-forward', 'fast-backward', 'fast-forward', 'shrink', 'arrows-alt', 'down', 'up', 'left', 'right', 'caret-up', 'caret-down',
+  'caret-left', 'caret-right', 'up-circle', 'down-circle', 'left-circle', 'right-circle', 'double-right', 'double-left', 'vertical-left', 'vertical-right',
+  'vertical-align-top', 'vertical-align-middle', 'vertical-align-bottom', 'forward', 'backward', 'rollback', 'enter', 'retweet', 'swap', 'swap-left',
+  'swap-right', 'arrow-up', 'arrow-down', 'arrow-left', 'arrow-right', 'play-circle', 'up-square', 'down-square', 'left-square', 'right-square', 'login',
+  'logout', 'menu-fold', 'menu-unfold', 'border-bottom', 'border-horizontal', 'border-inner', 'border-outer', 'border-left', 'border-right', 'border-top',
+  'border-verticle', 'pic-center', 'pic-left', 'pic-right', 'radius-bottomleft', 'radius-bottomright', 'radius-upleft', 'radius-upright', 'fullscreen',
+  'fullscreen-exit', 'question', 'question-circle', 'plus', 'plus-circle', 'pause', 'pause-circle', 'minus', 'minus-circle', 'plus-square', 'minus-square',
+  'info', 'info-circle', 'exclamation', 'exclamation-circle', 'close', 'close-circle', 'close-square', 'check', 'check-circle', 'check-square', 'clock-circle',
+  'warning', 'issues-close', 'stop', 'edit', 'form', 'copy', 'scissor', 'delete', 'snippets', 'diff', 'highlight', 'align-center', 'align-left', 'align-right',
+  'bg-colors', 'bold', 'italic', 'underline', 'strikethrough', 'redo', 'undo', 'zoom-in', 'zoom-out', 'font-colors', 'font-size', 'line-height',
+  'dash', 'small-dash', 'sort-ascending', 'sort-descending', 'drag', 'ordered-list', 'unordered-list', 'radius-setting',
+  'area-chart', 'pie-chart', 'bar-chart', 'dot-chart', 'line-chart', 'radar-chart', 'heat-map', 'fall', 'rise', 'stock', 'box-plot', 'fund', 'sliders',
+  'android', 'apple', 'windows', 'ie', 'chrome', 'github', 'aliwangwang', 'dingding', 'weibo-square', 'weibo-circle', 'taobao-circle', 'html5', 'weibo',
+  'twitter', 'wechat', 'youtube', 'alipay-circle', 'taobao', 'skype', 'qq', 'medium-workmark', 'gitlab', 'medium', 'linkedin', 'google-plus', 'dropbox',
+  'facebook', 'codepen', 'code-sandbox', 'amazon', 'google', 'codepen-circle', 'alipay', 'ant-design', 'ant-cloud', 'aliyun', 'zhihu',
+  'slack', 'slack-square', 'behance', 'behance-square', 'dribbble', 'dribbble-square', 'instagram', 'yuque', 'alibaba', 'yahoo', 'reddit', 'sketch', 'alert',
+  'account-book', 'aim', 'apartment', 'api', 'appstore-add', 'appstore', 'audio-muted', 'audio', 'audit', 'bank', 'barcode', 'bars', 'bell', 'block', 'book',
+  'border', 'borderless-table', 'bug', 'branches', 'build', 'bulb', 'calculator', 'calendar', 'camera', 'car', 'carry-out', 'ci-circle', 'ci', 'clear',
+  'cloud-server', 'cloud-sync', 'cloud-upload', 'cloud-download', 'cluster', 'cloud', 'code', 'coffee', 'comment', 'compass', 'compress',
+  'console-sql', 'contacts', 'container', 'control', 'copyright-circle', 'copyright', 'credit-card', 'customer-service', 'crown', 'dashboard', 'database',
+  'delete-column', 'delete-row', 'deployment-unit', 'desktop', 'delivered-procedure', 'dingtalk', 'disconnect', 'dislike', 'dollar-circle', 'dollar',
+  'download', 'ellipsis', 'euro-circle', 'environment', 'euro', 'expand-alt', 'exception', 'expand', 'experiment', 'export', 'eye-invisible', 'eye',
+  'field-binary', 'field-time', 'field-number', 'field-string', 'file-add', 'file-done', 'file-excel', 'file-exclamation', 'file-gif', 'file-image', 'file-jpg',
+  'file-ppt', 'file-markdown', 'file-pdf', 'file-protect', 'file-search', 'file-text', 'file-sync', 'file-unknown', 'file-word', 'file-zip', 'filter', 'fire',
+  'file', 'folder-add', 'folder-open', 'flag', 'folder', 'folder-view', 'fork', 'format-painter', 'fund-projection-screen', 'frown', 'fund-view', 'function',
+  'funnel-plot', 'gif', 'gateway', 'gift', 'gold', 'global', 'hdd', 'group', 'heart', 'history', 'home', 'hourglass', 'idcard', 'import', 'inbox',
+  'insert-row-right', 'insert-row-above', 'insert-row-below', 'layout', 'insurance', 'key', 'laptop', 'insert-row-left', 'like', 'interaction', 'loading',
+  'link', 'loading-3-quarters', 'line', 'lock', 'mail', 'mac-command', 'man', 'medicine-box', 'menu', 'meh', 'message', 'merge-cells', 'more', 'node-collapse',
+  'node-index', 'mobile', 'one-to-one', 'node-expand', 'notification', 'money-collect', 'number', 'monitor', 'pay-circle', 'partition', 'percentage',
+  'paper-clip', 'phone', 'picture', 'play-square', 'pound-circle', 'printer', 'pound', 'project', 'poweroff', 'profile', 'pull-request', 'qrcode', 'pushpin',
+  'property-safety', 'reconciliation', 'read', 'rest', 'red-envelope', 'reload', 'robot', 'safety-certificate', 'rocket', 'safety', 'save', 'rotate-right',
+  'rotate-left', 'scan', 'schedule', 'search', 'share-alt', 'select', 'security-scan', 'shop', 'send', 'shake', 'setting', 'skin', 'shopping', 'sisternode',
+  'shopping-cart', 'smile', 'solution', 'star', 'split-cells', 'sound', 'subnode', 'table', 'switcher', 'tablet', 'tags', 'team', 'sync', 'tool', 'tag',
+  'to-top', 'trademark', 'trademark-circle', 'thunderbolt', 'trophy', 'translation', 'transaction', 'unlock', 'upload', 'user-switch', 'user-delete', 'ungroup',
+  'verified', 'user', 'usb', 'usergroup-delete', 'usergroup-add', 'user-add', 'video-camera-add', 'wallet', 'video-camera', 'woman', 'whats-app',
+  'wifi'].forEach(c => ICONS[c] = {source: 'zorro'});
+
+
+
+

@@ -1,0 +1,43 @@
+<nz-input-group *ngIf="!mInline; else inline" [nzSuffix]="suffixTemplateInfo">
+  <input #textInput
+      nz-input
+      [mTextMask]="{mask: mask}"
+      [placeholder]="placeholder | i18n"
+      [(ngModel)]="value"
+      (ngModelChange)="onValueChange()"
+      (keydown)="keyEvent($event)"
+      (click)="openCalendar()"
+      (blur)="closeCalendar()"
+      [disabled]="disabled"
+  >
+
+  <ng-template #suffixTemplateInfo>
+    <m-icon *ngIf="!date || disabled" mCode="calendar"></m-icon>
+    <m-icon *ngIf="date && !disabled && mAllowClear" class="m-clickable" mCode="close-circle" (click)="clearValue()"></m-icon>
+  </ng-template>
+
+  <div style="visibility: hidden; position: absolute; left: 0">
+    <ng-container *ngTemplateOutlet="inline"></ng-container>
+  </div>
+</nz-input-group>
+
+
+<ng-template #inline>
+  <nz-date-picker
+      [name]="name + '-date'"
+      [ngModel]="date"
+      (ngModelChange)="onDatePick($event)"
+      [nzFormat]="dateFormat"
+      [nzAllowClear]="mAllowClear"
+      [nzDisabledDate]="isDisabledDate"
+      [nzInline]="mInline"
+      [nzDateRender]="tplRender"
+      [disabled]="disabled"
+  >
+    <ng-template #tplRender let-current>
+      <div class="ant-picker-cell-inner" [ngClass]="current | apply: getDateStyles: dateStyles">
+        {{ current.getDate() }}
+      </div>
+    </ng-template>
+  </nz-date-picker>
+</ng-template>

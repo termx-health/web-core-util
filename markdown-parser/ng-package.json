@@ -1,0 +1,27 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/markdown-parser",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "assets": [
+    "./**/*.less",
+    "./**/*.css"
+  ],
+  "allowedNonPeerDependencies": [
+    "markdown-it",
+    "markdown-it-abbr",
+    "markdown-it-attrs",
+    "markdown-it-emoji",
+    "markdown-it-expand-tabs",
+    "markdown-it-footnote",
+    "markdown-it-mark",
+    "markdown-it-multimd-table",
+    "markdown-it-sub",
+    "markdown-it-sup",
+    "markdown-it-task-lists",
+    "markdown-it-collapsible",
+    "uuid",
+    "escape-html"
+  ]
+}

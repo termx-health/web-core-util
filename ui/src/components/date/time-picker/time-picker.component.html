@@ -1,0 +1,16 @@
+<nz-input-group [nzSuffix]="suffixTemplateInfo">
+  <input #textInput
+      nz-input
+      [mTextMask]="{mask: mask}"
+      [placeholder]="placeholder | i18n"
+      [(ngModel)]="value"
+      (ngModelChange)="valueChange()"
+      (keydown)="keyEvent($event)"
+      (blur)="fireOnChange()"
+      [disabled]="disabled"
+  >
+</nz-input-group>
+
+<ng-template #suffixTemplateInfo>
+  <m-icon mCode="clock-circle"></m-icon>
+</ng-template>

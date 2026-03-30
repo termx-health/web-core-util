@@ -48,6 +48,121 @@
           }
         }
       }
+    },
+    "ui": {
+      "root": "ui",
+      "sourceRoot": "ui",
+      "projectType": "library",
+      "prefix": "m",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "util": {
+      "root": "util",
+      "sourceRoot": "util",
+      "projectType": "library",
+      "prefix": "m",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "util/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "util/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "util/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "quill": {
+      "root": "quill",
+      "sourceRoot": "quill",
+      "projectType": "library",
+      "prefix": "m",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "quill/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "quill/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "quill/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "markdown": {
+      "root": "markdown",
+      "sourceRoot": "markdown",
+      "projectType": "library",
+      "prefix": "m",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "markdown/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "markdown/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "markdown/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "markdown-parser": {
+      "root": "markdown-parser",
+      "sourceRoot": "markdown-parser",
+      "projectType": "library",
+      "prefix": "m",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "markdown-parser/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "markdown-parser/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "markdown-parser/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   },
   "schematics": {

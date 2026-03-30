@@ -1,0 +1,14 @@
+<nz-input-number m-input
+  class="m-number-input"
+  #input
+  [nzMin]="min"
+  [nzMax]="max"
+  [nzStep]="step"
+  [(ngModel)]="val"
+  (ngModelChange)="fireOnChange($event)"
+  (keydown)="onKeydown($event, input)"
+  [disabled]="disabled"
+  [nzPlaceHolder]="placeholder | i18n"
+  (nzFocus)="selectOnFocus"
+></nz-input-number>
+

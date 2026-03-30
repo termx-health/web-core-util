@@ -1,0 +1,23 @@
+<div
+  #container
+    class="m-collapse-panel_container"
+    [class.m-collapse-panel_container--in-progress]="collapseData.inProgress"
+    [class.m-collapse-panel_container--collapsed]="collapseData.collapsed"
+    [class.m-collapse-panel_container--resizeable]="mResizable"
+    [hidden]="!viewInitialized"
+>
+  <div
+      class="m-collapse-panel_actions__container"
+      [class.m-collapse-panel_actions__container--left]="mCollapsePosition === 'left'"
+      [class.m-collapse-panel_actions__container--right]="mCollapsePosition === 'right'"
+  >
+    <button class="m-collapse-panel_resize-bar" (mousedown)="resizeMouseDown($event)" (keyup.enter)="toggleCollapse()"></button>
+    <button class="m-collapse-panel_expand-button" (click)="toggleCollapse()">
+      <m-icon [mCode]="mCollapsePosition ==='left' ? (collapseData.collapsed ? 'right' : 'left') : (collapseData.collapsed ? 'left' : 'right')"></m-icon>
+    </button>
+  </div>
+
+  <div class="m-collapse-panel_content__wrapper">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+@import "../../../style/index";
+
+:root {
+  --padding-list-item-vertical: 0.6rem;
+  --padding-list-item-horizontal: 0.75rem;
+}
+
+.m-list {
+  border-radius: @mui-border-radius;
+  display: block;
+
+  .m-list-item {
+    display: block;
+    background-color: @mui-bg-component;;
+    width: 100%;
+    padding: var(--padding-list-item-vertical) var(--padding-list-item-horizontal);
+
+    &--selectable {
+      cursor: pointer;
+
+      &:not(.m-list-item--selected):hover {
+        background: hsv(0, 0, 98%);
+      }
+    }
+
+    &--selected {
+      background: @mui-primary-color-1;
+    }
+
+    &--active:not(&--selected) {
+      background: hsv(0, 0, 98%);
+    }
+  }
+
+  &:not(&--separated) {
+    .m-list-item {
+      &:first-of-type {
+        border-top-left-radius: @mui-border-radius;
+        border-top-right-radius: @mui-border-radius;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: @mui-border-radius;
+        border-bottom-right-radius: @mui-border-radius;
+      }
+    }
+
+    .m-list-item + .m-list-item {
+      border-top: none;
+    }
+  }
+
+  &--separated {
+    .m-list-item {
+      border-radius: @mui-border-radius;
+    }
+
+    .m-list-item + .m-list-item {
+      margin-top: .4rem;
+    }
+  }
+}

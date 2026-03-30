@@ -1,0 +1,162 @@
+@import (less) '@angular/cdk/overlay-prebuilt.css';
+
+html {
+  box-sizing: border-box;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+body {
+  background: @mui-bg-color;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+*:focus {
+  outline: 2px solid var(--color-primary-2);
+  outline-offset: 1px;
+}
+
+
+body,
+ol,
+ul {
+  padding: 0;
+  margin: 0;
+  font-weight: normal;
+}
+
+ol,
+ul {
+  margin: .25rem 0;
+  list-style-position: inside;
+}
+
+button {
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  font-size: 1em;
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--color-primary);
+
+
+  &:hover {
+    color: var(--color-primary-5);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-primary-2);
+  }
+}
+
+
+// -------- A11y --------
+.force-focus {
+  *:focus {
+    outline: 2px solid var(--color-primary-2) !important;
+    outline-offset: 1px !important;
+  }
+}
+
+
+// -------- Reusable classes --------
+
+.m-bordered {
+  border: @mui-border;
+}
+
+.m-raised {
+  box-shadow: @mui-shadow-base;
+
+  &--large {
+    box-shadow: var(--shadow-large);
+  }
+}
+
+.m-rounded {
+  border-radius: @mui-border-radius;
+}
+
+.m-whitespace {
+  white-space: pre-wrap;
+
+  &-pre {
+    white-space: pre;
+  }
+}
+
+.m-bold {
+  font-weight: bold;
+}
+
+.m-primary-color {
+  color: @mui-primary-color;
+}
+
+.m-clickable {
+  cursor: pointer;
+}
+
+
+// -------- Layout build classes --------
+
+.mItemsBase {
+  display: flex;
+  gap: var(--gap-default);
+}
+
+
+.m-justify-between {
+  .mItemsBase ;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.m-justify-left {
+  .mItemsBase ;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.m-justify-center {
+  .mItemsBase ;
+  align-items: center;
+  justify-content: center;
+}
+
+.m-justify-right {
+  .mItemsBase ;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+.m-items-top {
+  .mItemsBase ;
+  align-items: flex-start;
+}
+
+.m-items-middle {
+  .mItemsBase ;
+  align-items: center;
+}
+
+.m-items-bottom {
+  .mItemsBase ;
+  align-items: flex-end;
+}
+

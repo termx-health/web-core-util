@@ -1,0 +1,138 @@
+@import "../../../style/index";
+
+
+.m-popover {
+  &-content {
+    position: relative;
+  }
+
+  &-arrow {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    overflow: hidden;
+    pointer-events: none;
+
+    &-content {
+      position: absolute;
+
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      margin: auto;
+      background-color: transparent;
+      content: '';
+      border-radius: 0 0 2px;
+      pointer-events: none;
+
+      &::before {
+        content: " ";
+        position: absolute;
+        left: 50%;
+        border-width: .5rem;
+        border-style: solid;
+      }
+    }
+  }
+
+
+  &-inner {
+    min-width: 2rem;
+    min-height: 1rem;
+    text-align: left;
+    text-decoration: none;
+    word-wrap: anywhere;
+
+    background-color: @mui-bg-component;
+    border-radius: @mui-border-radius-component;
+    box-shadow: rgb(99 99 99 / 20%) 0 2px 8px 0;
+  }
+}
+
+
+.m-popover-placement {
+  &-bottom, &-bottomLeft, &-bottomRight {
+    padding-top: 1rem;
+
+    .m-popover-arrow {
+      top: -1rem;
+    }
+
+    .m-popover-arrow-content::before {
+      margin-left: -.5rem;
+      border-color: transparent transparent @mui-bg-component transparent;
+    }
+  }
+
+  &-top, &-topLeft, &-topRight {
+    padding-bottom: 1rem;
+
+    .m-popover-arrow {
+      bottom: -1rem;
+    }
+
+    .m-popover-arrow-content::before {
+      margin-left: -.5rem;
+      border-color: @mui-bg-component transparent transparent transparent;
+    }
+  }
+
+  &-left, &-leftTop, &-leftBottom {
+    padding-right: 1rem;
+
+    .m-popover-arrow {
+      right: -1rem;
+    }
+
+    .m-popover-arrow-content::before {
+      margin-left: -.5rem;
+      border-color: transparent transparent transparent @mui-bg-component;
+    }
+  }
+
+  &-right, &-rightTop, &-rightBottom {
+    padding-left: 1rem;
+
+    .m-popover-arrow {
+      left: -1rem;
+    }
+
+    .m-popover-arrow-content::before {
+      margin-left: -.5rem;
+      border-color: transparent @mui-bg-component transparent transparent;
+    }
+  }
+
+
+  &-top .m-popover-arrow, &-bottom .m-popover-arrow {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &-bottomLeft .m-popover-arrow, &-topLeft .m-popover-arrow {
+    left: .5rem;
+  }
+
+  &-bottomRight .m-popover-arrow, &-topRight .m-popover-arrow {
+    right: .5rem;
+  }
+
+  &-left .m-popover-arrow, &-right .m-popover-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &-leftBottom .m-popover-arrow, &-rightBottom .m-popover-arrow {
+    bottom: .5rem;
+  }
+
+  &-leftTop .m-popover-arrow, &-rightTop .m-popover-arrow {
+    top: .5rem;
+  }
+}
+
+.scaled {
+  .m-popover {
+    font-size: 1rem;
+  }
+}

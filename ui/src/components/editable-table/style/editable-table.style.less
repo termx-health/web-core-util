@@ -1,0 +1,48 @@
+@import "../../../style/index";
+
+.m-editable-table__row {
+  height: 56px;
+  transition: 0.2s;
+
+  &--error {
+    border-left: 2px solid @mui-error;
+  }
+
+  &--deletion-candidate {
+    background: var(--color-red-0);
+  }
+
+  .m-editable-table__row__cell > div {
+    padding: 5px 11px;
+    min-height: 32px;
+    border: @mui-border-width solid transparent;
+    border-radius: @mui-border-radius-component;
+  }
+
+  &:hover .m-editable-table__row__editable-cell > div {
+    cursor: pointer;
+    border-color: @mui-border-color;
+  }
+
+  .m-editable-table__actions {
+    text-align: right;
+  }
+}
+
+.m-editable-table__virtual-wrapper {
+  position: sticky;
+  bottom: calc(-1 * var(--virtual-scroll-offset));
+  z-index: 1;
+  background: white;
+  box-shadow: 0px -1px @mui-border-color;
+}
+
+.m-editable-table__add {
+  padding: 0.25rem !important;
+  cursor: pointer;
+  text-align: center;
+}
+
+.m-editable-table__tabel:focus .m-table-wrapper {
+  outline: 2px solid var(--color-primary-2);
+}

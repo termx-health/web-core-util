@@ -1,0 +1,9 @@
+<textarea nz-input
+  class="m-textarea"
+  m-input
+  [(ngModel)]="value"
+  (ngModelChange)="fireOnChange()"
+  [disabled]="disabled"
+  [placeholder]="placeholder | i18n"
+  [nzAutosize]="autosize || ''"
+></textarea>

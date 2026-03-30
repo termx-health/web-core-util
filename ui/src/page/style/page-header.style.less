@@ -1,0 +1,45 @@
+@import "../../style/index";
+
+:root {
+  --page-userinfo-background: var(--color-blue-0);
+  --page-userinfo-color: var(--color-blue-6);
+}
+
+.m-page-header {
+  &__userinfo {
+    background: var(--page-userinfo-background);
+    color: var(--page-userinfo-color);
+
+    height: 2.285rem;
+    min-width: 2.285rem;
+    border-radius: @mui-border-radius;
+    padding-inline: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 0.857rem;
+    font-weight: bold;
+  }
+
+  &__dropdown {
+    &--active {
+      border-left: 2px solid @mui-primary-color;
+      padding-left: 10px !important; // dropdown.style.less > 12px - 2px
+      color: @mui-primary-color-7 !important;
+    }
+
+    .ant-dropdown-menu {
+      padding: 0;
+    }
+
+    &__border-top {
+      border-top: @mui-border;
+    }
+
+    &__border-bottom {
+      border-bottom: @mui-border;
+    }
+  }
+}

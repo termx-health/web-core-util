@@ -1,0 +1,19 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/ui",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "assets": [
+    "./**/*.less",
+    "./**/*.css"
+  ],
+  "allowedNonPeerDependencies": [
+    "tslib",
+    "@termx-health/core-util",
+    "monaco-editor",
+    "ng-zorro-antd",
+    "text-mask-core",
+    "angular2-hotkeys"
+  ]
+}

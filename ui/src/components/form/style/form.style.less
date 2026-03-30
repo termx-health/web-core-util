@@ -1,0 +1,49 @@
+@import "../../../style/index";
+
+
+// -------- NgZorro override --------
+.ant-form-item {
+  font-size: 1rem;
+  // reduce spacing between form-item and other elements
+  margin-bottom: 0.5rem;
+
+  &-label {
+    // remove space between label and input
+    padding-bottom: 0 !important;
+    // BOOOOOLD~
+    font-weight: bold;
+
+    & > label {
+      height: 1.714rem;
+      font-size: .857rem;
+      font-weight: normal;
+    }
+
+    // move required mark on the right
+    & > label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
+      &::before {
+        all: initial;
+      }
+
+      &::after {
+        display: inline-block;
+        margin-left: 0.2rem;
+        color: @mui-error;
+        font-size: 1rem;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
+      }
+    }
+
+  }
+}
+
+
+.m-form-control {
+  &-error-explain {
+    font-size: .857rem;
+    margin-top: .3rem;
+    color: @mui-error;
+  }
+}

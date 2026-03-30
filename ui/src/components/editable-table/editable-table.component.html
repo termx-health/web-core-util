@@ -1,0 +1,173 @@
+<m-table [mData]="_data.items"
+  class="m-editable-table__tabel"
+  [mLoading]="mLoading"
+  (keydown.escape)="focusout()"
+
+  [mVirtualScroll]="mVirtualScroll"
+  [mVirtualViewportHeight]="mVirtualViewportHeight"
+  [mVirtualItemSize]="mVirtualItemSize"
+
+  tabindex="0"
+  (keydown.enter)="focusin()"
+>
+  <ng-content tableHeader select="[tableHeader]"></ng-content>
+
+  <ng-container *mTableHead>
+    <tr *ngIf="!headTemplate; else headTemplate">
+      <th
+        *ngIf="mShowExpandButton && hasAnyExpandTemplate"
+        class="m-editable-table__expand-button"
+        style="width: 4rem"
+      ></th>
+
+      <th *ngFor="let col of _columns"
+        [mColumnKey]="col.mSort"
+        [mHideSort]="!col.mSort"
+        (mSortOrderChange)="sortData(col.mSort, $event)"
+        [style.text-align]="col.mTextAlign"
+        [style.justify-content]="col.mTextAlign === 'right' ? 'flex-end' : col.mTextAlign === 'center' ? 'center' : 'normal'"
+        [style.width]="col.mWidth"
+      >
+        <ng-container *stringTemplateOutlet="col.headerTemplate">
+          {{col.mTitle | i18n}}
+        </ng-container>
+      </th>
+
+      <th
+        *ngIf="mEditAllowed || mDeleteAllowed"
+        class="m-editable-table__actions"
+        [style.width]="('marina.ui.editableTable.delete' | i18n).length + 'em'"
+      ></th>
+    </tr>
+  </ng-container>
+
+
+  <tr *ngIf="!_data.length" style="height: 100%">
+    <td [colSpan]="(mShowExpandButton && hasAnyExpandTemplate ? 1 : 0) + _columns.length + (mEditAllowed && mDeleteAllowed ? 1 : 0)">
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+
+
+  <ng-container *mTableRow="let item; let rowIndex = index ">
+    <tr
+      class="m-editable-table__row"
+      [class.m-editable-table__row--error]="!item.valid && !item.pristine"
+      [class.m-editable-table__row--pristine]="item.pristine && item.uid !== _item?.uid"
+      [class.m-editable-table__row--deletion-candidate]="_deleteCandidateIdx === rowIndex"
+      (focusout)="resetDeleteCandidateIdx()"
+      *ngIf="{isRowEditable: item.item | apply:mRowEditAllowed:item.trigger} as v"
+    >
+      <td
+        *ngIf="mShowExpandButton && hasAnyExpandTemplate"
+        m-table-expand
+        [mItem]="item"
+        (click)="toggleExpand(item.uid)"
+      ></td>
+
+      <ng-container *ngFor="let col of _columns; let colIndex = index; let first = first">
+        <ng-container
+          [ngTemplateOutlet]="colTpl"
+          [ngTemplateOutletContext]="{
+              viewMode: item.uid !== _item?.uid,
+              ctx: {
+                  $implicit: item.item,
+                  item: item.item,
+                  rowIndex: rowIndex,
+                  colIndex: colIndex,
+                  ngModelName: col.mName + '-' + item.uid
+                }
+            }"
+        ></ng-container>
+
+        <ng-template #colTpl let-viewMode='viewMode' let-ctx="ctx">
+          <td
+            *ngIf="viewMode || hasAnyExpandTemplate ? col.columnViewVisible : col.columnEditVisible"
+            [colSpan]="viewMode || hasAnyExpandTemplate ? col.mViewSpan : col.mSpan"
+            class="m-editable-table__row__cell"
+            [class.m-editable-table__row__editable-cell]="viewMode && mEditAllowed && (item.item | apply:mRowEditAllowed:item.trigger) && (col | apply: isCellEditable: item.item)"
+            [style.text-align]="col.mTextAlign"
+            [style.width]="col.mWidth"
+          >
+            <!--Not editable-->
+            <div
+              *ngIf="viewMode || hasAnyExpandTemplate"
+              (click)="viewMode && isCellEditable(col, item.item) ? startRowEdit(item.uid, ctx.ngModelName, true) : undefined"
+            >
+              <ng-template
+                [ngTemplateOutlet]="col.viewTemplate"
+                [ngTemplateOutletContext]="ctx"
+              ></ng-template>
+            </div>
+
+            <!--Editable-->
+            <ng-container *ngIf="!viewMode && !hasAnyExpandTemplate">
+              <!-- EditTemplate -->
+              <m-form-control
+                *ngIf="col.editTemplate"
+                [mName]="ctx.ngModelName"
+                (focusin)="focusinInput(ctx.rowIndex, ctx.colIndex)"
+                data-type="editable-table-form-control"
+              >
+                <ng-template
+                  [ngTemplateOutlet]="col.editTemplate"
+                  [ngTemplateOutletContext]="ctx"
+                ></ng-template>
+              </m-form-control>
+
+              <!-- ViewTemplate -->
+              <ng-container *ngIf="!col.editTemplate">
+                <ng-template
+                  [ngTemplateOutlet]="col.viewTemplate"
+                  [ngTemplateOutletContext]="ctx"
+                ></ng-template>
+              </ng-container>
+            </ng-container>
+          </td>
+        </ng-template>
+      </ng-container>
+
+
+      <!--Delete button-->
+      <td *ngIf="mDeleteAllowed">
+        <div class="m-editable-table__actions">
+          <a class="m-editable-table__actions-text"
+            *ngIf="item.item | apply:mRowDeleteAllowed:item.trigger"
+            m-popconfirm
+            [mPopconfirmTitle]="'marina.ui.editableTable.deleteConfirm'"
+            (mOnConfirm)="deleteRow(item.uid)"
+          >{{'marina.ui.editableTable.delete' | i18n}}</a>
+        </div>
+      </td>
+    </tr>
+
+    <ng-container *ngIf="{canEdit: expandEditTemplate && (mEditAllowed && (item.item | apply:mRowEditAllowed:item.trigger))} as v">
+      <!-- If has edit template AND edit is allowed-->
+      <ng-container *ngIf="item.uid === _item?.uid && v.canEdit">
+        <ng-template
+          [ngTemplateOutlet]="expandEditTemplate"
+          [ngTemplateOutletContext]="{$implicit: item.item, item: item.item, ngModelNamePrefix: item.uid}"
+        ></ng-template>
+      </ng-container>
+
+      <!-- If does not have edit template OR edit is not allowed-->
+      <ng-container *ngIf="item.uid === _item?.uid && expandViewTemplate && !v.canEdit">
+        <ng-template
+          [ngTemplateOutlet]="expandViewTemplate"
+          [ngTemplateOutletContext]="{$implicit: item.item, item: item.item}"
+        ></ng-template>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <tr *ngIf="mEditAllowed && mAddAllowed && !mLoading" [class.m-editable-table__virtual-wrapper]="mVirtualScroll">
+    <td
+      class="m-editable-table__add"
+      [colSpan]="(mShowExpandButton && expandEditTemplate ? 1 : 0) + _columns.length + (mEditAllowed && mDeleteAllowed ? 1 : 0)"
+      (click)="_initRow(true)"
+    >
+      <m-icon mCode="plus"></m-icon>
+    </td>
+  </tr>
+</m-table>
+

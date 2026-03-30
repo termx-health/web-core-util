@@ -1,0 +1,31 @@
+@import "../../../style/index";
+
+.m-button-wrapper {
+  display: inline-block;
+
+  .m-button {
+    height: inherit;
+    width: inherit;
+  }
+}
+
+.scaled {
+  .m-button-wrapper {
+    .m-button {
+      font-size: 1rem;
+    }
+  }
+
+  .ant-btn {
+    padding: .25rem .9375rem;
+
+    &-circle {
+      min-width: 1.714rem;
+      padding: 0;
+    }
+  }
+
+  .ant-btn-circle.ant-btn-sm {
+    min-width: 1.714rem;
+  }
+}

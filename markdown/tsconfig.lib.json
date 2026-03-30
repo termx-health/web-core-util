@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": [],
+    "paths": {
+      "@termx-health/core-util": ["../dist/core-util"],
+      "@termx-health/markdown-parser": ["../dist/markdown-parser"]
+    }
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ]
+}

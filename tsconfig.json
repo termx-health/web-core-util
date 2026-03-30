@@ -8,21 +8,30 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "strict": true,
+    "strict": false,
     "noImplicitOverride": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
+    "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "module": "preserve",
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
+    "useDefineForClassFields": false,
     "lib": [
       "ES2021",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@termx-health/core-util": ["./dist/core-util"],
+      "@termx-health/util": ["./dist/util"],
+      "@termx-health/ui": ["./dist/ui"],
+      "@termx-health/markdown-parser": ["./dist/markdown-parser"]
+    }
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }

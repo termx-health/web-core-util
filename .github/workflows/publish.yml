@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Publish packages to GitHub Packages
 on:
   push:
     branches: [ "main", "20.0.x" ]
@@ -15,8 +15,18 @@ jobs:
         id: filter
         with:
           filters: |
-            package:
+            core-util:
               - 'core-util/package.json'
+            ui:
+              - 'ui/package.json'
+            util:
+              - 'util/package.json'
+            quill:
+              - 'quill/package.json'
+            markdown:
+              - 'markdown/package.json'
+            markdown-parser:
+              - 'markdown-parser/package.json'
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
@@ -26,9 +36,39 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Publish
-        if: steps.filter.outputs.package == 'true'
+      - name: Publish core-util
+        if: steps.filter.outputs.core-util == 'true'
         working-directory: dist/core-util
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish ui
+        if: steps.filter.outputs.ui == 'true'
+        working-directory: dist/ui
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish util
+        if: steps.filter.outputs.util == 'true'
+        working-directory: dist/util
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish quill
+        if: steps.filter.outputs.quill == 'true'
+        working-directory: dist/quill
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish markdown-parser
+        if: steps.filter.outputs.markdown-parser == 'true'
+        working-directory: dist/markdown-parser
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish markdown
+        if: steps.filter.outputs.markdown == 'true'
+        working-directory: dist/markdown
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

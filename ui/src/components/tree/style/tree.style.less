@@ -1,0 +1,14 @@
+@import "../../../style/index";
+
+
+.m-tree-node__option {
+  cursor: default;
+}
+
+.m-tree-node__option.m-tree-node__option--selectable {
+  cursor: pointer;
+
+  &:not(.m-tree-node__option--selected):hover {
+    background: @mui-border-color-light;
+  }
+}

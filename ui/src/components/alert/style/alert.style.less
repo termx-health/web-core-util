@@ -1,0 +1,131 @@
+@import "../../../style/index";
+
+:root {
+  --padding-alert-vertical: 1rem;
+  --padding-alert-horizontal: 1.25rem;
+
+  --color-alert-success-background: var(--color-green-0);
+  --color-alert-success-text: var(--color-green-9);
+  --color-alert-success-border: var(--color-green-6);
+  --color-alert-success-icon: var(--color-green-7);
+
+  --color-alert-info-background: var(--color-sky-0);
+  --color-alert-info-text: var(--color-sky-9);
+  --color-alert-info-border: var(--color-sky-6);
+  --color-alert-info-icon: var(--color-sky-7);
+
+  --color-alert-warning-background: var(--color-amber-0);
+  --color-alert-warning-text: var(--color-amber-9);
+  --color-alert-warning-border: var(--color-amber-6);
+  --color-alert-warning-icon: var(--color-amber-7);
+
+  --color-alert-error-background: var(--color-red-0);
+  --color-alert-error-text: var(--color-red-9);
+  --color-alert-error-border: var(--color-red-6);
+  --color-alert-error-icon: var(--color-red-7);
+}
+
+
+.m-alert {
+  display: flex;
+  column-gap: 1rem;
+
+  background: @mui-bg-component;
+  padding: var(--padding-alert-vertical) var(--padding-alert-horizontal);
+  margin: 1rem 0;
+
+  &__icon {
+    box-sizing: border-box;
+
+    i {
+      font-size: 1.1rem;
+    }
+  }
+
+  &__title {
+    .m-title--bold;
+    font-size: 1rem;
+  }
+
+  &__description {
+    white-space: pre-wrap;
+  }
+
+  &__actions {
+    position: absolute;
+    right: 1em;
+  }
+
+
+  &__content {
+    font-size: 1rem;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.scaled {
+  .m-alert__icon {
+    margin-top: .15rem;
+  }
+}
+
+.createAlertVariant(@name, @bg, @text, @border, @icon) {
+  .m-alert--@{name} {
+    box-sizing: border-box;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: @border;
+      height: 2px;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+
+    background-color: @bg;
+    border-color: @border;
+    color: @text;
+
+    .m-alert__icon {
+      color: @icon;
+    }
+
+    .m-alert__actions-close i {
+      color: @icon;
+    }
+  }
+}
+
+
+.createAlertVariant(success,
+        var(--color-alert-success-background),
+        var(--color-alert-success-text),
+        var(--color-alert-success-border),
+        var(--color-alert-success-icon)
+);
+
+.createAlertVariant(info,
+        var(--color-alert-info-background),
+        var(--color-alert-info-text),
+        var(--color-alert-info-border),
+        var(--color-alert-info-icon)
+);
+
+.createAlertVariant(warning,
+        var(--color-alert-warning-background),
+        var(--color-alert-warning-text),
+        var(--color-alert-warning-border),
+        var(--color-alert-warning-icon)
+);
+
+.createAlertVariant(error,
+        var(--color-alert-error-background),
+        var(--color-alert-error-text),
+        var(--color-alert-error-border),
+        var(--color-alert-error-icon)
+);
+

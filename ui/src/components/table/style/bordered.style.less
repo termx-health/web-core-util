@@ -1,0 +1,41 @@
+@import "../../../style/index";
+
+@table-border: @mui-border;
+
+
+.m-table-bordered {
+  .m-table {
+    &-thead,
+    &-tbody {
+      > tr {
+        > th, td {
+          border-right: @table-border;
+        }
+
+        > th:not(:last-child):not([colspan]):not([rowspan])::before {
+          content: none;
+        }
+      }
+    }
+
+    &-cell-fix-left::after {
+      position: absolute;
+      top: 0;
+      right: calc(0px - @mui-border-width);
+      bottom: 0;
+      border-right: @table-border;
+      content: '';
+    }
+
+    &-cell-fix-right::before {
+      position: absolute;
+      top: 0;
+      left: calc(0px - @mui-border-width);
+      bottom: 0;
+      border-right: @table-border;
+      content: '' !important;
+      height: 100% !important;;
+      background-color: unset;
+    }
+  }
+}

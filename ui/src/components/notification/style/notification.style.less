@@ -1,0 +1,55 @@
+@import "../../../style/index";
+
+.m-notification-container {
+  z-index: 1020;
+  position: fixed;
+
+  width: 28rem;
+  max-width: calc(100vw - 2em);
+
+  &--top-left, &--bottom-left {
+    left: 0;
+  }
+
+  &--top-right, &--bottom-right {
+    right: 0;
+  }
+
+  &--top-center, &--bottom-center {
+    right: 50%;
+    transform: translate(50%);
+  }
+}
+
+.m-notification {
+  border-radius: @mui-border-radius;
+
+  .m-alert {
+    border-radius: @mui-border-radius;
+    overflow: hidden;
+  }
+}
+
+
+.m-alert__time-remained-animated {
+  &:hover.m-alert::after {
+    animation-play-state: paused;
+  }
+
+  &.m-alert::after {
+    animation-name: to-zero-width;
+    animation-duration: inherit;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+  }
+}
+
+
+@keyframes to-zero-width {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}

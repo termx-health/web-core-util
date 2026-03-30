@@ -1,0 +1,25 @@
+@import "../../../style/index";
+
+.m-number-range-input {
+  // color border when focused on any of inputs
+  &:focus-within {
+    .ant-input-number {
+      border-color: @mui-primary-color;
+    }
+  }
+
+
+  // removes border radius between two inputs
+  .m-number-input-wrapper:first-child {
+    .ant-input-number {
+      border-radius: @mui-border-radius-component 0 0 @mui-border-radius-component;
+    }
+  }
+
+  .m-number-input-wrapper:last-child {
+    .ant-input-number {
+      border-radius: 0 @mui-border-radius-component @mui-border-radius-component 0;
+      border-left: 0;
+    }
+  }
+}

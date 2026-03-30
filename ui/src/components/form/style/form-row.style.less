@@ -1,0 +1,28 @@
+@import "../../../style/index";
+
+:root {
+  --form-row-single-col-width: 1024px;
+}
+
+.m-form-row {
+  display: grid;
+  grid-template-columns: repeat(var(--m-form-row-col-count), minmax(0px, 1fr));
+
+  &:not(.m-form-row--single-col) .m-form-col {
+    min-width: 100%;
+  }
+
+  &--single-col:not(&--full) .m-form-col {
+    width: 100%;
+    max-width: var(--form-row-single-col-width);
+    justify-self: center;
+  }
+}
+
+
+@media only screen and (max-width: @mui-screen-sm-max) {
+  .m-form-row {
+    --m-form-row-col-count: 1 !important;
+  }
+}
+

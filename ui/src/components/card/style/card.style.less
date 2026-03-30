@@ -1,0 +1,67 @@
+@import "../../../style/index";
+
+:root {
+  --padding-card-vertical: .857rem;
+  --padding-card-horizontal: .857rem;
+}
+
+.m-card-padding {
+  padding: var(--padding-card-vertical) var(--padding-card-horizontal);
+}
+
+.m-card {
+  display: flex;
+  flex-direction: column;
+  background-color: @mui-bg-component;
+  width: 100%;
+
+  border-radius: @mui-border-radius;
+  font-size: 1rem;
+
+
+  &__content {
+    .m-card-padding;
+    flex: 1;
+  }
+
+  &__header {
+    .m-card-padding;
+    font-size: 1.15rem;
+  }
+
+  &__footer {
+    .m-card-padding;
+  }
+}
+
+.m-card__header + .m-card__content {
+  // removes card top padding
+  padding-top: 0;
+}
+
+.m-card__content:not(:last-child) {
+  // removes card bottom padding
+  padding-bottom: 0;
+}
+
+.m-card-inside {
+  box-shadow: none;
+  border: none;
+
+  > .m-card__header, > .m-card__footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > .m-card__header {
+    border-bottom: 0;
+
+    &.m-card__title-container {
+      padding-bottom: 1rem;
+    }
+  }
+
+  > .m-card__content {
+    padding: 0;
+  }
+}

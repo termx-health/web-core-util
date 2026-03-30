@@ -1,0 +1,33 @@
+@import "../../../style/index";
+
+.scaled {
+  .ant-checkbox-wrapper {
+    font-size: 1rem;
+  }
+
+  .ant-checkbox {
+    font-size: 1rem;
+  }
+
+  .ant-checkbox-inner {
+    width: 1.14rem;
+    height: 1.14rem;
+    border-radius: .25rem;
+
+    &::after {
+      width: .455rem;
+      height: .7rem;
+    }
+  }
+
+  .ant-checkbox-checked {
+    .ant-checkbox-inner::after {
+      border-width: .2rem;
+    }
+  }
+
+  .ant-checkbox-checked::after {
+    border: .0625rem solid #16a34a;
+    border-radius: .25rem;
+  }
+}

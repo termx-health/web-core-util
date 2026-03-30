@@ -1,0 +1,56 @@
+<form #form="ngForm" class="m-language-input-group-wrapper">
+  <m-form-control
+      *ngFor="let lang of val | keys | apply: requiredFirst: requiredLangs"
+      [mName]="name + '-' + lang"
+      [mShowExplain]="false"
+  >
+    <nz-input-group
+        class="m-language-input-group"
+        [class.m-language-input-group-disabled]="disabled"
+        [nzAddOnBefore]="lang | apply: langName: langs:currentLang"
+        [nzSuffix]="suffixTemplate"
+    >
+      <ng-container [ngSwitch]="mInputType">
+        <m-input
+            *ngSwitchCase="'input'"
+            [name]="name + '-' + lang"
+            [(ngModel)]="val[lang]"
+            (ngModelChange)="fireOnChange()"
+            [placeholder]="placeholder | i18n"
+            [disabled]="disabled | toBoolean"
+            required
+        ></m-input>
+        <m-textarea
+            *ngSwitchCase="'textarea'"
+            [name]="name + '-' + lang"
+            [(ngModel)]="val[lang]"
+            (ngModelChange)="fireOnChange()"
+            [placeholder]="placeholder | i18n"
+            [disabled]="disabled | toBoolean"
+            required
+        ></m-textarea>
+      </ng-container>
+    </nz-input-group>
+
+    <ng-template #suffixTemplate>
+      <m-button *ngIf="!disabled && !(lang | apply: isRequired: requiredLangs)" mDisplay="text" mShape="circle" mSize="small" (mClick)="removeLanguage(lang)">
+        <m-icon mCode="close-circle"></m-icon>
+      </m-button>
+    </ng-template>
+  </m-form-control>
+</form>
+
+
+<m-dropdown *ngIf="!disabled && (langs | filter:isFree: val)?.length" class="m-language-input-dropdown">
+  <m-button *m-dropdown-container mDisplay="default" mClass="m-language-input-dropdown-button">
+    <span>{{'marina.ui.inputs.multiLanguageInput.addTranslation' | i18n}}</span>
+    <m-icon mCode="down"></m-icon>
+  </m-button>
+
+  <ng-container *ngFor="let utl of (langs | filter:isFree: val)">
+    <a *m-dropdown-item (click)="addLanguage(utl.code)">
+      {{utl.names[currentLang]}}
+    </a>
+  </ng-container>
+</m-dropdown>
+

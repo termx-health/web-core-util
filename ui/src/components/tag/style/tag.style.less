@@ -1,0 +1,64 @@
+@import "../../../style/index";
+
+.m-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.5rem;
+  font-size: 0.85rem;
+
+  background: @mui-bg-component;
+  padding: .1rem .5rem;
+  color: @mui-text-color;
+
+  border: @mui-border;
+  border-radius: @mui-border-radius-component;
+
+  &-container {
+    display: flex;
+    column-gap: .5rem;
+  }
+
+  &-text {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.5;
+  }
+
+  &-custom {
+    color: @mui-white;
+    border-color: transparent;
+  }
+}
+
+
+
+
+.scaled {
+  .m-tag {
+    font-size: 1rem;
+  }
+}
+
+
+@array: red orange amber yellow lime green emerald teal cyan sky blue indigo violet fuchsia pink rose;
+
+.createTagVariant(@iterator:1) when(@iterator <= length(@array)) {
+  @name: extract(extract(@array, @iterator),1);
+  .m-tag-@{name} {
+    box-sizing: border-box;
+    position: relative;
+
+    background-color: ~'var(--color-@{name}-0)';
+    border-color: ~'var(--color-@{name}-6)';
+    color:  ~'var(--color-@{name}-9)';
+
+    .m-tag-icon {
+      color: ~'var(--color-@{name}-7)';
+    }
+  }
+  .createTagVariant(@iterator + 1);
+}
+.createTagVariant();
+

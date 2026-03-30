@@ -1,0 +1,103 @@
+@import "../../../style/index";
+
+.m-language-input-group-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
+}
+
+.m-language-input-dropdown {
+  margin-top: .5rem;
+
+  &-button {
+    span {
+      margin-right: .5rem;
+    }
+
+    i {
+      display: contents;
+    }
+  }
+}
+
+
+.m-language-input-group {
+  // todo: create m-input-group, override .ant-input-group-wrapper
+
+  &.ant-input-group-wrapper {
+    // for some reason group wrapper has square edges causing squared outline
+    border-radius: @mui-border-radius-component;
+  }
+
+  .ant-input-affix-wrapper {
+    box-shadow: none !important;
+  }
+
+  .ant-input-group-addon:first-child {
+    // set min width for language addon
+    min-width: 5.5rem;
+    text-align: left;
+    vertical-align: baseline;
+  }
+
+
+  .m-input-wrapper, .m-textarea-wrapper {
+    // override m-input inside of group
+    width: 100%;
+
+    .m-input, .m-textarea {
+      border: 0;
+      border-radius: 0 @mui-border-radius-component @mui-border-radius-component 0;
+      padding: 0;
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .ant-input-suffix {
+    position: initial;
+    top: initial;
+    right: initial;
+    height: initial;
+    margin-right: initial;
+    pointer-events: initial;
+
+    .m-button {
+      line-height: 1rem;
+    }
+  }
+}
+
+
+.m-language-input-group-disabled {
+  .ant-input-affix-wrapper {
+    padding: 0;
+    background: @mui-border-color-light;
+  }
+
+  .m-input, .m-textarea {
+    padding: (4 / 14rem) (11 / 14rem) !important;
+  }
+
+  .ant-input-suffix {
+    display: none;
+  }
+}
+
+.m-language-input-dropdown-button i {
+  font-size: 10px;
+}
+
+.scaled {
+  .m-language-input-dropdown .m-button i {
+    font-size: .714rem;
+  }
+
+  .m-language-input-group {
+    .ant-input-group-addon:first-child {
+      font-size: 1rem;
+    }
+  }
+}

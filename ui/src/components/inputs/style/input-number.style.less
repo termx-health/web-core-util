@@ -1,0 +1,48 @@
+@import "../../../style/index";
+
+.scaled {
+  @base-unit: 14rem;
+
+  .ant-input-number {
+    font-size: 1rem;
+    width: (90 / @base-unit);
+    border-radius: @mui-border-radius-component;
+  }
+
+  .ant-input-number-handler-wrap {
+    width: (22 / @base-unit);
+    border-radius: 0 @mui-border-radius-component @mui-border-radius-component 0;
+  }
+
+  .ant-input-number-handler-up {
+    border-top-right-radius: @mui-border-radius-component;
+  }
+
+  .ant-input-number-handler-down {
+    border-bottom-right-radius: @mui-border-radius-component;
+  }
+
+  .ant-input-number-handler-up-inner,
+  .ant-input-number-handler-down-inner {
+    right: (4 / @base-unit);
+    width: (12 / @base-unit);
+    height: (12 / @base-unit);
+    line-height: (12 / @base-unit);
+  }
+
+
+  .ant-input-number-input {
+    height: (30 / @base-unit);
+    padding: 0 (11 / @base-unit);
+    border-radius: @mui-border-radius-component;
+  }
+
+  .ant-input-number-handler-wrap .ant-input-number-handler .ant-input-number-handler-up-inner,
+  .ant-input-number-handler-wrap .ant-input-number-handler .ant-input-number-handler-down-inner {
+    font-size: (7 / @base-unit);
+  }
+
+  .ant-input-number-handler-up-inner {
+    margin-top: (-5 / @base-unit);
+  }
+}

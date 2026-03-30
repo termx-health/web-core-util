@@ -1,0 +1,133 @@
+<ng-template #rest>
+  <ng-content></ng-content>
+</ng-template>
+
+
+<div class="m-table-container"
+    [class.m-table-container-rounded]="_config.rounded"
+    [class.m-table-container-outlined]="_config.outlined"
+>
+  <div class="m-table-header">
+    <ng-content select="[tableHeader]"></ng-content>
+  </div>
+
+
+  <m-spinner [mLoading]="mLoading">
+    <div class="m-table-wrapper" mScrollable>
+      <!--
+        ACHTUNG!
+        Regular and virtual tables have same template, but use different directives for iteration.
+        Every change MUST be done in both tables, while no alternative solution exist.
+      -->
+
+
+      <!-- Single row template -->
+      <ng-template #rowTpl let-ti="ti" let-rowIndex="rowIndex">
+        <!-- Row -->
+        <ng-template
+            [ngTemplateOutlet]="row?.template"
+            [ngTemplateOutletContext]="{$implicit: ti.item, item: ti.item, index: rowIndex, expanded: ti.expanded}"
+        ></ng-template>
+
+        <!-- Expanded row-->
+        <ng-container *ngIf="ti.expanded && rowExpand">
+          <ng-template
+              [ngTemplateOutlet]="rowExpand.template"
+              [ngTemplateOutletContext]="{$implicit: ti.item, item: ti.item, index: rowIndex, expanded: ti.expanded}"
+          ></ng-template>
+        </ng-container>
+      </ng-template>
+
+
+      <!-- Regular table @see ACHTUNG -->
+      <ng-container *ngIf="!mVirtualScroll">
+        <table
+            class="m-table"
+            [class.m-table-bordered]="_config.bordered"
+            [class.m-table-outlined]="_config.outlined"
+            [class.m-table-small]="mSize === 'small'"
+            [class.m-table-fixed]="mFixed"
+        >
+          <!-- Head -->
+          <thead class="m-table-thead" *ngIf="head && _tableData.length > 0">
+          <ng-template [ngTemplateOutlet]="head.template"></ng-template>
+          </thead>
+
+          <tbody class="m-table-tbody">
+          <ng-container *ngFor="let ti of _tableData?.items; index as rowIndex; trackBy: _trackBy">
+            <ng-template [ngTemplateOutlet]="rowTpl" [ngTemplateOutletContext]="{ti, rowIndex}"></ng-template>
+          </ng-container>
+
+          <!-- No data -->
+          <ng-container *ngIf="_tableData.length === 0 && noData">
+            <ng-template [ngTemplateOutlet]="noData.template"></ng-template>
+          </ng-container>
+
+          <!-- Any other table rows -->
+          <ng-template [ngTemplateOutlet]="rest"></ng-template>
+          </tbody>
+        </table>
+      </ng-container>
+      <!-- //Regular table -->
+
+
+      <!-- Virtual scroll table @see ACHTUNG -->
+      <cdk-virtual-scroll-viewport
+        #virtualScrollViewport
+          *ngIf="mVirtualScroll"
+          [itemSize]="mVirtualItemSize"
+
+          [style.height.px]="mVirtualViewportHeight"
+          style="--virtual-scroll-offset: 0px"
+      >
+        <table
+            class="m-table"
+            [class.m-table-bordered]="_config.bordered"
+            [class.m-table-outlined]="_config.outlined"
+            [class.m-table-small]="mSize === 'small'"
+            [class.m-table-fixed]="mFixed"
+        >
+          <!-- Head -->
+          <thead #virtualScrollTableHead class="m-table-thead m-table-thead--virtual" *ngIf="head && _tableData.length > 0">
+          <ng-template [ngTemplateOutlet]="head.template"></ng-template>
+          </thead>
+
+          <tbody class="m-table-tbody">
+          <ng-container *cdkVirtualFor="let ti of _tableData?.items; index as rowIndex">
+            <ng-template [ngTemplateOutlet]="rowTpl" [ngTemplateOutletContext]="{ti, rowIndex}"></ng-template>
+          </ng-container>
+
+          <!-- No data -->
+          <ng-container *ngIf="_tableData.length === 0 && noData">
+            <ng-template [ngTemplateOutlet]="noData.template"></ng-template>
+          </ng-container>
+
+          <!-- Any other table rows -->
+          <ng-template [ngTemplateOutlet]="rest"></ng-template>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
+      <!-- //Virtual scroll table -->
+    </div>
+
+
+    <!-- Footer -->
+    <div class="m-table-footer" *ngIf="mEnablePagination && _tableData.length > 0">
+      <m-pagination *ngIf="!mHideOnSinglePage || _total > mPageSize"
+          class="m-table-paginator"
+          [mShowTotal]="_config.showTotal ? showTotal : undefined"
+          [mPageSizeOptions]="_config.pageSizeOptions"
+          [mShowPageSizeChanger]="_config.showPageSizeChanger"
+          [mTotal]="_total"
+          [mPageSize]="mPageSize"
+          [mPageIndex]="mPageIndex"
+          (mPageSizeChange)="onPageSizeChange($event)"
+          (mPageIndexChange)="onPageIndexChange($event)"
+      ></m-pagination>
+
+      <ng-template #showTotal let-total let-range="range">
+        {{'marina.ui.table.paginationTotal' | i18n: ({lower: range[0], upper: range[1], total})}}
+      </ng-template>
+    </div>
+  </m-spinner>
+</div>

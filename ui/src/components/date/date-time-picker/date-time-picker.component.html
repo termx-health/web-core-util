@@ -1,0 +1,18 @@
+<div class="m-items-middle">
+  <m-date-picker #datepicker
+      [(ngModel)]="date"
+      (ngModelChange)="onDatePicked($event)"
+      (keydown)="keyEvent($event)"
+      [mMin]="mMin"
+      [mMax]="mMax"
+      [disabled]="disabled"
+  ></m-date-picker>
+
+  <m-time-picker #timepicker
+      [name]="name + '-time'"
+      [(ngModel)]="time"
+      (ngModelChange)="onTimeChange($event)"
+      (keydown)="keyEvent($event)"
+      [disabled]="disabled"
+  ></m-time-picker>
+</div>

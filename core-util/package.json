@@ -1,6 +1,6 @@
 {
   "name": "@termx-health/core-util",
-  "version": "21.0.0",
+  "version": "21.0.1",
   "description": "TypeScript/Angular utilities for the TermX ecosystem",
   "author": "TermX Health",
   "license": "Apache-2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@termx-health/markdown-parser",
-  "version": "21.0.1",
+  "version": "21.0.2",
   "author": "Kodality",
   "license": "Apache-2.0",
   "dependencies": {

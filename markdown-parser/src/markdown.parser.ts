@@ -1,6 +1,6 @@
 import {v4 as uuid} from 'uuid';
 import mdAttrs from 'markdown-it-attrs';
-import mdEmoji from 'markdown-it-emoji';
+import {full as mdEmoji} from 'markdown-it-emoji';
 import mdTaskLists from 'markdown-it-task-lists';
 import mdExpandTabs from 'markdown-it-expand-tabs';
 import mdAbbr from 'markdown-it-abbr';

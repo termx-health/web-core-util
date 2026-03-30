@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {isNil, remove} from '@termx-health/core-util';
 import {DataSource, SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl, TreeControl} from '@angular/cdk/tree';
-import {getParent, NzTreeViewFlatDataSource, NzTreeFlattener} from 'ng-zorro-antd/tree-view';
+import {getParent, NzTreeFlatDataSource, NzTreeFlattener} from 'ng-zorro-antd/tree-view';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {MuiTreeNode, MuiTreeNodeOptions} from './tree.base';
@@ -87,7 +87,7 @@ export class MuiTreeService implements OnDestroy {
 
   private readonly _treeControl = new FlatTreeControl<MuiTreeNode>(node => node.level, node => node.expandable);
   private readonly _treeFlattener = new NzTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children);
-  private readonly _dataSource = new NzTreeViewFlatDataSource(this._treeControl as any, this._treeFlattener);
+  private readonly _dataSource = new NzTreeFlatDataSource(this._treeControl as any, this._treeFlattener);
 
   private readonly _selectionModel = new SelectionModel<MuiTreeNode>(true);
   private readonly _destroy$ = new Subject<void>();

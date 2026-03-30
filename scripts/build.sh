@@ -20,6 +20,9 @@ install_lib util
 
 echo "Building ui"
 ng build ui
+echo "Copying icons"
+mkdir -p dist/ui/src/icons
+cp -r node_modules/@ant-design/icons-angular/src/inline-svg/outline dist/ui/src/icons/
 install_lib ui
 
 echo "Building markdown-parser"

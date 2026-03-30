@@ -1,5 +1,6 @@
 {
   "name": "@kodality-web/core-util",
+  "version": "20.0.2",
   "description": "TypeScript/Angular utilities",
   "author": "Kodality",
   "license": "Apache-2.0",

@@ -16,7 +16,7 @@ jobs:
         with:
           filters: |
             package:
-              - 'package.json'
+              - 'core-util/package.json'
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
@@ -28,6 +28,7 @@ jobs:
         run: npm run build
       - name: Publish
         if: steps.filter.outputs.package == 'true'
+        working-directory: dist/core-util
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

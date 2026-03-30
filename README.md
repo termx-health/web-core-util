@@ -26,6 +26,19 @@ All 6 libraries are built in dependency order via `scripts/build.sh`.
 
 Packages are published automatically to [GitHub Packages](https://github.com/orgs/termx-health/packages) on push to `main` or `20.0.x` when a library's `package.json` changes.
 
+The CI checks that each changed package has a new version before publishing. If the version already exists on the registry, the build fails with a clear error.
+
+### Bumping versions
+
+After making changes, bump the patch version for any packages that need republishing:
+
+```shell
+./scripts/bump-versions.sh          # bump only packages whose version is already published
+./scripts/bump-versions.sh --all    # bump all packages unconditionally
+```
+
+Then review, commit, and push. The CI will build and publish the bumped packages.
+
 ## Setup
 
 Add the GitHub Packages registry to your project's `.npmrc`:

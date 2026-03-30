@@ -16,8 +16,8 @@
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "lib": [

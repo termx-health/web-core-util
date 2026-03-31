@@ -22,6 +22,7 @@ import {NzTreeModule} from 'ng-zorro-antd/tree';
 import {NzTreeSelectModule} from 'ng-zorro-antd/tree-select';
 import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
 import {en_US, et_EE, NZ_DATE_CONFIG, NzI18nService, ru_RU} from 'ng-zorro-antd/i18n';
+import {NzIconService} from 'ng-zorro-antd/icon';
 import {CoreI18nService} from '@termx-health/core-util';
 import {NzTimelineModule} from 'ng-zorro-antd/timeline';
 import {NzListModule} from 'ng-zorro-antd/list';
@@ -106,7 +107,8 @@ export const zorroModules = [
   ]
 })
 export class CoreZorroModule {
-  public constructor(coreI18nService: CoreI18nService, nzI18nService: NzI18nService) {
+  public constructor(coreI18nService: CoreI18nService, nzI18nService: NzI18nService, nzIconService: NzIconService) {
+    nzIconService.changeAssetsSource('/');
     coreI18nService.localeChange.pipe(startWith(coreI18nService.currentLang)).subscribe(localId => {
       nzI18nService.setLocale(this.getLocale(localId));
     });

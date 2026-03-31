@@ -1,6 +1,6 @@
 {
   "name": "@termx-health/quill",
-  "version": "21.0.2",
+  "version": "21.0.3",
   "author": "Kodality",
   "license": "Apache-2.0",
   "peerDependencies": {

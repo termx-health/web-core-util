@@ -1,7 +1,7 @@
 {
   "name": "@termx-health/ui",
   "version": "21.0.3",
-  "author": "Kodality",
+  "author": "TermX Health",
   "license": "Apache-2.0",
   "peerDependencies": {
     "@angular/common": ">=21.0.0",

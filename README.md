@@ -41,7 +41,13 @@ Then review, commit, and push. The CI will build and publish the bumped packages
 
 ## Setup
 
-Add the GitHub Packages registry to your project's `.npmrc`:
+GitHub Packages requires authentication even for public packages. Add to your `~/.npmrc`:
+
+```
+//npm.pkg.github.com/:_authToken=<GITHUB_TOKEN>
+```
+
+Then add the registry scope to your project's `.npmrc`:
 
 ```
 @termx-health:registry=https://npm.pkg.github.com/

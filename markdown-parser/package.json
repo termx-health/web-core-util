@@ -1,7 +1,7 @@
 {
   "name": "@termx-health/markdown-parser",
   "version": "21.0.3",
-  "author": "Kodality",
+  "author": "TermX Health",
   "license": "Apache-2.0",
   "dependencies": {
     "tslib": "^2.5.0",

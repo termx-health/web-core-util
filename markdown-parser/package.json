@@ -1,6 +1,6 @@
 {
   "name": "@termx-health/markdown-parser",
-  "version": "21.0.3",
+  "version": "21.0.4",
   "author": "TermX Health",
   "license": "Apache-2.0",
   "dependencies": {

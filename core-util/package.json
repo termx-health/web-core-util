@@ -1,6 +1,6 @@
 {
   "name": "@termx-health/core-util",
-  "version": "21.0.3",
+  "version": "21.0.4",
   "description": "TypeScript/Angular utilities for the TermX ecosystem",
   "author": "TermX Health",
   "license": "Apache-2.0",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@angular/cdk": ">=21.0.0",
     "date-fns": "^4.1.0",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.18.0"
   },
   "devDependencies": {
     "typescript": ">=4.9.5"
